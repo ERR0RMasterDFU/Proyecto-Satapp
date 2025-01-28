@@ -1,10 +1,12 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -15,6 +17,9 @@ import java.util.Objects;
 @Entity
 public class Alumno extends Usuario {
 
+    // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
+    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     @Override

@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -28,6 +26,34 @@ public class Incidencia {
     private Estado estado;
     private boolean urgencia;
 
+
+    // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // (M:1) CATEGORIA
+    @ManyToOne
+    @JoinColumn(name="categoria_id", foreignKey = @ForeignKey(name = "fk_incidencia_categoria"))
+    private Categoria categoria;
+
+    // (M:1) EQUIPO
+    @ManyToOne
+    @JoinColumn(name="equipo_id", foreignKey = @ForeignKey(name = "fk_incidencia_equipo"))
+    private Equipo equipo;
+
+    // (M:1) UBICACION
+    @ManyToOne
+    @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
+    private Ubicacion ubicacion;
+
+
+
+
+    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     public final boolean equals(Object o) {
