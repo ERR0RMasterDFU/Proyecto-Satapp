@@ -1,10 +1,10 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,11 +13,21 @@ import java.time.LocalDate;
 @ToString
 @Builder
 @Entity
+@IdClass(NotaPk.class)
 public class Nota {
 
-    @Id // COMPOSICIÓN - NO TIENE ID
-    private LocalDate fecha;
+    // COMPOSICIÓN CON ID COMP (M:1) INCIDENCIA
+    @Id
+    @ManyToOne
+    @JoinColumn(name="incidencia_id", foreignKey = @ForeignKey(name = "fk_nota_incidencia"))
+    private Incidencia incidencia;
+
+    @Id
+    private LocalDateTime fecha;
     private String contenido;
-    //private
+
+    @Id
+    private String autor;
+
 
 }

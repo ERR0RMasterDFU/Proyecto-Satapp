@@ -7,9 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -19,11 +17,21 @@ import java.util.Objects;
 @Entity
 public class Tecnico extends Usuario {
 
-    @ManyToMany(mappedBy = "listaTecnicos", fetch = FetchType.EAGER)
+    // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // (N:M) INCIDENCIA
+    @ManyToMany(mappedBy = "listaTecnicos", fetch = FetchType.LAZY)
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Incidencia> listaIncidencias  = new ArrayList<>();
+    private Set<Incidencia> listaIncidencias  = new HashSet<>();
+
+
+    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     public final boolean equals(Object o) {

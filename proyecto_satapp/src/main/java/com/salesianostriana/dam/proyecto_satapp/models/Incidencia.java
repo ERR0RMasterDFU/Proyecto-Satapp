@@ -5,9 +5,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -51,7 +49,16 @@ public class Incidencia {
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Tecnico> listaTecnicos = new ArrayList<>();
+    private Set<Tecnico> listaTecnicos = new HashSet<>();
+
+    // (1:M) NOTA
+    @OneToMany(mappedBy = "incidencia",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Nota> listaNotas = new ArrayList<>();
 
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
