@@ -63,8 +63,15 @@ public class Incidencia {
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public void addNota (Nota n) {
+        n.setIncidencia(this);
+        listaNotas.add(n);
+    }
 
-
+    public void removeNota (Nota n) {
+        listaNotas.remove(n);
+        //n.setIncidencia(null); ELIMINAMOS ESTA LÍNEA PARA EVITAR OTROS FALLOS
+    }
 
 
     // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
