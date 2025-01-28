@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -27,6 +29,33 @@ public class Usuario {
     private String email;
     private String role;
 
+
+    // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // (1:M) INCIDENCIA
+    @OneToMany(mappedBy = "usuario",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Incidencia> listaIncidencias = new ArrayList<>();
+
+
+    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void addIncidencia (Incidencia i) {
+        i.setUsuario(this);
+        listaIncidencias.add(i);
+    }
+
+    public void removeIncidencia (Incidencia i) {
+        listaIncidencias.remove(i);
+        i.setUsuario(null);
+    }
+
+
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     public boolean equals(Object o) {

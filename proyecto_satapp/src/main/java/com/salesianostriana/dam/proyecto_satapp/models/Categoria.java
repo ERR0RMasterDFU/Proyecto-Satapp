@@ -28,7 +28,7 @@ public class Categoria {
 
     // (1:M) CATEGORIA
     @OneToMany(mappedBy = "categoriaPadre",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
@@ -42,7 +42,7 @@ public class Categoria {
 
     // (1:M) INCIDENCIA
     @OneToMany(mappedBy = "categoria",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default

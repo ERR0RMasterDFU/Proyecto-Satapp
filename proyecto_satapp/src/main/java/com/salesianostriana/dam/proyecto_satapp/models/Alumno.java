@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -16,9 +18,31 @@ import java.util.Objects;
 public class Alumno extends Usuario {
 
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
-    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // (1:M) ALUMNO
+    @OneToMany(mappedBy = "alumno",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @Builder.Default
+    @ToString.Exclude
+    private List<HistoricoCursos> listaHistoricoCursos = new ArrayList<>();
+
+
+    // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void addHistoricoCursos (HistoricoCursos hc) {
+        hc.setAlumno(this);
+        listaHistoricoCursos.add(hc);
+    }
+
+    public void removeHistoricoCursos (HistoricoCursos hc) {
+        listaHistoricoCursos.remove(hc);
+        hc.setAlumno(null);
+    }
+
+
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     public final boolean equals(Object o) {

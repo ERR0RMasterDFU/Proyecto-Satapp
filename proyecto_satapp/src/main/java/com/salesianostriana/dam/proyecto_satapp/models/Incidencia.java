@@ -3,6 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -20,7 +21,9 @@ public class Incidencia {
     @GeneratedValue
     private Long id;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate fecha;
+
     private String titulo;
     private String descripcion;
     private Estado estado;
@@ -44,8 +47,13 @@ public class Incidencia {
     @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
     private Ubicacion ubicacion;
 
+    // (M:1) USUARIO
+    @ManyToOne
+    @JoinColumn(name="usuario_id", foreignKey = @ForeignKey(name = "fk_incidencia_usuario"))
+    private Usuario usuario;
+
     // (N:M) TECNICO
-    @ManyToMany(mappedBy = "listaIncidencias", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "listaIncidenciasTecnico", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

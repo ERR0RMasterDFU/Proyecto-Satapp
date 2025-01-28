@@ -17,6 +17,9 @@ public class Personal extends Usuario {
 
     private Tipo tipo;
 
+
+    // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

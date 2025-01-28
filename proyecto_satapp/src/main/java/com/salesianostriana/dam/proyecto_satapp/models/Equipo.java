@@ -22,14 +22,14 @@ public class Equipo {
     private Long id;
 
     private String nombre;
-    private String características;
+    private String caracteristicas;
 
 
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // (1:M) INCIDENCIA
     @OneToMany(mappedBy = "equipo",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default

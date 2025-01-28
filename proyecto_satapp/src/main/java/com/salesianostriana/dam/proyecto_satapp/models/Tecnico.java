@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
@@ -20,15 +18,28 @@ public class Tecnico extends Usuario {
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // (N:M) INCIDENCIA
-    @ManyToMany(mappedBy = "listaTecnicos", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "gestiona",
+            joinColumns = @JoinColumn(name="tecnico_id"),
+            inverseJoinColumns = @JoinColumn(name="incidencia_id")
+    )
     @Builder.Default
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Incidencia> listaIncidencias  = new HashSet<>();
+    private Set<Incidencia> listaIncidenciasTecnico = new HashSet<>();
 
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public void addIncidencia (Incidencia i) {
+        this.listaIncidenciasTecnico.add(i);
+        i.getListaTecnicos().add(this);
+    }
+
+    public void removeIncidencia (Incidencia i) {
+        i.getListaTecnicos().remove(this);
+        this.listaIncidenciasTecnico.remove(i);
+    }
 
 
     // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------

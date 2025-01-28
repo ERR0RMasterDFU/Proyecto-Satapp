@@ -28,7 +28,7 @@ public class Ubicacion {
 
     // (1:M) EQUIPO
     @OneToMany(mappedBy = "ubicacion",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
@@ -37,7 +37,7 @@ public class Ubicacion {
 
     // (1:M) INCIDENCIAS
     @OneToMany(mappedBy = "ubicacion",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
