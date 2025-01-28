@@ -1,10 +1,14 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -15,6 +19,11 @@ import java.util.Objects;
 @Entity
 public class Tecnico extends Usuario {
 
+    @ManyToMany(mappedBy = "listaTecnicos", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Incidencia> listaIncidencias  = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {

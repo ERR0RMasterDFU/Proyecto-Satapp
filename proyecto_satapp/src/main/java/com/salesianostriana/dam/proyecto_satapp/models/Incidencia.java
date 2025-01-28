@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -44,7 +46,12 @@ public class Incidencia {
     @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
     private Ubicacion ubicacion;
 
-
+    // (N:M) TECNICO
+    @ManyToMany(mappedBy = "listaIncidencias", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Tecnico> listaTecnicos = new ArrayList<>();
 
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
