@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.CreateUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import jakarta.persistence.EntityNotFoundException;

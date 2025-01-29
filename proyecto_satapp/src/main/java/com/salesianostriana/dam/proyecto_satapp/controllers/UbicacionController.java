@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.CreateUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +25,9 @@ public class UbicacionController {
     }*/
 
     @PostMapping("")
-    public ResponseEntity<Ubicacion> create(@RequestBody CreateUbicacionDto nuevaUbicacion) {
+    public ResponseEntity<Ubicacion> create(@RequestBody Ubicacion nuevaUbicacion) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ubicacionService.save(nuevaUbicacion.toUbicacion()));
+                .body(ubicacionService.save(nuevaUbicacion));
     }
 
     /*@PutMapping("/{id}")

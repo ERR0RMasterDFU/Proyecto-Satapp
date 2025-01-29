@@ -28,6 +28,13 @@ public class Tecnico extends Usuario {
     @ToString.Exclude
     private Set<Incidencia> listaIncidenciasTecnico = new HashSet<>();
 
+    /*
+    * @Query("""
+    *   select tecnico t join fetch t.listaIncidenciasTecnico
+    *   """)
+    * List<Tecnico> tecnicosConListaIncidencias()
+    * */
+
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
