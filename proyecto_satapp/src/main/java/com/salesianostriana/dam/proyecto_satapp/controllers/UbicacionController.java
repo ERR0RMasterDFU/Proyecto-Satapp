@@ -24,10 +24,10 @@ public class UbicacionController {
         return ubicacionService.findAllSinListas();
     }
 
-    /*@GetMapping("/{id}")
-    public Producto getById(@PathVariable Long id) {
-        return productoService.findById(id);
-    }*/
+    @GetMapping("/{id}")
+    public Ubicacion getById(@PathVariable Long id) {
+        return ubicacionService.findById(id);
+    }
 
     @PostMapping("")
     public ResponseEntity<Ubicacion> create(@RequestBody Ubicacion nuevaUbicacion) {
