@@ -1,11 +1,13 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.CreateEquipoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
-import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
+import com.salesianostriana.dam.proyecto_satapp.services.EquipoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ubicacion")
+@RequestMapping("/equipo")
 @RequiredArgsConstructor
-public class UbicacionController {
+public class EquipoController {
 
-    private final UbicacionService ubicacionService;
+    private final EquipoService equipoService;
 
-    @GetMapping("")
+    /*@GetMapping("")
     public List<GetUbicacionDto> getAll() {
         return ubicacionService.findAllSinListas();
     }
@@ -28,14 +30,20 @@ public class UbicacionController {
     @GetMapping("/{id}")
     public Ubicacion getById(@PathVariable Long id) {
         return ubicacionService.findById(id);
-    }
+    }*/
+
+    /*@PostMapping("")
+    public ResponseEntity<Equipo> create(@RequestBody CreateEquipoCmd nuevoEquipo) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(equipoService.save(nuevoEquipo));
+    }*/
 
     @PostMapping("")
-    public ResponseEntity<GetUbicacionDto> create(@RequestBody Ubicacion nuevaUbicacion) {
-        Ubicacion ubicacion = ubicacionService.save(nuevaUbicacion);
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetUbicacionDto.of(ubicacion));
+    public ResponseEntity<GetEquipoDto> create(@RequestBody CreateEquipoCmd nuevoEquipoCmd) {
+        Equipo nuevoEquipo = equipoService.save(nuevoEquipoCmd);
+        return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoDto.of(nuevoEquipo));
     }
-
+/*
     @PutMapping("/{id}")
     public Ubicacion edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
         return ubicacionService.edit(aEditar, id);
@@ -45,6 +53,6 @@ public class UbicacionController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         ubicacionService.delete(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
 }

@@ -16,8 +16,7 @@ public class GlobalErrorController extends ResponseEntityExceptionHandler {
         result.setTitle("Entidad no encontrada.");
         //result.setType(URI.create("https://www.salesianos-triana.edu/errors/entity-not-found"));
         //result.setProperty("author", "David");
-
         return result;
-
     }
+
 }
