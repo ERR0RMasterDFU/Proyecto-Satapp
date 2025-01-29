@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +19,13 @@ public class UbicacionService {
 
     public List<Ubicacion> findAll() {
         List<Ubicacion> result = UbicacionRepository.findAll();
+        if (result.isEmpty())
+            throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
+        return result;
+    }
+
+    public List<GetUbicacionDto> findAllSinListas() {
+        List<GetUbicacionDto> result = UbicacionRepository.findAllSinListas();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
         return result;

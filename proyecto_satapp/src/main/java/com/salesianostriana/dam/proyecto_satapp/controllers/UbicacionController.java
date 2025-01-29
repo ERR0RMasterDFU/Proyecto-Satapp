@@ -1,11 +1,15 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
+import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ubicacion")
@@ -13,13 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class UbicacionController {
 
     private final UbicacionService ubicacionService;
+    private final UbicacionRepository ubicacionRepository;
 
-    /*@GetMapping
-    public List<Producto> getAll() {
-        return productoService.findAll();
+    @GetMapping("")
+    public List<GetUbicacionDto> getAll() {
+        return ubicacionService.findAllSinListas();
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public Producto getById(@PathVariable Long id) {
         return productoService.findById(id);
     }*/
