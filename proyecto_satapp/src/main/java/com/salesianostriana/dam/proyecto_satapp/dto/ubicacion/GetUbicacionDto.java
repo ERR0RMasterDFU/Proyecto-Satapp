@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.proyecto_satapp.dto;
+package com.salesianostriana.dam.proyecto_satapp.dto.ubicacion;
 
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 
