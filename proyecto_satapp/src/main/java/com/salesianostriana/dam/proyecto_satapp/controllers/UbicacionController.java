@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
@@ -35,13 +36,12 @@ public class UbicacionController {
                 .body(ubicacionService.save(nuevaUbicacion));
     }
 
-    /*@PutMapping("/{id}")
-    public Producto edit(@RequestBody Producto aEditar,
-                         @PathVariable Long id) {
-        return productoService.edit(aEditar, id);
+    @PutMapping("/{id}")
+    public Ubicacion edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
+        return ubicacionService.edit(aEditar, id);
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         productoService.delete(id);
         return ResponseEntity.noContent().build();
