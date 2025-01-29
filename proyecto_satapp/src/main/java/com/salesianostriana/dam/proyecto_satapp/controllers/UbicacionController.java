@@ -41,10 +41,10 @@ public class UbicacionController {
         return ubicacionService.edit(aEditar, id);
     }
 
-    /*@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        productoService.delete(id);
+        ubicacionService.delete(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 
 }
