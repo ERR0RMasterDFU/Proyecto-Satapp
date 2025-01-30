@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.CreateEquipoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.services.EquipoService;
@@ -36,7 +36,7 @@ public class EquipoController {
     }*/
 
     @PostMapping("")
-    public ResponseEntity<GetEquipoConUbicacionDto> create(@RequestBody CreateEquipoCmd nuevoEquipoCmd) {
+    public ResponseEntity<GetEquipoConUbicacionDto> create(@RequestBody EditEquipoCmd nuevoEquipoCmd) {
         Equipo nuevoEquipo = equipoService.save(nuevoEquipoCmd);
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoConUbicacionDto.of(nuevoEquipo));
     }
@@ -48,12 +48,13 @@ public class EquipoController {
     }*/
 
 
-/*
-    @PutMapping("/{id}")
-    public Ubicacion edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
-        return ubicacionService.edit(aEditar, id);
-    }
 
+    @PutMapping("/{id}")
+    public GetEquipoConUbicacionDto edit(@RequestBody EditEquipoCmd aEditar, @PathVariable Long id) {
+        Equipo equipoEditado = equipoService.edit(aEditar, id);
+        return GetEquipoConUbicacionDto.of(equipoEditado);
+    }
+/*
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         ubicacionService.delete(id);
