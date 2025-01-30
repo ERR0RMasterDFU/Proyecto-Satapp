@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
@@ -20,18 +21,18 @@ public class UbicacionController {
 
     @GetMapping("")
     public List<GetUbicacionDto> getAll() {
-        return ubicacionService.findAllSinListas();
+        return ubicacionService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Ubicacion getById(@PathVariable Long id) {
+    public GetUbicacionConListasDto getById(@PathVariable Long id) {
         return ubicacionService.findById(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<GetUbicacionDto> create(@RequestBody Ubicacion nuevaUbicacion) {
-        Ubicacion ubicacion = ubicacionService.save(nuevaUbicacion);
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetUbicacionDto.of(ubicacion));
+    public ResponseEntity<Ubicacion> create(@RequestBody Ubicacion nuevaUbicacion) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ubicacionService.save(nuevaUbicacion));
     }
 
     @PutMapping("/{id}")

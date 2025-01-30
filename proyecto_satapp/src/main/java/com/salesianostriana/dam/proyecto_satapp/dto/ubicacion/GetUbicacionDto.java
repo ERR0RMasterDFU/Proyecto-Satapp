@@ -3,12 +3,12 @@ package com.salesianostriana.dam.proyecto_satapp.dto.ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 
 public record GetUbicacionDto(
-        Long id,
+        //Long id,
         String nombre
 ) {
     public static GetUbicacionDto of(Ubicacion u) {
         return new GetUbicacionDto(
-                u.getId(),
+                //u.getId(),
                 u.getNombre()
         );
     }

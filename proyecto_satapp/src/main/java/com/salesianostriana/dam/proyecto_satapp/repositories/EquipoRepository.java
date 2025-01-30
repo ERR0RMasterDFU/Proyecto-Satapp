@@ -12,7 +12,7 @@ public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 
     @Query("""
         select new com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto(
-        e.id, e.nombre, e.caracteristicas
+        e.nombre, e.caracteristicas
         )
         from Equipo e join e.ubicacion u
         where u.id = ?1
