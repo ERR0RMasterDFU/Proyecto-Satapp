@@ -1,8 +1,11 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
+import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +19,50 @@ import java.util.Optional;
 public class UbicacionService {
 
     private final UbicacionRepository ubicacionRepository;
+    private final EquipoRepository equipoRepository;
 
 
-    public List<Ubicacion> findAll() {
-        List<Ubicacion> result = ubicacionRepository.findAll();
+    public List<GetUbicacionDto> findAll() {
+        List<GetUbicacionDto> result = ubicacionRepository.findAllSinListas();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
         return result;
     }
 
-    public List<GetUbicacionDto> findAllSinListas() {
-        List<GetUbicacionDto> result = ubicacionRepository.findAllSinListas();
+    public GetUbicacionConListasDto findById(Long id) {
+        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
+
+        if (ubicacionOptional.isPresent()) {
+            List<GetEquipoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
+            return GetUbicacionConListasDto.of(ubicacionOptional.get(), listaEquipos);
+        } else {
+            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
+        }
+    }
+
+    public Ubicacion save(Ubicacion ubicacion) {
+        return ubicacionRepository.save(ubicacion);
+    }
+
+    public Ubicacion edit(EditUbicacionCmd editProductoCmd, Long id) {
+        return ubicacionRepository.findById(id)
+                .map(old -> {
+                    old.setNombre(editProductoCmd.nombre());
+                    return ubicacionRepository.save(old);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
+
+    }
+
+    public void delete(Long id) {
+        ubicacionRepository.deleteById(id);
+    }
+
+
+    /*
+
+    public List<Ubicacion> findAll() {
+        List<Ubicacion> result = ubicacionRepository.findAll();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
         return result;
@@ -42,31 +78,25 @@ public class UbicacionService {
         }
     }
 
-    public Ubicacion save(Ubicacion ubicacion) {
-        return ubicacionRepository.save(ubicacion);
+    public Ubicacion findByIdConDto(Long id) {
+        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
+
+        if (ubicacionOptional.isPresent()) {
+            return ubicacionOptional.get();
+        } else {
+            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
+        }
     }
 
-    /*public Ubicacion edit(Ubicacion ubicacion, Long id) {
+    public Ubicacion edit(Ubicacion ubicacion, Long id) {
         return ubicacionRepository.findById(id)
                 .map(old -> {
                     old.setNombre(ubicacion.getNombre());
                     return ubicacionRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
-    }*/
-
-    public Ubicacion edit(EditUbicacionCmd editProductoCmd, Long id) {
-        return ubicacionRepository.findById(id)
-                .map(old -> {
-                    old.setNombre(editProductoCmd.nombre());
-                    return ubicacionRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
-
     }
 
-    public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
-    }
+     */
 
 }

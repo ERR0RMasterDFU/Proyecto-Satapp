@@ -1,9 +1,9 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
-import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,15 +18,14 @@ import java.util.List;
 public class UbicacionController {
 
     private final UbicacionService ubicacionService;
-    private final UbicacionRepository ubicacionRepository;
 
     @GetMapping("")
     public List<GetUbicacionDto> getAll() {
-        return ubicacionService.findAllSinListas();
+        return ubicacionService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Ubicacion getById(@PathVariable Long id) {
+    public GetUbicacionConListasDto getById(@PathVariable Long id) {
         return ubicacionService.findById(id);
     }
 

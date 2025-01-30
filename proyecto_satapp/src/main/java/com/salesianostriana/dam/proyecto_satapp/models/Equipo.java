@@ -27,19 +27,19 @@ public class Equipo {
 
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // (M:1) UBICACIÓN
+    @ManyToOne
+    @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_equipo_ubicacion"))
+    private Ubicacion ubicacion;
+
     // (1:M) INCIDENCIA
     @OneToMany(mappedBy = "equipo",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     private List<Incidencia> listaIncidencias = new ArrayList<>();
-
-    // (M:1) UBICACIÓN
-    @ManyToOne
-    @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_equipo_ubicacion"))
-    private Ubicacion ubicacion;
 
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------
