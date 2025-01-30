@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.CreateEquipoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
@@ -11,8 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +43,10 @@ public class EquipoService {
             throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
         }
     }*/
+
+    /*public Equipo save(Equipo equipo) {
+        return equipoRepository.save(equipo);
+    }^*/
 
     public Equipo save(CreateEquipoCmd createEquipoCmd) {
 

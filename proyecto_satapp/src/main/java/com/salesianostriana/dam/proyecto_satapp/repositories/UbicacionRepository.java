@@ -16,5 +16,7 @@ public interface UbicacionRepository extends JpaRepository<Ubicacion, Long> {
         from Ubicacion u
     """)
     List<GetUbicacionDto> findAllSinListas();
+
+
 //u join u.listaIncidencias join u.listaEquipos
 }

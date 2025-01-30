@@ -32,7 +32,18 @@ public class UbicacionService {
         return result;
     }
 
+
     public Ubicacion findById(Long id) {
+        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
+
+        if (ubicacionOptional.isPresent()) {
+            return ubicacionOptional.get();
+        } else {
+            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
+        }
+    }
+
+    public Ubicacion findByIdConDto(Long id) {
         Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
 
         if (ubicacionOptional.isPresent()) {
