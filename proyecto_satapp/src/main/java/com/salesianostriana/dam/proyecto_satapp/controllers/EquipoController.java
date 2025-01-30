@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/equipo")
@@ -17,15 +19,15 @@ public class EquipoController {
 
     private final EquipoService equipoService;
 
-    /*@GetMapping("")
-    public List<GetUbicacionDto> getAll() {
-        return ubicacionService.findAllSinListas();
+    @GetMapping("")
+    public List<GetEquipoConUbicacionDto> getAll() {
+        return equipoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Ubicacion getById(@PathVariable Long id) {
-        return ubicacionService.findById(id);
-    }*/
+    public GetEquipoConUbicacionDto getById(@PathVariable Long id) {
+        return equipoService.findById(id);
+    }
 
     /*@PostMapping("")
     public ResponseEntity<Equipo> create(@RequestBody CreateEquipoCmd nuevoEquipo) {
