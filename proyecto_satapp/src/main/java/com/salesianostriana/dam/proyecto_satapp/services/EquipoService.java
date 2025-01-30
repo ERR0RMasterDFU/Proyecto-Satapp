@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.CreateEquipoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
@@ -9,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,34 +21,23 @@ public class EquipoService {
     private final EquipoRepository equipoRepository;
     private final UbicacionRepository ubicacionRepository;
 
-/*
-    public List<Ubicacion> findAll() {
-        List<Ubicacion> result = ubicacionRepository.findAll();
+
+    public List<GetEquipoConUbicacionDto> findAll() {
+        List<GetEquipoConUbicacionDto> result = equipoRepository.findAllEquiposConUbicacionDto();
         if (result.isEmpty())
-            throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
+            throw new EntityNotFoundException("No existen equipos con esos criterios de búsqueda");
         return result;
     }
 
-    public List<GetUbicacionDto> findAllSinListas() {
-        List<GetUbicacionDto> result = ubicacionRepository.findAllSinListas();
-        if (result.isEmpty())
-            throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
-        return result;
-    }
+    public GetEquipoConUbicacionDto findById(Long id) {
+        Optional<Equipo> equipoOptional = equipoRepository.findById(id);
 
-    public Ubicacion findById(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
+        if (equipoOptional.isEmpty()) {
+            throw new EntityNotFoundException("No existe ningún equipo con ID: " + id);
         } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
+            return GetEquipoConUbicacionDto.of(equipoOptional.get());
         }
-    }*/
-
-    /*public Equipo save(Equipo equipo) {
-        return equipoRepository.save(equipo);
-    }^*/
+    }
 
     public Equipo save(CreateEquipoCmd createEquipoCmd) {
 
