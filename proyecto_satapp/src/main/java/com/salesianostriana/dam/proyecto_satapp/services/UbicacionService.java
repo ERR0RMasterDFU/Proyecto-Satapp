@@ -4,6 +4,7 @@ import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.error.UbicacionEnUsoException;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
@@ -54,8 +55,26 @@ public class UbicacionService {
 
     }
 
-    public void delete(Long id) {
+    /*public void delete(Long id) {
         ubicacionRepository.deleteById(id);
+    }*/
+
+    public void delete(Long id) {
+        GetUbicacionConListasDto ubicacion = findById(id);
+
+        if(ubicacion.listaEquipos().isEmpty() //&& ubicacion.listaIncidencias().isEmpty
+        ) {
+            ubicacionRepository.deleteById(id);
+        } else {
+            if(!ubicacion.listaEquipos().isEmpty() //&& !ubicacion.listaIncidencias().isEmpty
+            ) {
+                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay equipos en ella e incidencias asociadas.");
+            } else if(!ubicacion.listaEquipos().isEmpty()) {
+                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay equipos en ella.");
+            } else {
+                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay incicidencias asociadas.");
+            }
+        }
     }
 
 
