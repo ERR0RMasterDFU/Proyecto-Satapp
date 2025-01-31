@@ -84,7 +84,7 @@ public class EquipoService {
     }
 
     public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
+        equipoRepository.deleteById(id);
     }
 
 }

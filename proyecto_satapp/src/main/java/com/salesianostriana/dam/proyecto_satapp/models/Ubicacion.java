@@ -28,9 +28,10 @@ public class Ubicacion {
 
     // (1:M) EQUIPO
     @OneToMany(mappedBy = "ubicacion",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            fetch = FetchType.LAZY
+            //cascade = CascadeType.ALL,
+            //orphanRemoval = true
+            )
     @Builder.Default
     @ToString.Exclude
     private List<Equipo> listaEquipos = new ArrayList<>();

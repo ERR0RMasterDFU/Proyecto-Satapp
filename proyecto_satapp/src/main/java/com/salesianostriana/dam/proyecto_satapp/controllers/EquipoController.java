@@ -54,11 +54,11 @@ public class EquipoController {
         Equipo equipoEditado = equipoService.edit(aEditar, id);
         return GetEquipoConUbicacionDto.of(equipoEditado);
     }
-/*
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        ubicacionService.delete(id);
+        equipoService.delete(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 
 }
