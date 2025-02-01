@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.EditCatgeoriaCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
@@ -11,12 +13,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/categoria")
 @RequiredArgsConstructor
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
+
+
+    @GetMapping("")
+    public List<GetCategoriaSinListasDto> getAll() {
+        return categoriaService.findAllDto();
+    }
+
+    @GetMapping("/{id}")
+    public GetCategoriaDto getById(@PathVariable Long id) {
+        return categoriaService.findByIdDto(id);
+    }
 
     @PostMapping("")
     public ResponseEntity<Categoria> create(@RequestBody EditCatgeoriaCmd nuevoCategoriaCmd) {

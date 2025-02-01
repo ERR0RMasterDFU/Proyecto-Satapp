@@ -25,7 +25,7 @@ public class GlobalErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UbicacionEnUsoException.class)
     public ProblemDetail handleUbicacionEnUso(UbicacionEnUsoException ex) {
         ProblemDetail result = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        result.setTitle("La Ubicación no se puede eliminar.");
+        result.setTitle("La Ubicación NO se puede eliminar.");
         result.setProperty("author", "David Falla Urtiaga y Daniel Martínez León");
         return result;
     }
