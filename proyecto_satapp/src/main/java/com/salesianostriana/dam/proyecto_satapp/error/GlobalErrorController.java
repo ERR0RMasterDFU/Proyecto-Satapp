@@ -17,15 +17,23 @@ public class GlobalErrorController extends ResponseEntityExceptionHandler {
     public ProblemDetail handleEntityNotFound(EntityNotFoundException ex) {
         ProblemDetail result = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         result.setTitle("Entidad no encontrada.");
-        //result.setType(URI.create("https://www.salesianos-triana.edu/errors/entity-not-found"));
-        //result.setProperty("author", "David");
+        result.setProperty("author", "David Falla Urtiaga y Daniel Martínez León");
         return result;
     }
 
     //CUANDO SE INTENTA ELIMINAR UNA UBICACIÓN CON EQUIPOS E INCIDENCIAS ASOCIADAS
     @ExceptionHandler(UbicacionEnUsoException.class)
+    public ProblemDetail handleUbicacionEnUso(UbicacionEnUsoException ex) {
+        ProblemDetail result = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        result.setTitle("La Ubicación no se puede eliminar.");
+        result.setProperty("author", "David Falla Urtiaga y Daniel Martínez León");
+        return result;
+    }
+
+    /*CUANDO SE INTENTA ELIMINAR UNA UBICACIÓN CON EQUIPOS E INCIDENCIAS ASOCIADAS
+    @ExceptionHandler(UbicacionEnUsoException.class)
     public ResponseEntity<String> handleUbicacionEnUso(UbicacionEnUsoException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
+    }*/
 
 }

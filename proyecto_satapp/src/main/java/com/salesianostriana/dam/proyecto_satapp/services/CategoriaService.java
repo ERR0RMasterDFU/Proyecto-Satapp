@@ -3,6 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.services;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.EditCatgeoriaCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 import com.salesianostriana.dam.proyecto_satapp.repositories.CategoriaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,17 +46,17 @@ public class CategoriaService {
         } else {
             throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
         }
-    }
+    }*/
 
-    public Ubicacion edit(Ubicacion ubicacion, Long id) {
-        return ubicacionRepository.findById(id)
+    public Categoria edit(EditCatgeoriaCmd categoria, Long id) {
+        return categoriaRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(ubicacion.getNombre());
-                    return ubicacionRepository.save(old);
+                    old.setNombre(categoria.nombre());
+                    return categoriaRepository.save(old);
                 })
-                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna categoría con ID: "+ id));
     }
-
+/*
     public void delete(Long id) {
         ubicacionRepository.deleteById(id);
     }
