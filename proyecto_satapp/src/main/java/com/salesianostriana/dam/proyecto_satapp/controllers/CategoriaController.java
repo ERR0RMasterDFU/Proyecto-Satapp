@@ -9,10 +9,7 @@ import com.salesianostriana.dam.proyecto_satapp.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/categoria")
@@ -25,6 +22,11 @@ public class CategoriaController {
     public ResponseEntity<Categoria> create(@RequestBody EditCatgeoriaCmd nuevoCategoriaCmd) {
         Categoria nuevaCategoria = categoriaService.save(nuevoCategoriaCmd);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
+    }
+
+    @PutMapping("/{id}")
+    public Categoria edit(@RequestBody EditCatgeoriaCmd aEditar, @PathVariable Long id) {
+        return categoriaService.edit(aEditar, id);
     }
 
 }
