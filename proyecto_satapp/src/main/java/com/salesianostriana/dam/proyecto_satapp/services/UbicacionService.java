@@ -55,10 +55,6 @@ public class UbicacionService {
 
     }
 
-    /*public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
-    }*/
-
     public void delete(Long id) {
         GetUbicacionConListasDto ubicacion = findById(id);
 
@@ -114,6 +110,10 @@ public class UbicacionService {
                     return ubicacionRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
+    }
+
+    public void delete(Long id) {
+        ubicacionRepository.deleteById(id);
     }
 
      */

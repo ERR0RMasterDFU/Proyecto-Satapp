@@ -26,23 +26,23 @@ public class Categoria {
 
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    // (M:1) CATEGORIA
+    @ManyToOne
+    @JoinColumn(name="categoriaPadre_categoria_id", foreignKey = @ForeignKey(name = "fk_categoriaPadre_categoria"))
+    private Categoria categoriaPadre;
+
     // (1:M) CATEGORIA
     @OneToMany(mappedBy = "categoriaPadre",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     private List<Categoria> listaSubCategorias = new ArrayList<>();
 
-    // (M:1) CATEGORIA
-    @ManyToOne
-    @JoinColumn(name="categoriaPadre_categoria_id", foreignKey = @ForeignKey(name = "fk_categoriaPadre_categoria"))
-    private Categoria categoriaPadre;
-
     // (1:M) INCIDENCIA
     @OneToMany(mappedBy = "categoria",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default
