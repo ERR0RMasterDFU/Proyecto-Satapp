@@ -58,16 +58,7 @@ public class EquipoService {
 
         return equipoRepository.save(equipo);
     }
-/*
-    public Ubicacion edit(Ubicacion ubicacion, Long id) {
-        return ubicacionRepository.findById(id)
-                .map(old -> {
-                    old.setNombre(ubicacion.getNombre());
-                    return ubicacionRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
-    }
-*/
+
     public Equipo edit(EditEquipoCmd editEquipoCmd, Long id) {
         return equipoRepository.findById(id)
                 .map(old -> {
