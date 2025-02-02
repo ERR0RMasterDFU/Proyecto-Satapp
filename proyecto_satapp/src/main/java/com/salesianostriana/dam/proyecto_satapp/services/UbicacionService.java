@@ -1,9 +1,9 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.error.UbicacionEnUsoException;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
@@ -23,21 +23,23 @@ public class UbicacionService {
     private final EquipoRepository equipoRepository;
 
 
-    public List<GetUbicacionDto> findAll() {
-        List<GetUbicacionDto> result = ubicacionRepository.findAllSinListas();
+    public List<String> findAll() {
+        List<String> result = ubicacionRepository.findAllSinListas();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
         return result;
     }
 
-    public GetUbicacionConListasDto findById(Long id) {
+    public GetUbicacionDto findById(Long id) {
         Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
 
         if (ubicacionOptional.isPresent()) {
-            List<GetEquipoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
-            return GetUbicacionConListasDto.of(ubicacionOptional.get(), listaEquipos);
+            List<GetEquipoBasicoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
+            return GetUbicacionDto.of(ubicacionOptional.get(), listaEquipos
+            //, listaIncidencias
+            );
         } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
+            throw new EntityNotFoundException("No existe ninguna Ubicación con ID: " + id);
         }
     }
 
@@ -45,18 +47,21 @@ public class UbicacionService {
         return ubicacionRepository.save(ubicacion);
     }
 
-    public Ubicacion edit(EditUbicacionCmd editProductoCmd, Long id) {
-        return ubicacionRepository.findById(id)
+    public GetUbicacionDto edit(EditUbicacionCmd editUbicacionCmd, Long id) {
+        List<GetEquipoBasicoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
+        // FALTAN LAS INCIDENCIAS
+        Ubicacion ubicacionAEditar = ubicacionRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(editProductoCmd.nombre());
+                    old.setNombre(editUbicacionCmd.nombre());
                     return ubicacionRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
 
+        return GetUbicacionDto.of(ubicacionAEditar, listaEquipos);
     }
 
     public void delete(Long id) {
-        GetUbicacionConListasDto ubicacion = findById(id);
+        GetUbicacionDto ubicacion = findById(id);
 
         if(ubicacion.listaEquipos().isEmpty() //&& ubicacion.listaIncidencias().isEmpty
         ) {

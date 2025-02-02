@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.services.EquipoService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class EquipoController {
     private final EquipoService equipoService;
 
     @GetMapping("")
-    public List<GetEquipoConUbicacionDto> getAll() {
+    public List<GetEquipoSinListasDto> getAll() {
         return equipoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public GetEquipoConUbicacionDto getById(@PathVariable Long id) {
+    public GetEquipoSinListasDto getById(@PathVariable Long id) {
         return equipoService.findById(id);
     }
 
@@ -36,9 +36,9 @@ public class EquipoController {
     }*/
 
     @PostMapping("")
-    public ResponseEntity<GetEquipoConUbicacionDto> create(@RequestBody EditEquipoCmd nuevoEquipoCmd) {
+    public ResponseEntity<GetEquipoSinListasDto> create(@RequestBody EditEquipoCmd nuevoEquipoCmd) {
         Equipo nuevoEquipo = equipoService.save(nuevoEquipoCmd);
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoConUbicacionDto.of(nuevoEquipo));
+        return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoSinListasDto.of(nuevoEquipo));
     }
 
     /*@PostMapping("")
@@ -50,9 +50,9 @@ public class EquipoController {
 
 
     @PutMapping("/{id}")
-    public GetEquipoConUbicacionDto edit(@RequestBody EditEquipoCmd aEditar, @PathVariable Long id) {
+    public GetEquipoSinListasDto edit(@RequestBody EditEquipoCmd aEditar, @PathVariable Long id) {
         Equipo equipoEditado = equipoService.edit(aEditar, id);
-        return GetEquipoConUbicacionDto.of(equipoEditado);
+        return GetEquipoSinListasDto.of(equipoEditado);
     }
 
     @DeleteMapping("/{id}")

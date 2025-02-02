@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
@@ -22,20 +22,20 @@ public class EquipoService {
     private final UbicacionRepository ubicacionRepository;
 
 
-    public List<GetEquipoConUbicacionDto> findAll() {
-        List<GetEquipoConUbicacionDto> result = equipoRepository.findAllEquiposConUbicacionDto();
+    public List<GetEquipoSinListasDto> findAll() {
+        List<GetEquipoSinListasDto> result = equipoRepository.findAllEquiposSinListasDto();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen equipos con esos criterios de búsqueda");
         return result;
     }
 
-    public GetEquipoConUbicacionDto findById(Long id) {
+    public GetEquipoSinListasDto findById(Long id) {
         Optional<Equipo> equipoOptional = equipoRepository.findById(id);
 
         if (equipoOptional.isEmpty()) {
             throw new EntityNotFoundException("No existe ningún equipo con ID: " + id);
         } else {
-            return GetEquipoConUbicacionDto.of(equipoOptional.get());
+            return GetEquipoSinListasDto.of(equipoOptional.get());
         }
     }
 
