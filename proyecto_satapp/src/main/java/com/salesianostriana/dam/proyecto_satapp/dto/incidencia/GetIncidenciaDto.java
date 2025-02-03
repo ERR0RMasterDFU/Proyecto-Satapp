@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.dto.incidencia;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetSubCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Estado;
 import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
@@ -10,6 +8,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import java.time.LocalDate;
 
 public record GetIncidenciaDto(
+        Long id,
         LocalDate fecha,
         String titulo,
         String descripcion,
@@ -27,6 +26,7 @@ public record GetIncidenciaDto(
         String ubicacion = (i.getUbicacion() != null) ? i.getUbicacion().getNombre() : "Ninguna";
 
         return new GetIncidenciaDto(
+                i.getId(),
                 i.getFecha(),
                 i.getTitulo(),
                 i.getDescripcion(),
