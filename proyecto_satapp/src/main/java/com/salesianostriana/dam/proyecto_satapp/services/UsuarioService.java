@@ -1,7 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditUsuarioCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetUsuarioDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,8 +18,8 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
-    public List<Usuario> findAll() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+    public List<GetUsuarioBasicoDto> findAll() {
+        List<GetUsuarioBasicoDto> usuarios = usuarioRepository.findAllBasicoDto();
 
         if (usuarios.isEmpty()) {
             throw new EntityNotFoundException("No se encontraron usuarios");
@@ -57,7 +58,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public GetUsuarioDto edit(EditUsuarioCmd editUsuarioCmd, Long id) {
+    /*public GetUsuarioDto edit(EditUsuarioCmd editUsuarioCmd, Long id) {
         Usuario aEditar = usuarioRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editUsuarioCmd.nombre());
@@ -69,7 +70,7 @@ public class UsuarioService {
                 }).orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
 
                 return GetUsuarioDto.of(aEditar);
-    }
+    }*/
 
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
