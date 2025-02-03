@@ -11,7 +11,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query("""
         select new com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto(
-            u.id, u.nombre, u.username, u.role
+            u.id, u.nombre, u.username, u.email, u.role
         ) 
         from Usuario u
     """)

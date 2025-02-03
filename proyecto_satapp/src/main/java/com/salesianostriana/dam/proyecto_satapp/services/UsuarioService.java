@@ -3,7 +3,9 @@ package com.salesianostriana.dam.proyecto_satapp.services;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
     public List<GetUsuarioBasicoDto> findAll() {
         List<GetUsuarioBasicoDto> usuarios = usuarioRepository.findAllBasicoDto();
@@ -27,12 +30,16 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public Usuario findById(Long id) {
+    public GetUsuarioDto findById(Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByUsuarioId(id);
+
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
-            return usuario.get();
+            return GetUsuarioDto.of(usuario.get(), listaIncidencias);
         } else {
-            throw new EntityNotFoundException("No se encontro el usuario");
+            throw new EntityNotFoundException("No existen Usuarios con esos criterios de búsqueda");
         }
     }
 
