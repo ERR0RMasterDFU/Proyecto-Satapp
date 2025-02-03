@@ -20,7 +20,7 @@ public class UbicacionController {
     private final UbicacionService ubicacionService;
 
     @GetMapping("")
-    public List<String> getAll() {
+    public List<GetUbicacionSinListasDto> getAll() {
         return ubicacionService.findAll();
     }
 
@@ -30,7 +30,7 @@ public class UbicacionController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Ubicacion> create(@RequestBody Ubicacion nuevaUbicacion) {
+    public ResponseEntity<Ubicacion> create(@RequestBody EditUbicacionCmd nuevaUbicacion) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ubicacionService.save(nuevaUbicacion));
     }

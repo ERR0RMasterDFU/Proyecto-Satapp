@@ -4,20 +4,20 @@ import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinLis
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 
 public record GetEquipoDto(
-    String nombre,
-    String caracteristicas,
-    //GetUbicacionSinListasDto ubicacion
-    String ubicacion
-    //, GetIncidenciasDto listaIncidencias
+        Long id,
+        String nombre,
+        String caracteristicas,
+        GetUbicacionSinListasDto ubicacion
+        //, GetIncidenciasDto listaIncidencias
 ){
-    public static GetEquipoSinListasDto of(Equipo e
+    public static GetEquipoDto of(Equipo e
                                            //, List<GetIncidenciaSinListasDto> listaIncidencias
     ){
-        return new GetEquipoSinListasDto(
+        return new GetEquipoDto(
+                e.getId(),
                 e.getNombre(),
                 e.getCaracteristicas(),
-                //GetUbicacionSinListasDto.of(e.getUbicacion())
-                e.getUbicacion().getNombre()
+                GetUbicacionSinListasDto.of(e.getUbicacion())
                 //listaIncidencias
         );
     }

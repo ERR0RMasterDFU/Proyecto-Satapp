@@ -24,11 +24,6 @@ public class UsuarioService {
         return usuarios;
     }
 
-    /*public Usuario findById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
-    }*/
-
     public Usuario findById(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
