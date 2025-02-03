@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditPersonalCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetPersonalDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPersonalCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
 import com.salesianostriana.dam.proyecto_satapp.repositories.PersonalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -43,12 +43,13 @@ public class PersonalService {
                 .password(editPersonalCmd.password())
                 .email(editPersonalCmd.email())
                 .role(editPersonalCmd.role())
+                .tipo(editPersonalCmd.tipo())
                 .build();
 
         return personalRepository.save(personal);
     }
 
-    public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
+    /*public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
         Personal aEditar = personalRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editPersonalCmd.nombre());
@@ -60,7 +61,7 @@ public class PersonalService {
                 }).orElseThrow(() -> new EntityNotFoundException("No hay personal con ID: "+ id));
 
         return GetPersonalDto.of(aEditar);
-    }
+    }*/
 
 
     public void delete(Long id) {
