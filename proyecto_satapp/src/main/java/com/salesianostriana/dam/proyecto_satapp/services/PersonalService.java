@@ -4,6 +4,7 @@ import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasi
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPersonalCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
@@ -60,7 +61,11 @@ public class PersonalService {
         return personalRepository.save(personal);
     }
 
-    /*public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
+    public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByPersonalId(id);
+
         Personal aEditar = personalRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editPersonalCmd.nombre());
@@ -68,12 +73,12 @@ public class PersonalService {
                     old.setEmail(editPersonalCmd.email());
                     old.setPassword(editPersonalCmd.password());
                     old.setRole(editPersonalCmd.role());
+                    old.setTipo(editPersonalCmd.tipo());
                     return personalRepository.save(old);
                 }).orElseThrow(() -> new EntityNotFoundException("No existe ningún Usuario con ID: " + id));
 
-        return GetPersonalDto.of(aEditar);
-    }*/
-
+        return GetPersonalDto.of(aEditar, listaIncidencias);
+    }
 
     public void delete(Long id) {
         personalRepository.deleteById(id);

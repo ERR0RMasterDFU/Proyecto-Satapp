@@ -4,6 +4,7 @@ import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPerson
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.PersonalService;
@@ -37,11 +38,11 @@ public class PersonalController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(nuevoPersonal);
     }
-/*
+
     @PutMapping("/{id}")
     public GetPersonalDto edit(@PathVariable Long id, @RequestBody EditPersonalCmd editPersonalCmd) {
         return personalService.edit(editPersonalCmd, id);
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
