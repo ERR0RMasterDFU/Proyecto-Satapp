@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "1048b990-0e5f-4f0f-a614-27ec90ddd967",
+		"name": "Proyecto Satapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38617662"
+	},
+	"item": [
+		{
+			"name": "Ubicación",
+			"item": [
+				{
+					"name": "Mostrar todas las ubicaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/ubicacion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ubicacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar ubicación por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/ubicacion/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ubicacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear ubicación",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Aula 301\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/ubicacion",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ubicacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar ubicación por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Aula 102\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/ubicacion/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ubicacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar ubicación por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/ubicacion/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ubicacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Equipo",
+			"item": [
+				{
+					"name": "Mostrar todos los equipos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar equipo por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipo/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear equipo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Ordenador viejo\",\r\n    \"caracteristicas\": \"Capacidad de 16 GB\",\r\n    \"ubicacionId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/equipo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar equipo por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Ordenador viejo\",\r\n    \"caracteristicas\": \"Capacidad de 16 GB\",\r\n    \"ubicacionId\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/equipo/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar equipo por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipo/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoría",
+			"item": [
+				{
+					"name": "Mostrar todas las categorías",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/categoria",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar categoría por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/categoria/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoría",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Ordenadores\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/categoria",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar categoría por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Robótica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/categoria/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categoria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incidencia",
+			"item": [
+				{
+					"name": "Crear incidencia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\":\"2005-03-18\",\r\n    \"titulo\":\"Ordenador estropeado\",\r\n    \"descripcion\":\"El ordenador ha cogido fuego y ha sido reducido a cenizas\",\r\n    \"estado\":\"ABIERTA\",\r\n    \"urgencia\":true,\r\n    \"categoriaId\":3,\r\n    \"usuarioId\":null,\r\n    \"equipoId\":1,\r\n    \"ubicacionId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/incidencia",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
