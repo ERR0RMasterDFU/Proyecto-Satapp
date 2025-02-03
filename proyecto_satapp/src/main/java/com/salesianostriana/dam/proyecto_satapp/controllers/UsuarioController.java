@@ -35,11 +35,11 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(nuevoUsuario);
     }
-/*
+
     @PutMapping("/{id}")
     public GetUsuarioDto edit(@PathVariable Long id, @RequestBody EditUsuarioCmd editUsuarioCmd) {
         return usuarioService.edit(editUsuarioCmd, id);
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {

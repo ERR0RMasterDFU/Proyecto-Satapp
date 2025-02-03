@@ -43,16 +43,6 @@ public class UsuarioService {
         }
     }
 
-    /*public Usuario save(Usuario usuario) {
-        return usuarioRepository.save(Usuario.builder()
-                .nombre(usuario.getNombre())
-                .email(usuario.getEmail())
-                .username(usuario.getUsername())
-                .role(usuario.getRole())
-                .password(usuario.getPassword())
-                .build());
-    }*/
-
     public Usuario save(EditUsuarioCmd editUsuarioCmd) {
         Usuario usuario = Usuario.builder()
                 .nombre(editUsuarioCmd.nombre())
@@ -65,7 +55,11 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    /*public GetUsuarioDto edit(EditUsuarioCmd editUsuarioCmd, Long id) {
+    public GetUsuarioDto edit(EditUsuarioCmd editUsuarioCmd, Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByUsuarioId(id);
+
         Usuario aEditar = usuarioRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editUsuarioCmd.nombre());
@@ -76,8 +70,8 @@ public class UsuarioService {
                     return usuarioRepository.save(old);
                 }).orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
 
-                return GetUsuarioDto.of(aEditar);
-    }*/
+        return GetUsuarioDto.of(aEditar, listaIncidencias);
+    }
 
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
