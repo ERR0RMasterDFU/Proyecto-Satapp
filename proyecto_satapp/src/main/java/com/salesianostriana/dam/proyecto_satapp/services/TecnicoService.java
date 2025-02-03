@@ -35,7 +35,6 @@ public class TecnicoService {
     }
 
     public Tecnico save(Tecnico tecnico) {
-        tecnico.setRole("Tecnico");
         return tecnicoRepository.save(tecnico);
     }
 
