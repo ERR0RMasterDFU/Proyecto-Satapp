@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPersonalCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
@@ -21,12 +22,12 @@ public class PersonalController {
     private final PersonalService personalService;
 
     @GetMapping
-    public List<Personal> getAll() {
+    public List<GetPersonalBasicoDto> getAll() {
         return personalService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Personal getById(@PathVariable Long id) {
+    public GetPersonalDto getById(@PathVariable Long id) {
         return personalService.findById(id);
     }
 

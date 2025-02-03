@@ -19,4 +19,30 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
     """)
     List<GetIncidenciaBasicaDto> findIncidenciasByUsuarioId(Long id);
 
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria.nombre
+        )
+        from Incidencia i join i.usuario u
+        where TYPE(u) = Alumno and u.id = ?1
+    """)
+    List<GetIncidenciaBasicaDto> findIncidenciasByAlumnoId(Long id);
+
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria.nombre
+        )
+        from Incidencia i join i.usuario u
+        where TYPE(u) = Personal and u.id = ?1
+    """)
+    List<GetIncidenciaBasicaDto> findIncidenciasByPersonalId(Long id);
+
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria.nombre
+        )
+        from Incidencia i join i.usuario u
+        where TYPE(u) = Tecnico and u.id = ?1
+    """)
+    List<GetIncidenciaBasicaDto> findIncidenciasByTecnicoId(Long id);
 }
