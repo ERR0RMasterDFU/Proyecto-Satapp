@@ -12,7 +12,7 @@ public class HistoricoCursosPk implements Serializable {
 
     private Alumno alumno;
     private String cursoEscolar;
-    private int curso;
+    private String curso;
 
     @Override
     public boolean equals(Object o) {

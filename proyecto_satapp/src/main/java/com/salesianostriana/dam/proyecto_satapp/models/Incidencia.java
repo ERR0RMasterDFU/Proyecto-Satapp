@@ -54,7 +54,7 @@ public class Incidencia {
 
     // (1:M) NOTA
     @OneToMany(mappedBy = "incidencia",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @Builder.Default

@@ -18,7 +18,7 @@ public class Tecnico extends Usuario {
     // ASOCIACIONES ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // (N:M) INCIDENCIA
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "gestiona",
             joinColumns = @JoinColumn(name="tecnico_id"),
