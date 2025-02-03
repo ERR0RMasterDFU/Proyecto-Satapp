@@ -22,12 +22,12 @@ public class CategoriaController {
 
     @GetMapping("")
     public List<GetCategoriaSinListasDto> getAll() {
-        return categoriaService.findAllDto();
+        return categoriaService.findAll();
     }
 
     @GetMapping("/{id}")
     public GetCategoriaDto getById(@PathVariable Long id) {
-        return categoriaService.findByIdDto(id);
+        return categoriaService.findById(id);
     }
 
     @PostMapping("")
@@ -37,7 +37,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public Categoria edit(@RequestBody EditCatgeoriaCmd aEditar, @PathVariable Long id) {
+    public GetCategoriaDto edit(@RequestBody EditCatgeoriaCmd aEditar, @PathVariable Long id) {
         return categoriaService.edit(aEditar, id);
     }
 

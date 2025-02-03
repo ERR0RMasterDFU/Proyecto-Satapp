@@ -3,7 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.services;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.EditCatgeoriaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaSinListasDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetSubCategoriaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 import com.salesianostriana.dam.proyecto_satapp.repositories.CategoriaRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,21 +20,20 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
 
-    public List<GetCategoriaSinListasDto> findAllDto() {
+    public List<GetCategoriaSinListasDto> findAll() {
         List<GetCategoriaSinListasDto> result = categoriaRepository.findAllCategoriasDto();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen categorías con esos criterios de búsqueda");
         return result;
     }
 
-    public GetCategoriaDto findByIdDto(Long id) {
+    public GetCategoriaDto findById(Long id) {
         Optional<Categoria> categoriaOptional = categoriaRepository.findById(id);
 
         if (categoriaOptional.isPresent()) {
-
             Categoria categoria = categoriaOptional.get();
 
-            List<GetSubCategoriaDto> listaSubCategoriaDto =
+            List<GetCategoriaBasicaDto> listaSubCategoriaDto =
                     categoriaRepository.findSubCategoriasDtoById(id);
 
             // FALTAN LAS INCIDENCIAS
@@ -46,48 +45,28 @@ public class CategoriaService {
         }
     }
 
-    /*
-    public List<Categoria> findAll() {
-        List<Categoria> result = categoriaRepository.findAll();
-        if (result.isEmpty())
-            throw new EntityNotFoundException("No existen categorías con esos criterios de búsqueda");
-        return result;
-    }
-
-    public Categoria findById(Long id) {
-        Optional<Categoria> ubicacionOptional = categoriaRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Categoría con ID: " + id);
-        }
-    }*/
-
     public Categoria save(EditCatgeoriaCmd editCategoriaCmd) {
-        Categoria categoria = new Categoria();
-        categoria.setNombre(editCategoriaCmd.nombre());
-
+        Categoria categoria = Categoria.builder()
+                .nombre(editCategoriaCmd.nombre())
+                .build();
         return categoriaRepository.save(categoria);
     }
-/*
-    public Ubicacion findByIdConDto(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
 
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
-        }
-    }*/
+    public GetCategoriaDto edit(EditCatgeoriaCmd editCatgeoriaCmd, Long id) {
 
-    public Categoria edit(EditCatgeoriaCmd categoria, Long id) {
-        return categoriaRepository.findById(id)
+        List<GetCategoriaBasicaDto> listaSubCategoriaDto =
+                categoriaRepository.findSubCategoriasDtoById(id);
+
+        // FALTAN INCIDENCIAS
+
+        Categoria categoriaAEditar = categoriaRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(categoria.nombre());
+                    old.setNombre(editCatgeoriaCmd.nombre());
                     return categoriaRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna categoría con ID: "+ id));
+
+        return GetCategoriaDto.of(categoriaAEditar, listaSubCategoriaDto);
     }
 /*
     public void delete(Long id) {

@@ -4,6 +4,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 
 
 public record GetCategoriaSinListasDto(
+        Long id,
         String nombre,
         String categoriaPadre
 ) {
@@ -14,6 +15,7 @@ public record GetCategoriaSinListasDto(
                 c.getCategoriaPadre().getNombre() : "Ninguna";
 
         return new GetCategoriaSinListasDto(
+                c.getId(),
                 c.getNombre(),
                 nombreCategoriaPadre
         );
