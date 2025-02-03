@@ -8,6 +8,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Tipo;
 import java.util.List;
 
 public record GetPersonalDto(
+        Long id,
         String nombre,
         String username,
         String password,
@@ -18,6 +19,7 @@ public record GetPersonalDto(
 ) {
     public static GetPersonalDto of(Personal p, List<GetIncidenciaBasicaDto> listaIncidencias) {
         return new GetPersonalDto(
+                p.getId(),
                 p.getNombre(),
                 p.getUsername(),
                 p.getPassword(),
