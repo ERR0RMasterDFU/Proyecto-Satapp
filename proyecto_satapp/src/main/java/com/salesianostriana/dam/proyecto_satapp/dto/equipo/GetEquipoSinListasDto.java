@@ -5,22 +5,22 @@ import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 
 public record GetEquipoSinListasDto(
+        Long id,
         String nombre,
         String caracteristicas,
-        //GetUbicacionSinListasDto ubicacion
-        String ubicacion
+        GetUbicacionSinListasDto ubicacion
 ) {
     public static GetEquipoSinListasDto of(Equipo e) {
         return new GetEquipoSinListasDto(
+                e.getId(),
                 e.getNombre(),
                 e.getCaracteristicas(),
-                //GetUbicacionSinListasDto.of(e.getUbicacion())
-                e.getUbicacion().getNombre()
+                GetUbicacionSinListasDto.of(e.getUbicacion())
         );
     }
 
-    /* CONSTRUCTOR PARA CONSULTAS
-    public GetEquipoSinListasDto(String nombre, String caracteristicas, Ubicacion ubicacion) {
-        this(nombre, caracteristicas, GetUbicacionSinListasDto.of(ubicacion));
-    }*/
+    // CONSTRUCTOR PARA CONSULTAS
+    public GetEquipoSinListasDto(Long id, String nombre, String caracteristicas, Ubicacion ubicacion) {
+        this(id, nombre, caracteristicas, GetUbicacionSinListasDto.of(ubicacion));
+    }
 }

@@ -23,8 +23,8 @@ public class UbicacionService {
     private final EquipoRepository equipoRepository;
 
 
-    public List<String> findAll() {
-        List<String> result = ubicacionRepository.findAllSinListas();
+    public List<GetUbicacionSinListasDto> findAll() {
+        List<GetUbicacionSinListasDto> result = ubicacionRepository.findAllSinListas();
         if (result.isEmpty())
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
         return result;
@@ -35,16 +35,18 @@ public class UbicacionService {
 
         if (ubicacionOptional.isPresent()) {
             List<GetEquipoBasicoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
-            return GetUbicacionDto.of(ubicacionOptional.get(), listaEquipos
-            //, listaIncidencias
-            );
+            // FALTAN INCIDENCIAS
+            return GetUbicacionDto.of(ubicacionOptional.get(), listaEquipos);
         } else {
             throw new EntityNotFoundException("No existe ninguna Ubicación con ID: " + id);
         }
     }
 
-    public Ubicacion save(Ubicacion ubicacion) {
-        return ubicacionRepository.save(ubicacion);
+    public Ubicacion save(EditUbicacionCmd editUbicacionCmd) {
+        Ubicacion nuevaUbicacion = Ubicacion.builder()
+                .nombre(editUbicacionCmd.nombre())
+                .build();
+        return ubicacionRepository.save(nuevaUbicacion);
     }
 
     public GetUbicacionDto edit(EditUbicacionCmd editUbicacionCmd, Long id) {
@@ -77,50 +79,5 @@ public class UbicacionService {
             }
         }
     }
-
-
-    /*
-
-    public List<Ubicacion> findAll() {
-        List<Ubicacion> result = ubicacionRepository.findAll();
-        if (result.isEmpty())
-            throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
-        return result;
-    }
-
-    public Ubicacion findById(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
-        }
-    }
-
-    public Ubicacion findByIdConDto(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
-        }
-    }
-
-    public Ubicacion edit(Ubicacion ubicacion, Long id) {
-        return ubicacionRepository.findById(id)
-                .map(old -> {
-                    old.setNombre(ubicacion.getNombre());
-                    return ubicacionRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
-    }
-
-    public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
-    }
-
-     */
 
 }

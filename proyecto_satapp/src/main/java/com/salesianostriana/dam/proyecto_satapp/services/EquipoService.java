@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
@@ -29,46 +30,46 @@ public class EquipoService {
         return result;
     }
 
-    public GetEquipoSinListasDto findById(Long id) {
+    public GetEquipoDto findById(Long id) {
         Optional<Equipo> equipoOptional = equipoRepository.findById(id);
-
+        // FALTAN LAS INCIDENCIAS
         if (equipoOptional.isEmpty()) {
-            throw new EntityNotFoundException("No existe ningún equipo con ID: " + id);
+            throw new EntityNotFoundException("No existe ningún Equipo con ID: " + id);
         } else {
-            return GetEquipoSinListasDto.of(equipoOptional.get());
+            return GetEquipoDto.of(equipoOptional.get());
         }
     }
 
-    public Equipo save(EditEquipoCmd createEquipoCmd) {
+    public Equipo save(EditEquipoCmd editEquipoCmd) {
 
-        Optional<Ubicacion> ubicacionOpt = ubicacionRepository.findById(createEquipoCmd.ubicacionId());
-
+        Optional<Ubicacion> ubicacionOpt = ubicacionRepository.findById(editEquipoCmd.ubicacionId());
         Ubicacion ubicacion = null;
 
         if (ubicacionOpt.isPresent()) {
             ubicacion = ubicacionOpt.get();
         } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + createEquipoCmd.ubicacionId());
+            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + editEquipoCmd.ubicacionId());
         }
 
-        Equipo equipo = new Equipo();
-        equipo.setNombre(createEquipoCmd.nombre());
-        equipo.setCaracteristicas(createEquipoCmd.caracteristicas());
-        equipo.setUbicacion(ubicacion);
+        Equipo equipo = Equipo.builder()
+                .nombre(editEquipoCmd.nombre())
+                .caracteristicas(editEquipoCmd.caracteristicas())
+                .ubicacion(ubicacion)
+                .build();
 
         return equipoRepository.save(equipo);
     }
 
     public Equipo edit(EditEquipoCmd editEquipoCmd, Long id) {
+
+        Ubicacion ubicacionAEditar = ubicacionRepository.findById(editEquipoCmd.ubicacionId())
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicación con ID: " + editEquipoCmd.ubicacionId()));
+
         return equipoRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editEquipoCmd.nombre());
                     old.setCaracteristicas(editEquipoCmd.caracteristicas());
-
-                    Ubicacion nuevaUbicacion = ubicacionRepository.findById(editEquipoCmd.ubicacionId())
-                            .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicación con ID: " + editEquipoCmd.ubicacionId()));
-
-                    old.setUbicacion(nuevaUbicacion);
+                    old.setUbicacion(ubicacionAEditar);
                     return equipoRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ningún Equipo con ID: "+ id));

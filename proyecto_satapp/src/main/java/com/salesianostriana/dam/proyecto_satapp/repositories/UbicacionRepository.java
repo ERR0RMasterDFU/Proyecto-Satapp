@@ -10,9 +10,11 @@ import java.util.List;
 public interface UbicacionRepository extends JpaRepository<Ubicacion, Long> {
 
     @Query("""
-        select u.nombre
+        select new com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto(
+            u.id, u.nombre
+        ) 
         from Ubicacion u
     """)
-    List<String> findAllSinListas();
+    List<GetUbicacionSinListasDto> findAllSinListas();
 
 }
