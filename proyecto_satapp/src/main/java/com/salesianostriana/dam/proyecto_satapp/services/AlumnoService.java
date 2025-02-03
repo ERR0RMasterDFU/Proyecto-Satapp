@@ -35,7 +35,6 @@ public class AlumnoService {
     }
 
     public Alumno save(Alumno alumno) {
-        alumno.setRole("Alumno");
         return alumnoRepository.save(alumno);
     }
 

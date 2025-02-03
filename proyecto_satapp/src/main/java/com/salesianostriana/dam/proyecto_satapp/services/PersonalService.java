@@ -35,7 +35,6 @@ public class PersonalService {
     }
 
     public Personal save(Personal personal) {
-        personal.setRole("Personal");
         return personalRepository.save(personal);
     }
 
