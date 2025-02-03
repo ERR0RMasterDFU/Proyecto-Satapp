@@ -37,6 +37,11 @@ public class Incidencia {
     @JoinColumn(name="categoria_id", foreignKey = @ForeignKey(name = "fk_incidencia_categoria"))
     private Categoria categoria;
 
+    // (M:1) USUARIO
+    @ManyToOne
+    @JoinColumn(name="usuario_id", foreignKey = @ForeignKey(name = "fk_incidencia_usuario"))
+    private Usuario usuario;
+
     // (M:1) EQUIPO
     @ManyToOne
     @JoinColumn(name="equipo_id", foreignKey = @ForeignKey(name = "fk_incidencia_equipo"))
@@ -47,18 +52,6 @@ public class Incidencia {
     @JoinColumn(name="ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
     private Ubicacion ubicacion;
 
-    // (M:1) USUARIO
-    @ManyToOne
-    @JoinColumn(name="usuario_id", foreignKey = @ForeignKey(name = "fk_incidencia_usuario"))
-    private Usuario usuario;
-
-    // (N:M) TECNICO
-    @ManyToMany(mappedBy = "listaIncidenciasTecnico", fetch = FetchType.EAGER)
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Tecnico> listaTecnicos = new HashSet<>();
-
     // (1:M) NOTA
     @OneToMany(mappedBy = "incidencia",
             fetch = FetchType.EAGER,
@@ -67,6 +60,13 @@ public class Incidencia {
     @Builder.Default
     @ToString.Exclude
     private List<Nota> listaNotas = new ArrayList<>();
+
+    // (N:M) TECNICO
+    @ManyToMany(mappedBy = "listaIncidenciasTecnico", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Tecnico> listaTecnicos = new HashSet<>();
 
 
     // HELPERS ---------------------------------------------------------------------------------------------------------------------------------------------------------------

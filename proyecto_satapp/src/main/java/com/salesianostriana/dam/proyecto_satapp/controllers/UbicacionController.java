@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionConListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class UbicacionController {
     private final UbicacionService ubicacionService;
 
     @GetMapping("")
-    public List<GetUbicacionDto> getAll() {
+    public List<String> getAll() {
         return ubicacionService.findAll();
     }
 
     @GetMapping("/{id}")
-    public GetUbicacionConListasDto getById(@PathVariable Long id) {
+    public GetUbicacionDto getById(@PathVariable Long id) {
         return ubicacionService.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class UbicacionController {
     }
 
     @PutMapping("/{id}")
-    public Ubicacion edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
+    public GetUbicacionDto edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
         return ubicacionService.edit(aEditar, id);
     }
 

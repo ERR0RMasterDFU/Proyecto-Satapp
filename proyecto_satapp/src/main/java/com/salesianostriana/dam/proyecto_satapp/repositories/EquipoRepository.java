@@ -1,8 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.repositories;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,20 +11,20 @@ import java.util.List;
 public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 
     @Query("""
-        select new com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoConUbicacionDto(
-        e.id, e.nombre, e.caracteristicas, e.ubicacion
+        select new com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto(
+        e.nombre, e.caracteristicas, e.ubicacion.nombre
         )
         from Equipo e
     """)
-    List<GetEquipoConUbicacionDto> findAllEquiposConUbicacionDto();
+    List<GetEquipoSinListasDto> findAllEquiposSinListasDto();
 
     @Query("""
-        select new com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto(
+        select new com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto(
         e.nombre, e.caracteristicas
         )
         from Equipo e join e.ubicacion u
         where u.id = ?1
     """)
-    List<GetEquipoDto> findEquiposByUbicacionId(Long id);
+    List<GetEquipoBasicoDto> findEquiposByUbicacionId(Long id);
 
 }

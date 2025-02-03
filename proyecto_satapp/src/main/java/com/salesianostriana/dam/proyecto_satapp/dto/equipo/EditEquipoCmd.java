@@ -7,9 +7,10 @@ public record EditEquipoCmd(
         String caracteristicas,
         Long ubicacionId
 ) {
-    // CONSTRUCTOR PARA CONSULTAS
+
+    /* CONSTRUCTOR PARA CONSULTAS
     public EditEquipoCmd(String nombre, String caracteristicas, Ubicacion ubicacion) {
         this(nombre, caracteristicas, ubicacion.getId());
-    }
+    }*/
 
 }
