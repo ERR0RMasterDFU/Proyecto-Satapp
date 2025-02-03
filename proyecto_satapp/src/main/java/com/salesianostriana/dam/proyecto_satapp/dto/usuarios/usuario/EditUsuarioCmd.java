@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.proyecto_satapp.dto.usuarios;
+package com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario;
 
 public record EditUsuarioCmd(
         String nombre,
