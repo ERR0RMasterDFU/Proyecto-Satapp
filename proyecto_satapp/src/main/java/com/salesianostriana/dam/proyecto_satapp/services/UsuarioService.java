@@ -25,7 +25,7 @@ public class UsuarioService {
         List<GetUsuarioBasicoDto> usuarios = usuarioRepository.findAllBasicoDto();
 
         if (usuarios.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron usuarios");
+            throw new EntityNotFoundException("No existen Usuarios con esos criterios de búsqueda");
         }
         return usuarios;
     }
@@ -39,7 +39,7 @@ public class UsuarioService {
         if (usuario.isPresent()) {
             return GetUsuarioDto.of(usuario.get(), listaIncidencias);
         } else {
-            throw new EntityNotFoundException("No existen Usuarios con esos criterios de búsqueda");
+            throw new EntityNotFoundException("No existe ningún Usuario con ID: " + id);
         }
     }
 
@@ -68,7 +68,7 @@ public class UsuarioService {
                     old.setPassword(editUsuarioCmd.password());
                     old.setRole(editUsuarioCmd.role());
                     return usuarioRepository.save(old);
-                }).orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
+                }).orElseThrow(() -> new EntityNotFoundException("No existe ningún Usuario con ID: " + id));
 
         return GetUsuarioDto.of(aEditar, listaIncidencias);
     }
