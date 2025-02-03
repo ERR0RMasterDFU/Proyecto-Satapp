@@ -6,6 +6,7 @@ public record GetUsuarioBasicoDto(
         Long id,
         String nombre,
         String username,
+        String email,
         String role
 ) {
     public static GetUsuarioBasicoDto of(Usuario u) {
@@ -13,6 +14,7 @@ public record GetUsuarioBasicoDto(
                 u.getId(),
                 u.getNombre(),
                 u.getUsername(),
+                u.getEmail(),
                 u.getRole()
         );
     }
