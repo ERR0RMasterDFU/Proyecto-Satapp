@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.services.AlumnoService;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +29,15 @@ public class AlumnoController {
     }
 
     @PostMapping
-    public ResponseEntity<Alumno> create(@RequestBody Alumno alumno) {
+    public ResponseEntity<GetAlumnoDto> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
+        Alumno nuevoAlumno = alumnoService.save(editAlumnoCmd);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        alumnoService.save(alumno));
+                .body(GetAlumnoDto.of(nuevoAlumno));
     }
 
     @PutMapping("/{id}")
-    public Alumno edit(@PathVariable Long id, @RequestBody Alumno alumno) {
-        return alumnoService.edit(alumno, id);
+    public GetAlumnoDto edit(@PathVariable Long id, @RequestBody EditAlumnoCmd editAlumnoCmd) {
+        return alumnoService.edit(editAlumnoCmd, id);
     }
 
     @DeleteMapping("/{id}")

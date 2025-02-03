@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -48,21 +50,30 @@ public class UsuarioService {
                 .build());
     }*/
 
-    public Usuario save(Usuario usuario) {
+    public Usuario save(EditUsuarioCmd editUsuarioCmd) {
+        Usuario usuario = Usuario.builder()
+                .nombre(editUsuarioCmd.nombre())
+                .username(editUsuarioCmd.username())
+                .password(editUsuarioCmd.password())
+                .email(editUsuarioCmd.email())
+                .role(editUsuarioCmd.role())
+                .build();
+
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario edit(Usuario usuario, Long id) {
-        return usuarioRepository.findById(id)
+    public GetUsuarioDto edit(EditUsuarioCmd editUsuarioCmd, Long id) {
+        Usuario aEditar = usuarioRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(usuario.getNombre());
-                    old.setUsername(usuario.getUsername());
-                    old.setEmail(usuario.getEmail());
-                    old.setPassword(usuario.getPassword());
-                    old.setRole(usuario.getRole());
+                    old.setNombre(editUsuarioCmd.nombre());
+                    old.setUsername(editUsuarioCmd.username());
+                    old.setEmail(editUsuarioCmd.email());
+                    old.setPassword(editUsuarioCmd.password());
+                    old.setRole(editUsuarioCmd.role());
                     return usuarioRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
+                }).orElseThrow(() -> new EntityNotFoundException("No hay usuario con ID: "+ id));
+
+                return GetUsuarioDto.of(aEditar);
     }
 
     public void delete(Long id) {

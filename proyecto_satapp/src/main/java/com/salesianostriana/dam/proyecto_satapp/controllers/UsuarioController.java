@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +29,15 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
+    public ResponseEntity<GetUsuarioDto> create(@RequestBody EditUsuarioCmd editUsuarioCmd) {
+        Usuario nuevoUsuario = usuarioService.save(editUsuarioCmd);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                    usuarioService.save(usuario));
+                .body(GetUsuarioDto.of(nuevoUsuario));
     }
 
     @PutMapping("/{id}")
-    public Usuario edit(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return usuarioService.edit(usuario, id);
+    public GetUsuarioDto edit(@PathVariable Long id, @RequestBody EditUsuarioCmd editUsuarioCmd) {
+        return usuarioService.edit(editUsuarioCmd, id);
     }
 
     @DeleteMapping("/{id}")

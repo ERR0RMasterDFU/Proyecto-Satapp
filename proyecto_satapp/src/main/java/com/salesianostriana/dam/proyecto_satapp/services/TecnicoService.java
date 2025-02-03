@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditTecnicoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetTecnicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import com.salesianostriana.dam.proyecto_satapp.repositories.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,21 +36,32 @@ public class TecnicoService {
         }
     }
 
-    public Tecnico save(Tecnico tecnico) {
+    public Tecnico save(EditTecnicoCmd editTecnicoCmd) {
+        Tecnico tecnico = Tecnico.builder()
+                .nombre(editTecnicoCmd.nombre())
+                .username(editTecnicoCmd.username())
+                .password(editTecnicoCmd.password())
+                .email(editTecnicoCmd.email())
+                .role(editTecnicoCmd.role())
+                .build();
+
         return tecnicoRepository.save(tecnico);
     }
 
-    public Tecnico edit(Tecnico tecnico, Long id) {
-        return tecnicoRepository.findById(id)
+    public GetTecnicoDto edit(EditTecnicoCmd editTecnicoCmd, Long id) {
+        Tecnico aEditar = tecnicoRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(tecnico.getNombre());
-                    old.setUsername(tecnico.getUsername());
-                    old.setEmail(tecnico.getEmail());
-                    old.setPassword(tecnico.getPassword());
+                    old.setNombre(editTecnicoCmd.nombre());
+                    old.setUsername(editTecnicoCmd.username());
+                    old.setEmail(editTecnicoCmd.email());
+                    old.setPassword(editTecnicoCmd.password());
+                    old.setRole(editTecnicoCmd.role());
                     return tecnicoRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
+                }).orElseThrow(() -> new EntityNotFoundException("No hay tecnico con ID: "+ id));
+
+        return GetTecnicoDto.of(aEditar);
     }
+
 
     public void delete(Long id) {
         tecnicoRepository.deleteById(id);
