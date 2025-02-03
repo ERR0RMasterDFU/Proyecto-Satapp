@@ -1,8 +1,10 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditPersonalCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetPersonalDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPersonalCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.PersonalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,16 +31,16 @@ public class PersonalController {
     }
 
     @PostMapping
-    public ResponseEntity<GetPersonalDto> create(@RequestBody EditPersonalCmd editPersonalCmd) {
+    public ResponseEntity<Personal> create(@RequestBody EditPersonalCmd editPersonalCmd) {
         Personal nuevoPersonal = personalService.save(editPersonalCmd);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GetPersonalDto.of(nuevoPersonal));
+                .body(nuevoPersonal);
     }
-
+/*
     @PutMapping("/{id}")
     public GetPersonalDto edit(@PathVariable Long id, @RequestBody EditPersonalCmd editPersonalCmd) {
         return personalService.edit(editPersonalCmd, id);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
