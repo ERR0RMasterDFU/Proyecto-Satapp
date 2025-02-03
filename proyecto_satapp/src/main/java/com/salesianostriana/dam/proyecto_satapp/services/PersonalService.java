@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditPersonalCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetPersonalDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
 import com.salesianostriana.dam.proyecto_satapp.repositories.PersonalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,21 +36,32 @@ public class PersonalService {
         }
     }
 
-    public Personal save(Personal personal) {
+    public Personal save(EditPersonalCmd editPersonalCmd) {
+        Personal personal = Personal.builder()
+                .nombre(editPersonalCmd.nombre())
+                .username(editPersonalCmd.username())
+                .password(editPersonalCmd.password())
+                .email(editPersonalCmd.email())
+                .role(editPersonalCmd.role())
+                .build();
+
         return personalRepository.save(personal);
     }
 
-    public Personal edit(Personal personal, Long id) {
-        return personalRepository.findById(id)
+    public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
+        Personal aEditar = personalRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(personal.getNombre());
-                    old.setUsername(personal.getUsername());
-                    old.setEmail(personal.getEmail());
-                    old.setPassword(personal.getPassword());
+                    old.setNombre(editPersonalCmd.nombre());
+                    old.setUsername(editPersonalCmd.username());
+                    old.setEmail(editPersonalCmd.email());
+                    old.setPassword(editPersonalCmd.password());
+                    old.setRole(editPersonalCmd.role());
                     return personalRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No se encontró personal"));
+                }).orElseThrow(() -> new EntityNotFoundException("No hay personal con ID: "+ id));
+
+        return GetPersonalDto.of(aEditar);
     }
+
 
     public void delete(Long id) {
         personalRepository.deleteById(id);

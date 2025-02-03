@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditTecnicoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetTecnicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import com.salesianostriana.dam.proyecto_satapp.services.TecnicoService;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +30,15 @@ public class TecnicoController {
     }
 
     @PostMapping
-    public ResponseEntity<Tecnico> create(@RequestBody Tecnico tecnico) {
+    public ResponseEntity<GetTecnicoDto> create(@RequestBody EditTecnicoCmd editTecnicoCmd) {
+        Tecnico nuevoTecnico = tecnicoService.save(editTecnicoCmd);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        tecnicoService.save(tecnico));
+                .body(GetTecnicoDto.of(nuevoTecnico));
     }
 
     @PutMapping("/{id}")
-    public Tecnico edit(@PathVariable Long id, @RequestBody Tecnico tecnico) {
-        return tecnicoService.edit(tecnico, id);
+    public GetTecnicoDto edit(@PathVariable Long id, @RequestBody EditTecnicoCmd editTecnicoCmd) {
+        return tecnicoService.edit(editTecnicoCmd, id);
     }
 
     @DeleteMapping("/{id}")

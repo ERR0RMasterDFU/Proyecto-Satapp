@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.repositories.AlumnoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,21 +36,32 @@ public class AlumnoService {
         }
     }
 
-    public Alumno save(Alumno alumno) {
+    public Alumno save(EditAlumnoCmd editAlumnoCmd) {
+        Alumno alumno = Alumno.builder()
+                .nombre(editAlumnoCmd.nombre())
+                .username(editAlumnoCmd.username())
+                .password(editAlumnoCmd.password())
+                .email(editAlumnoCmd.email())
+                .role(editAlumnoCmd.role())
+                .build();
+
         return alumnoRepository.save(alumno);
     }
 
-    public Alumno edit(Alumno alumno, Long id) {
-        return alumnoRepository.findById(id)
+    public GetAlumnoDto edit(EditAlumnoCmd editAlumnoCmd, Long id) {
+        Alumno aEditar = alumnoRepository.findById(id)
                 .map(old -> {
-                    old.setNombre(alumno.getNombre());
-                    old.setUsername(alumno.getUsername());
-                    old.setEmail(alumno.getEmail());
-                    old.setPassword(alumno.getPassword());
+                    old.setNombre(editAlumnoCmd.nombre());
+                    old.setUsername(editAlumnoCmd.username());
+                    old.setEmail(editAlumnoCmd.email());
+                    old.setPassword(editAlumnoCmd.password());
+                    old.setRole(editAlumnoCmd.role());
                     return alumnoRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No se encontraron alumnos"));
+                }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: "+ id));
+
+        return GetAlumnoDto.of(aEditar);
     }
+
 
     public void delete(Long id) {
         alumnoRepository.deleteById(id);

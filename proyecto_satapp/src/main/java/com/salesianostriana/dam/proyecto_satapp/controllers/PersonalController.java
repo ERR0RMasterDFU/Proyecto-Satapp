@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditPersonalCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetPersonalDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Personal;
 import com.salesianostriana.dam.proyecto_satapp.services.PersonalService;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +29,15 @@ public class PersonalController {
     }
 
     @PostMapping
-    public ResponseEntity<Personal> create(@RequestBody Personal personal) {
+    public ResponseEntity<GetPersonalDto> create(@RequestBody EditPersonalCmd editPersonalCmd) {
+        Personal nuevoPersonal = personalService.save(editPersonalCmd);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(
-                        personalService.save(personal));
+                .body(GetPersonalDto.of(nuevoPersonal));
     }
 
     @PutMapping("/{id}")
-    public Personal edit(@PathVariable Long id, @RequestBody Personal personal) {
-        return personalService.edit(personal, id);
+    public GetPersonalDto edit(@PathVariable Long id, @RequestBody EditPersonalCmd editPersonalCmd) {
+        return personalService.edit(editPersonalCmd, id);
     }
 
     @DeleteMapping("/{id}")
