@@ -64,8 +64,14 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-/*
     public GetAlumnoDto edit(EditAlumnoCmd editAlumnoCmd, Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByAlumnoId(id);
+
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoRepository.findHistoricoCursosByAlumnoId(id);
+
         Alumno aEditar = alumnoRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editAlumnoCmd.nombre());
@@ -76,11 +82,11 @@ public class AlumnoService {
                     return alumnoRepository.save(old);
                 }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: "+ id));
 
-        return GetAlumnoDto.of(aEditar);
-    }*/
+        return GetAlumnoDto.of(aEditar, listaIncidencias, listaHistoricoCursos);
+    }
 
-
+/*
     public void delete(Long id) {
         alumnoRepository.deleteById(id);
-    }
+    }*/
 }
