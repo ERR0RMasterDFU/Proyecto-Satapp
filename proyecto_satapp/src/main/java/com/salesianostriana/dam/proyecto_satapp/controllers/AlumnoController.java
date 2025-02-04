@@ -1,8 +1,10 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.AlumnoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,16 +31,15 @@ public class AlumnoController {
     }
 
     @PostMapping
-    public ResponseEntity<GetAlumnoDto> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
+    public ResponseEntity<Alumno> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
         Alumno nuevoAlumno = alumnoService.save(editAlumnoCmd);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GetAlumnoDto.of(nuevoAlumno));
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAlumno);
     }
-
+/*
     @PutMapping("/{id}")
     public GetAlumnoDto edit(@PathVariable Long id, @RequestBody EditAlumnoCmd editAlumnoCmd) {
         return alumnoService.edit(editAlumnoCmd, id);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
