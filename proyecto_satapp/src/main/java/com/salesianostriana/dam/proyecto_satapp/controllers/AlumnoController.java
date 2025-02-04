@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
@@ -21,12 +22,12 @@ public class AlumnoController {
     private final AlumnoService alumnoService;
 
     @GetMapping
-    public List<Alumno> getAll() {
+    public List<GetAlumnoBasicoDto> getAll() {
         return alumnoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Alumno getById(@PathVariable Long id) {
+    public GetAlumnoDto getById(@PathVariable Long id) {
         return alumnoService.findById(id);
     }
 
