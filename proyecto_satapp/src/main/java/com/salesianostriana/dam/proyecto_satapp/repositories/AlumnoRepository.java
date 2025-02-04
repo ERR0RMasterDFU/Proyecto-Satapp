@@ -20,7 +20,7 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
     @Query("""
         select new com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto(
-            hu.cursoEscolar, hu.curso
+            hu.curso, hu.cursoEscolar
         ) 
         from HistoricoCursos hu 
         where hu.alumno.id = ?1

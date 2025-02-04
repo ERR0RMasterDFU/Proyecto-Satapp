@@ -38,7 +38,7 @@ public class Alumno extends Usuario {
 
     public void removeHistoricoCursos (HistoricoCursos hc) {
         listaHistoricoCursos.remove(hc);
-        hc.setAlumno(null);
+        // hc.setAlumno(null);
     }
 
 

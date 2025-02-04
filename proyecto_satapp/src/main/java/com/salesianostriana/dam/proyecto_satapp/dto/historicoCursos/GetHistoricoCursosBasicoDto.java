@@ -3,13 +3,13 @@ package com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 
 public record GetHistoricoCursosBasicoDto(
-        String cursoEscolar,
-        String curso
+        String curso,
+        String cursoEscolar
 ){
     public static GetHistoricoCursosBasicoDto of(HistoricoCursos hc) {
         return new GetHistoricoCursosBasicoDto(
-                hc.getCursoEscolar(),
-                hc.getCurso()
+                hc.getCurso(),
+                hc.getCursoEscolar()
         );
     }
 }
