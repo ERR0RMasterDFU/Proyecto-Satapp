@@ -45,4 +45,15 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
         where TYPE(u) = Tecnico and u.id = ?1
     """)
     List<GetIncidenciaBasicaDto> findIncidenciasByTecnicoId(Long id);
+
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria.nombre
+        )
+        from Tecnico t join t.listaIncidenciasTecnico i
+        where t.id = ?1
+    """)
+    List<GetIncidenciaBasicaDto> findIncidenciasTecnicoByTecnicoId(Long id);
+
+
 }

@@ -1,10 +1,15 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.EditTecnicoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +23,32 @@ import java.util.Optional;
 public class TecnicoService {
 
     private final TecnicoRepository tecnicoRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
-    public List<Tecnico> findAll() {
-        List<Tecnico> tecnicos = tecnicoRepository.findAll();
+
+    public List<GetTecnicoBasicoDto> findAll() {
+        List<GetTecnicoBasicoDto> tecnicos = tecnicoRepository.findAllBasicoDto();
 
         if (tecnicos.isEmpty()) {
-            throw new EntityNotFoundException("Tecnico no encontrado");
+            throw new EntityNotFoundException("No existen Técnicos con esos criterios de búsqueda");
         }
         return tecnicos;
     }
 
-    public Tecnico findById(Long id) {
+    public GetTecnicoDto findById(Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByTecnicoId(id);
+
+        List<GetIncidenciaBasicaDto> listaIncidenciasTecnico =
+                incidenciaRepository.findIncidenciasTecnicoByTecnicoId(id);
+
         Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
 
         if (tecnico.isPresent()) {
-            return tecnico.get();
+            return GetTecnicoDto.of(tecnico.get(), listaIncidencias, listaIncidenciasTecnico);
         } else {
-            throw new EntityNotFoundException("Tecnico no encontrado");
+            throw new EntityNotFoundException("No existe ningún Técnico con ID: " + id);
         }
     }
 
