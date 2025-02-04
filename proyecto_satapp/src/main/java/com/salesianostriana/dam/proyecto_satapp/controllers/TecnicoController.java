@@ -35,11 +35,11 @@ public class TecnicoController {
         Tecnico nuevoTecnico = tecnicoService.save(editTecnicoCmd);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoTecnico);
     }
-/*
+
     @PutMapping("/{id}")
     public GetTecnicoDto edit(@PathVariable Long id, @RequestBody EditTecnicoCmd editTecnicoCmd) {
         return tecnicoService.edit(editTecnicoCmd, id);
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
