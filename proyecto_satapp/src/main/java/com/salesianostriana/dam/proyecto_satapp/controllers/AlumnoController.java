@@ -42,9 +42,9 @@ public class AlumnoController {
         return alumnoService.edit(editAlumnoCmd, id);
     }
 
-    /*@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         alumnoService.delete(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }

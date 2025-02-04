@@ -80,13 +80,14 @@ public class AlumnoService {
                     old.setPassword(editAlumnoCmd.password());
                     old.setRole(editAlumnoCmd.role());
                     return alumnoRepository.save(old);
-                }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: "+ id));
+                }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: " + id));
 
         return GetAlumnoDto.of(aEditar, listaIncidencias, listaHistoricoCursos);
     }
 
-/*
+
     public void delete(Long id) {
         alumnoRepository.deleteById(id);
-    }*/
+    }
+
 }
