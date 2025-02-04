@@ -2,7 +2,9 @@ package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.AlumnoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,7 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
+/*
     public GetAlumnoDto edit(EditAlumnoCmd editAlumnoCmd, Long id) {
         Alumno aEditar = alumnoRepository.findById(id)
                 .map(old -> {
@@ -60,7 +63,7 @@ public class AlumnoService {
                 }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: "+ id));
 
         return GetAlumnoDto.of(aEditar);
-    }
+    }*/
 
 
     public void delete(Long id) {
