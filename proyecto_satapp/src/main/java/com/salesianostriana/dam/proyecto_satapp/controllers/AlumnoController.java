@@ -36,15 +36,15 @@ public class AlumnoController {
         Alumno nuevoAlumno = alumnoService.save(editAlumnoCmd);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAlumno);
     }
-/*
+
     @PutMapping("/{id}")
     public GetAlumnoDto edit(@PathVariable Long id, @RequestBody EditAlumnoCmd editAlumnoCmd) {
         return alumnoService.edit(editAlumnoCmd, id);
-    }*/
+    }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         alumnoService.delete(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 }
