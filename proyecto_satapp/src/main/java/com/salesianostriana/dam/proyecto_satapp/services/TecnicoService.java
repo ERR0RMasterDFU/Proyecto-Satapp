@@ -63,8 +63,15 @@ public class TecnicoService {
 
         return tecnicoRepository.save(tecnico);
     }
-/*
+
     public GetTecnicoDto edit(EditTecnicoCmd editTecnicoCmd, Long id) {
+
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByTecnicoId(id);
+
+        List<GetIncidenciaBasicaDto> listaIncidenciasTecnico =
+                incidenciaRepository.findIncidenciasTecnicoByTecnicoId(id);
+
         Tecnico aEditar = tecnicoRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editTecnicoCmd.nombre());
@@ -73,11 +80,10 @@ public class TecnicoService {
                     old.setPassword(editTecnicoCmd.password());
                     old.setRole(editTecnicoCmd.role());
                     return tecnicoRepository.save(old);
-                }).orElseThrow(() -> new EntityNotFoundException("No hay tecnico con ID: "+ id));
+                }).orElseThrow(() -> new EntityNotFoundException("No existe ningún Técnico con ID: " + id));
 
-        return GetTecnicoDto.of(aEditar);
-    }*/
-
+        return GetTecnicoDto.of(aEditar, listaIncidencias, listaIncidenciasTecnico);
+    }
 
     public void delete(Long id) {
         tecnicoRepository.deleteById(id);
