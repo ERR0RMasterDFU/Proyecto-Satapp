@@ -2,6 +2,7 @@ package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.EditTecnicoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import com.salesianostriana.dam.proyecto_satapp.services.TecnicoService;
@@ -20,12 +21,12 @@ public class TecnicoController {
     private final TecnicoService tecnicoService;
 
     @GetMapping
-    public List<Tecnico> getAll() {
+    public List<GetTecnicoBasicoDto> getAll() {
         return tecnicoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Tecnico getById(@PathVariable Long id) {
+    public GetTecnicoDto getById(@PathVariable Long id) {
         return tecnicoService.findById(id);
     }
 

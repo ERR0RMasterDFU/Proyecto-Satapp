@@ -6,6 +6,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import java.util.List;
 
 public record GetTecnicoDto(
+        Long id,
         String nombre,
         String username,
         String password,
@@ -14,13 +15,14 @@ public record GetTecnicoDto(
         List<GetIncidenciaBasicaDto> listaIncidencias,
         List<GetIncidenciaBasicaDto> listaIncidenciasTecnico
 ) {
-    public static GetTecnicoDto of(Tecnico tecnico, List<GetIncidenciaBasicaDto> listaIncidencias, List<GetIncidenciaBasicaDto> listaIncidenciasTecnico) {
+    public static GetTecnicoDto of(Tecnico t, List<GetIncidenciaBasicaDto> listaIncidencias, List<GetIncidenciaBasicaDto> listaIncidenciasTecnico) {
         return new GetTecnicoDto(
-                tecnico.getNombre(),
-                tecnico.getUsername(),
-                tecnico.getPassword(),
-                tecnico.getEmail(),
-                tecnico.getRole(),
+                t.getId(),
+                t.getNombre(),
+                t.getUsername(),
+                t.getPassword(),
+                t.getEmail(),
+                t.getRole(),
                 listaIncidencias,
                 listaIncidenciasTecnico
         );
