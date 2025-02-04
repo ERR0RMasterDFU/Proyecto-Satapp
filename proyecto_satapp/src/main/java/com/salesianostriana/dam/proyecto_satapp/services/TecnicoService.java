@@ -1,8 +1,10 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditTecnicoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetTecnicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.EditTecnicoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +49,7 @@ public class TecnicoService {
 
         return tecnicoRepository.save(tecnico);
     }
-
+/*
     public GetTecnicoDto edit(EditTecnicoCmd editTecnicoCmd, Long id) {
         Tecnico aEditar = tecnicoRepository.findById(id)
                 .map(old -> {
@@ -60,7 +62,7 @@ public class TecnicoService {
                 }).orElseThrow(() -> new EntityNotFoundException("No hay tecnico con ID: "+ id));
 
         return GetTecnicoDto.of(aEditar);
-    }
+    }*/
 
 
     public void delete(Long id) {

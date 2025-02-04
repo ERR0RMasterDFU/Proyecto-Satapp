@@ -32,8 +32,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody EditUsuarioCmd editUsuarioCmd) {
         Usuario nuevoUsuario = usuarioService.save(editUsuarioCmd);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(nuevoUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @PutMapping("/{id}")
