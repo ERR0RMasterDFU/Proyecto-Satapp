@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,8 @@ public class EquipoController {
 
     private final EquipoService equipoService;
 
-    @Operation(summary = "Obtener todos los equipos", responses = {
+    @Operation(summary = "Obtener todos los equipos")
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de equipos obtenida con éxito",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetEquipoSinListasDto.class)))
@@ -35,7 +37,8 @@ public class EquipoController {
         return equipoService.findAll();
     }
 
-    @Operation(summary = "Obtener un equipo por ID", responses = {
+    @Operation(summary = "Obtener un equipo por ID")
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Equipo encontrado",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetEquipoDto.class))),
@@ -46,7 +49,8 @@ public class EquipoController {
         return equipoService.findById(id);
     }
 
-    @Operation(summary = "Crear un nuevo equipo", responses = {
+    @Operation(summary = "Crear un nuevo equipo")
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Equipo creado con éxito",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetEquipoSinListasDto.class)))
@@ -57,10 +61,10 @@ public class EquipoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoSinListasDto.of(nuevoEquipo));
     }
 
-    @Operation(summary = "Editar un equipo existente", responses = {
-            @ApiResponse(responseCode = "200", description = "Equipo editado con éxito",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetEquipoDto.class))),
+    @Operation(summary = "Editar un equipo existente")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Equipo editado con éxito",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = GetEquipoDto.class))),
             @ApiResponse(responseCode = "404", description = "Equipo no encontrado")
     })
     @PutMapping("/{id}")
@@ -69,7 +73,8 @@ public class EquipoController {
         return GetEquipoDto.of(equipoEditado);
     }
 
-    @Operation(summary = "Eliminar un equipo por ID", responses = {
+    @Operation(summary = "Eliminar un equipo por ID")
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Equipo eliminado con éxito"),
             @ApiResponse(responseCode = "404", description = "Equipo no encontrado")
     })
