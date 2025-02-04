@@ -63,7 +63,7 @@ public class AlumnoService {
     }
 
 
-    public void delete(Long id) {
+    /*public void delete(Long id) {
         alumnoRepository.deleteById(id);
-    }
+    }*/
 }
