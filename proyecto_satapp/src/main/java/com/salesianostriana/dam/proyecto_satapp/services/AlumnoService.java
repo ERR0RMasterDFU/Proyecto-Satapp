@@ -1,11 +1,18 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.AlumnoRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,23 +25,30 @@ import java.util.Optional;
 public class AlumnoService {
 
     private final AlumnoRepository alumnoRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
-    public List<Alumno> findAll() {
-        List<Alumno> alumnos = alumnoRepository.findAll();
+    public List<GetAlumnoBasicoDto> findAll() {
+        List<GetAlumnoBasicoDto> alumnos = alumnoRepository.findAllBasicoDto();
 
         if (alumnos.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron alumnos");
+            throw new EntityNotFoundException("No existen Alumnos con esos criterios de búsqueda");
         }
         return alumnos;
     }
 
-    public Alumno findById(Long id) {
-        Optional<Alumno> alumno = alumnoRepository.findById(id);
+    public GetAlumnoDto findById(Long id) {
 
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                incidenciaRepository.findIncidenciasByAlumnoId(id);
+
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoRepository.findHistoricoCursosByAlumnoId(id);
+
+        Optional<Alumno> alumno = alumnoRepository.findById(id);
         if (alumno.isPresent()) {
-            return alumno.get();
+            return GetAlumnoDto.of(alumno.get(), listaIncidencias, listaHistoricoCursos);
         } else {
-            throw new EntityNotFoundException("No se encontraron alumnos");
+            throw new EntityNotFoundException("No existe ningún Alumno con ID: " + id);
         }
     }
 
@@ -66,7 +80,7 @@ public class AlumnoService {
     }*/
 
 
-    /*public void delete(Long id) {
+    public void delete(Long id) {
         alumnoRepository.deleteById(id);
-    }*/
+    }
 }
