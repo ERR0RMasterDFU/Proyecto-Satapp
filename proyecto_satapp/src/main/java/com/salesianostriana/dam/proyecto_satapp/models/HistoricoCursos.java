@@ -26,7 +26,7 @@ public class HistoricoCursos {
     private String cursoEscolar;
 
     @Id
-    private int curso;
+    private String curso;
 
 
     // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------

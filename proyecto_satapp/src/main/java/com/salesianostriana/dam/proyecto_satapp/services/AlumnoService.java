@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.repositories.AlumnoRepository;
 import jakarta.persistence.EntityNotFoundException;
