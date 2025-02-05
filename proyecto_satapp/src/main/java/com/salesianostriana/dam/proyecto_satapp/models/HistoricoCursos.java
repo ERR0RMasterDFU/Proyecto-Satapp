@@ -22,7 +22,6 @@ public class HistoricoCursos {
     @JoinColumn(name="alumno_id", foreignKey = @ForeignKey(name = "fk_historicoCursos_alumno"))
     private Alumno alumno;
 
-    @Id
     private String curso;
 
     @Id

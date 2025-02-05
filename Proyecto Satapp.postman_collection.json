@@ -345,7 +345,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fecha\":\"2005-03-18\",\r\n    \"titulo\":\"Ordenador estropeado\",\r\n    \"descripcion\":\"El ordenador ha cogido fuego y ha sido reducido a cenizas\",\r\n    \"estado\":\"ABIERTA\",\r\n    \"urgencia\":true,\r\n    \"categoriaId\":3,\r\n    \"usuarioId\":null,\r\n    \"equipoId\":1,\r\n    \"ubicacionId\":2\r\n}",
+							"raw": "{\r\n    \"titulo\": \"Ordenador estropeado\",\r\n    \"descripcion\": \"El ordenador ha cogido fuego y ha sido reducido a cenizas\",\r\n    \"estado\": \"ABIERTA\",\r\n    \"urgencia\": true,\r\n    \"categoriaId\": 3,\r\n    \"equipoId\": 1,\r\n    \"ubicacionId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -360,6 +360,577 @@
 							"port": "8080",
 							"path": [
 								"incidencia"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Usuario",
+					"item": [
+						{
+							"name": "Mostrar todos los usuarios",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/usuario",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar usuario por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/usuario/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear usuario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Jotaro Kujo Joestar\",\r\n    \"username\":\"Star Platinum\",\r\n    \"password\":\"Qtar0\",\r\n    \"email\":\"stardust.crusaders@gmail.com\",\r\n    \"role\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/usuario",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar usuario por ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Jonathan Joestar\",\r\n    \"username\":\"Hamon user 1\",\r\n    \"password\":\"J0n4th4N\",\r\n    \"email\":\"phantom.blood@gmail.com\",\r\n    \"role\": \"USER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/usuario/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar usuario por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/usuario/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Personal",
+					"item": [
+						{
+							"name": "Mostrar todo el personal",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/personal",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"personal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar personal por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/personal/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"personal",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear personal",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Pannacotta Fugo\",\r\n    \"username\": \"Purple Haze\",\r\n    \"password\": \"54N4C0TT4\",\r\n    \"email\": \"vento.aureo@gmail.com\",\r\n    \"role\": \"USER\",\r\n    \"tipo\": \"PROFESOR\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/personal",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"personal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar personal por ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Enrico Pucci\",\r\n    \"username\": \"Made in Heaven\",\r\n    \"password\": \"CmO05d10\",\r\n    \"email\": \"another.universe@gmail.com\",\r\n    \"role\": \"ADMIN\",\r\n    \"tipo\": \"PAS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/personal/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"personal",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar personal por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/personal/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"personal",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Técnico",
+					"item": [
+						{
+							"name": "Mostrar todos los técnicos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/tecnico",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tecnico"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar técnico por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/tecnico/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tecnico",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear técnico",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Josuke Higashikata\",\r\n    \"username\":\"Crazy Diamond\",\r\n    \"password\":\"Joj05k3h1\",\r\n    \"email\":\"diamond.isUnbreakable@gmail.com\",\r\n    \"role\": \"USER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/tecnico",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tecnico"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar técnico por ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Jean Pierre Polnareff\",\r\n    \"username\":\"Silver Chariot\",\r\n    \"password\":\"MrpR351Den7\",\r\n    \"email\":\"cocojumbo.key@gmail.com\",\r\n    \"role\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/tecnico/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tecnico",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar técnico por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/tecnico/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"tecnico",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Alumno",
+					"item": [
+						{
+							"name": "Mostrar todos los alumnos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/alumno",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"alumno"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar Alumno por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/alumno/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"alumno",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear alumno",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\":\"Johnny Joestar\",\r\n    \"username\":\"Tusk\",\r\n    \"password\":\"r0ta310NDoR4dA\",\r\n    \"email\":\"steelball.run@gmail.com\",\r\n    \"role\": \"USER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/alumno",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"alumno"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar alumno por ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nombre\": \"Narancia Ghirga\",\r\n    \"username\": \"Aerosmith\",\r\n    \"password\": \"N4ra69o5M1th\",\r\n    \"email\": \"lil.bomber@gmail.com\",\r\n    \"role\": \"USER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/alumno/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"alumno",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar alumno por ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/alumno/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"alumno",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Histórico de cursos",
+			"item": [
+				{
+					"name": "Mostrar todos los históricos de un alumno por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/historico_cursos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historico_cursos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear histórico de cursos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alumnoId\": \"1\",\r\n    \"curso\": \"1º DAM\",\r\n    \"cursoEscolar\": \"2022-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/historico_cursos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historico_cursos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar el curso de un histórico de curso por ID del alumno y curso escolar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"curso\": \"2º DAM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/historico_cursos/1/curso_escolar/2022-2023",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historico_cursos",
+								"1",
+								"curso_escolar",
+								"2022-2023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un histórico de curso por ID del alumno y curso escolar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/historico_cursos/1/curso_escolar/2022-2023",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historico_cursos",
+								"1",
+								"curso_escolar",
+								"2022-2023"
 							]
 						}
 					},

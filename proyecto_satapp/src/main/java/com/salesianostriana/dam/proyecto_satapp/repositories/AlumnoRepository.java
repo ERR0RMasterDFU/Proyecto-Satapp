@@ -37,4 +37,8 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
     """)
     Optional<HistoricoCursos> findHistoricoCursosByAlumnoIdAndCursoEscolar(Long id, String cursoEscolar);
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 55c57ba672f0173a7fcfdf75ac16103979fc0f1f
