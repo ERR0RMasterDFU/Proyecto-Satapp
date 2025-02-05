@@ -2,6 +2,7 @@ package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.EditIncidenciaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.services.IncidenciaService;
@@ -21,9 +22,9 @@ public class IncidenciaController {
     private final IncidenciaService incidenciaService;
 
     @PostMapping("")
-    public ResponseEntity<GetIncidenciaDto> create(@RequestBody EditIncidenciaCmd nuevaIncidencia) {
+    public ResponseEntity<GetIncidenciaSinUsuarioDto> create(@RequestBody EditIncidenciaCmd nuevaIncidencia) {
         Incidencia incidencia = incidenciaService.save(nuevaIncidencia);
-        return ResponseEntity.status(HttpStatus.CREATED).body(GetIncidenciaDto.of(incidencia));
+        return ResponseEntity.status(HttpStatus.CREATED).body(GetIncidenciaSinUsuarioDto.of(incidencia));
     }
 
 }

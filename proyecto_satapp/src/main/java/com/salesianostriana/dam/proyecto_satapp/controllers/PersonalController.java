@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.EditPersonalCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.personal.GetPersonalDto;
@@ -29,19 +30,24 @@ public class PersonalController {
 
     @GetMapping("/{id}")
     public GetPersonalDto getById(@PathVariable Long id) {
-        return personalService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                personalService.getIncidenciasByPersonalId(id);
+        Personal personal = personalService.findById(id);
+        return GetPersonalDto.of(personal, listaIncidencias);
     }
 
     @PostMapping
     public ResponseEntity<Personal> create(@RequestBody EditPersonalCmd editPersonalCmd) {
         Personal nuevoPersonal = personalService.save(editPersonalCmd);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(nuevoPersonal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPersonal);
     }
 
     @PutMapping("/{id}")
     public GetPersonalDto edit(@PathVariable Long id, @RequestBody EditPersonalCmd editPersonalCmd) {
-        return personalService.edit(editPersonalCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                personalService.getIncidenciasByPersonalId(id);
+        Personal personal = personalService.edit(editPersonalCmd, id);
+        return GetPersonalDto.of(personal, listaIncidencias);
     }
 
     @DeleteMapping("/{id}")

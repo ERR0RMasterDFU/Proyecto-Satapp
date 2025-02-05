@@ -25,24 +25,31 @@ public class PersonalService {
     private final PersonalRepository personalRepository;
     private final IncidenciaRepository incidenciaRepository;
 
+
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetIncidenciaBasicaDto> getIncidenciasByPersonalId(Long id) {
+        return incidenciaRepository.findIncidenciasByPersonalId(id);
+    }
+
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
+
     public List<GetPersonalBasicoDto> findAll() {
         List<GetPersonalBasicoDto> listaPersonal = personalRepository.findAllBasicoDto();
 
         if (listaPersonal.isEmpty()) {
             throw new EntityNotFoundException("No existe ningún Personal con esos criterios de búsqueda");
+        } else {
+            return listaPersonal;
         }
-        return listaPersonal;
     }
 
-    public GetPersonalDto findById(Long id) {
-
-        List<GetIncidenciaBasicaDto> listaIncidencias =
-                incidenciaRepository.findIncidenciasByPersonalId(id);
-
+    public Personal findById(Long id) {
         Optional<Personal> personal = personalRepository.findById(id);
 
         if (personal.isPresent()) {
-            return GetPersonalDto.of(personal.get(), listaIncidencias);
+            return personal.get();
         } else {
             throw new EntityNotFoundException("No existe ningún Personal con ID: " + id);
         }
@@ -61,12 +68,8 @@ public class PersonalService {
         return personalRepository.save(personal);
     }
 
-    public GetPersonalDto edit(EditPersonalCmd editPersonalCmd, Long id) {
-
-        List<GetIncidenciaBasicaDto> listaIncidencias =
-                incidenciaRepository.findIncidenciasByPersonalId(id);
-
-        Personal aEditar = personalRepository.findById(id)
+    public Personal edit(EditPersonalCmd editPersonalCmd, Long id) {
+        return personalRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editPersonalCmd.nombre());
                     old.setUsername(editPersonalCmd.username());
@@ -76,8 +79,6 @@ public class PersonalService {
                     old.setTipo(editPersonalCmd.tipo());
                     return personalRepository.save(old);
                 }).orElseThrow(() -> new EntityNotFoundException("No existe ningún Usuario con ID: " + id));
-
-        return GetPersonalDto.of(aEditar, listaIncidencias);
     }
 
     public void delete(Long id) {

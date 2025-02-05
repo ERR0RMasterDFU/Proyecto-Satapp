@@ -27,26 +27,35 @@ public class AlumnoService {
     private final AlumnoRepository alumnoRepository;
     private final IncidenciaRepository incidenciaRepository;
 
+
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetIncidenciaBasicaDto> getIncidenciasByAlumnoId(Long id) {
+        return incidenciaRepository.findIncidenciasByAlumnoId(id);
+    }
+
+    public List<GetHistoricoCursosBasicoDto> getHistoricoCursosByAlumnoId(Long id) {
+        return alumnoRepository.findHistoricoCursosByAlumnoId(id);
+    }
+
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
+
     public List<GetAlumnoBasicoDto> findAll() {
         List<GetAlumnoBasicoDto> alumnos = alumnoRepository.findAllBasicoDto();
 
         if (alumnos.isEmpty()) {
             throw new EntityNotFoundException("No existen Alumnos con esos criterios de búsqueda");
+        } else {
+            return alumnos;
         }
-        return alumnos;
     }
 
-    public GetAlumnoDto findById(Long id) {
-
-        List<GetIncidenciaBasicaDto> listaIncidencias =
-                incidenciaRepository.findIncidenciasByAlumnoId(id);
-
-        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
-                alumnoRepository.findHistoricoCursosByAlumnoId(id);
-
+    public Alumno findById(Long id) {
         Optional<Alumno> alumno = alumnoRepository.findById(id);
+
         if (alumno.isPresent()) {
-            return GetAlumnoDto.of(alumno.get(), listaIncidencias, listaHistoricoCursos);
+            return alumno.get();
         } else {
             throw new EntityNotFoundException("No existe ningún Alumno con ID: " + id);
         }
@@ -64,15 +73,8 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-    public GetAlumnoDto edit(EditAlumnoCmd editAlumnoCmd, Long id) {
-
-        List<GetIncidenciaBasicaDto> listaIncidencias =
-                incidenciaRepository.findIncidenciasByAlumnoId(id);
-
-        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
-                alumnoRepository.findHistoricoCursosByAlumnoId(id);
-
-        Alumno aEditar = alumnoRepository.findById(id)
+    public Alumno edit(EditAlumnoCmd editAlumnoCmd, Long id) {
+        return alumnoRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editAlumnoCmd.nombre());
                     old.setUsername(editAlumnoCmd.username());
@@ -81,10 +83,7 @@ public class AlumnoService {
                     old.setRole(editAlumnoCmd.role());
                     return alumnoRepository.save(old);
                 }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: " + id));
-
-        return GetAlumnoDto.of(aEditar, listaIncidencias, listaHistoricoCursos);
     }
-
 
     public void delete(Long id) {
         alumnoRepository.deleteById(id);

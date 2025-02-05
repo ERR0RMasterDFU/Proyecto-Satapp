@@ -1,8 +1,10 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.EditCatgeoriaCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaSinListasDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 import com.salesianostriana.dam.proyecto_satapp.services.CategoriaService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,13 @@ public class CategoriaController {
 
     @GetMapping("/{id}")
     public GetCategoriaDto getById(@PathVariable Long id) {
-        return categoriaService.findById(id);
+        List<GetCategoriaBasicaDto> listaSubCategorias =
+                categoriaService.getSubCategoriasDtoById(id);
+        List<GetIncidenciaSinCategoriaDto> listaIncidencias =
+                categoriaService.getIncidenciasByCategoriaId(id);
+        Categoria categoria = categoriaService.findById(id);
+
+        return GetCategoriaDto.of(categoria, listaSubCategorias, listaIncidencias);
     }
 
     @PostMapping("")
@@ -38,7 +46,13 @@ public class CategoriaController {
 
     @PutMapping("/{id}")
     public GetCategoriaDto edit(@RequestBody EditCatgeoriaCmd aEditar, @PathVariable Long id) {
-        return categoriaService.edit(aEditar, id);
+        List<GetCategoriaBasicaDto> listaSubCategorias =
+                categoriaService.getSubCategoriasDtoById(id);
+        List<GetIncidenciaSinCategoriaDto> listaIncidencias =
+                categoriaService.getIncidenciasByCategoriaId(id);
+        Categoria categoria = categoriaService.edit(aEditar, id);
+
+        return GetCategoriaDto.of(categoria, listaSubCategorias, listaIncidencias);
     }
 
 }

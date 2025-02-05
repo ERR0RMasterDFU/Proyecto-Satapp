@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.EditTecnicoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoDto;
@@ -27,7 +28,13 @@ public class TecnicoController {
 
     @GetMapping("/{id}")
     public GetTecnicoDto getById(@PathVariable Long id) {
-        return tecnicoService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                tecnicoService.getIncidenciasByTecnicoId(id);
+        List<GetIncidenciaBasicaDto> listaIncidenciastecnico =
+                tecnicoService.getIncidenciasTecnicoByTecnicoId(id);
+        Tecnico tecnico = tecnicoService.findById(id);
+
+        return GetTecnicoDto.of(tecnico, listaIncidencias, listaIncidenciastecnico);
     }
 
     @PostMapping
@@ -38,7 +45,13 @@ public class TecnicoController {
 
     @PutMapping("/{id}")
     public GetTecnicoDto edit(@PathVariable Long id, @RequestBody EditTecnicoCmd editTecnicoCmd) {
-        return tecnicoService.edit(editTecnicoCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                tecnicoService.getIncidenciasByTecnicoId(id);
+        List<GetIncidenciaBasicaDto> listaIncidenciastecnico =
+                tecnicoService.getIncidenciasTecnicoByTecnicoId(id);
+        Tecnico tecnico = tecnicoService.edit(editTecnicoCmd, id);
+
+        return GetTecnicoDto.of(tecnico, listaIncidencias, listaIncidenciastecnico);
     }
 
     @DeleteMapping("/{id}")
