@@ -24,7 +24,7 @@ El proyecto está implementado utilizando las siguientes tecnologías:
 
 ## Instalación
 
-Para ejecutar el proyecto, no es necesario ejecutar `docker-compose`, **esto se hace automáticamente**. Simplemente descarga el proyecto, configura la base de datos de PostgreSQL y ejecuta la aplicación con Spring Boot.
+Para ejecutar el proyecto, no es necesario ejecutar `docker-compose`, **esto se hace automáticamente**. Sencillamente ejecuta el proyecto.
 
 ## Autores
 
