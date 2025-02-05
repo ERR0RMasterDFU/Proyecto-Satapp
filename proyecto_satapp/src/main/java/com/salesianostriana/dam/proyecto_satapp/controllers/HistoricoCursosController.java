@@ -5,6 +5,7 @@ import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistorico
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
@@ -23,6 +24,11 @@ public class HistoricoCursosController {
 
     private final HistoricoCursosService historicoCursosService;
 
+    @GetMapping("/{id}")
+    public List<GetHistoricoCursosBasicoDto> getAllHistoricoCursosByAlumnoId(@PathVariable Long id) {
+        return historicoCursosService.getHistoricoCursosByAlumnoId(id);
+    }
+
     @PostMapping
     public ResponseEntity<GetHistoricoCursosDto> create(@RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {
         HistoricoCursos nuevoHistoricoCursos = historicoCursosService.save(editHistoricoCursosCmd);
@@ -33,6 +39,12 @@ public class HistoricoCursosController {
     public GetHistoricoCursosDto edit(@PathVariable Long id, @PathVariable String cursoEscolar, @RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {
         HistoricoCursos historicoCursos = historicoCursosService.edit(editHistoricoCursosCmd, id, cursoEscolar);
         return GetHistoricoCursosDto.of(historicoCursos);
+    }
+
+    @DeleteMapping("/{id}/curso_escolar/{cursoEscolar}")
+    public ResponseEntity<?> delete(@PathVariable Long id, @PathVariable String cursoEscolar) {
+        historicoCursosService.delete(id, cursoEscolar);
+        return ResponseEntity.noContent().build();
     }
 
 }

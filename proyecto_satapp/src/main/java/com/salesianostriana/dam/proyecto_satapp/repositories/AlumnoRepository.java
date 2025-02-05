@@ -23,10 +23,10 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
     @Query("""
         select new com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto(
-            hu.curso, hu.cursoEscolar
+            hc.curso, hc.cursoEscolar
         ) 
-        from HistoricoCursos hu 
-        where hu.alumno.id = ?1
+        from HistoricoCursos hc
+        where hc.alumno.id = ?1
     """)
     List<GetHistoricoCursosBasicoDto> findHistoricoCursosByAlumnoId(Long id);
 
