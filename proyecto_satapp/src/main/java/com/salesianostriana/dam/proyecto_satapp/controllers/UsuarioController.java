@@ -47,6 +47,28 @@ public class UsuarioController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetUsuarioDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "id": 1,
+                                        "nombre": "Robert E.O. Speedwagon",
+                                        "username": "JojoBroNumber1",
+                                        "password": "5p33dWag02",
+                                        "email": "fundacion.speedwagon@gmail.com",
+                                        "role": "ADMIN",
+                                        "listaIncidencias": [
+                                            {
+                                                "id": 3,
+                                                "fecha": "2025-02-05T12:00:00",
+                                                "titulo": "Fallo en la pantalla del ordenador",
+                                                "descripcion": "El monitor Dell no enciende en el aula 204.",
+                                                "estado": "TRABAJANDO",
+                                                "urgencia": true,
+                                                "categoria": {
+                                                    "id": 3,
+                                                    "nombre": "Ordenador"
+                                                }
+                                            }
+                                        ]
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                     content = @Content)
@@ -65,6 +87,13 @@ public class UsuarioController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Usuario.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre":"Jotaro Kujo Joestar",
+                                        "username":"Star Platinum",
+                                        "password":"Qtar0",
+                                        "email":"stardust.crusaders@gmail.com",
+                                        "role": "ADMIN"
+                                    }
                                     """)))
     })
     @PostMapping
@@ -79,6 +108,13 @@ public class UsuarioController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetUsuarioDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre":"Jotaro Kujo Joestar",
+                                        "username":"Star Platinum",
+                                        "password":"Qtar0",
+                                        "email":"stardust.crusaders@gmail.com",
+                                        "role": "ADMIN"
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                     content = @Content)

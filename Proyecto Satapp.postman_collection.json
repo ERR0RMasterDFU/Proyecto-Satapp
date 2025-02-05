@@ -196,7 +196,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\":\"Ordenador viejo\",\r\n    \"caracteristicas\": \"Capacidad de 16 GB\",\r\n    \"ubicacionId\": 4\r\n}",
+							"raw": "{\r\n    \"nombre\":\"Ordenador roto\",\r\n    \"caracteristicas\": \"Capacidad de 32 GB\",\r\n    \"ubicacionId\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -513,14 +513,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/personal/1",
+									"raw": "localhost:8080/personal/8",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"personal",
-										"1"
+										"8"
 									]
 								}
 							},
@@ -629,14 +629,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/tecnico/1",
+									"raw": "localhost:8080/tecnico/12",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"tecnico",
-										"1"
+										"12"
 									]
 								}
 							},
@@ -684,14 +684,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/tecnico/1",
+									"raw": "localhost:8080/tecnico/11",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"tecnico",
-										"1"
+										"11"
 									]
 								}
 							},
@@ -745,14 +745,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/alumno/1",
+									"raw": "localhost:8080/alumno/4",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"alumno",
-										"1"
+										"4"
 									]
 								}
 							},
@@ -800,14 +800,14 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/alumno/1",
+									"raw": "localhost:8080/alumno/5",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"alumno",
-										"1"
+										"5"
 									]
 								}
 							},
@@ -845,14 +845,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/historico_cursos/1",
+							"raw": "localhost:8080/historico_cursos/4",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"historico_cursos",
-								"1"
+								"4"
 							]
 						}
 					},
@@ -865,7 +865,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"alumnoId\": \"1\",\r\n    \"curso\": \"1º DAM\",\r\n    \"cursoEscolar\": \"2022-2023\"\r\n}",
+							"raw": "{\r\n    \"alumnoId\": \"6\",\r\n    \"curso\": \"1º DAM\",\r\n    \"cursoEscolar\": \"2022-2023\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -900,14 +900,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/historico_cursos/1/curso_escolar/2022-2023",
+							"raw": "localhost:8080/historico_cursos/5/curso_escolar/2022-2023",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"historico_cursos",
-								"1",
+								"5",
 								"curso_escolar",
 								"2022-2023"
 							]

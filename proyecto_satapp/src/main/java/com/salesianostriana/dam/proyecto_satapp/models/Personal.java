@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.proxy.HibernateProxy;
@@ -15,6 +17,7 @@ import java.util.Objects;
 @Entity
 public class Personal extends Usuario {
 
+    @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
 

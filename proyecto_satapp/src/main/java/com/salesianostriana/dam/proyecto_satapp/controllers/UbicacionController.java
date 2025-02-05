@@ -35,6 +35,24 @@ public class UbicacionController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetUbicacionSinListasDto.class),
                             examples = @ExampleObject(value = """ 
+                                    [
+                                        {
+                                            "id": 1,
+                                            "nombre": "Sala de profesores"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "nombre": "Aula 102"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "nombre": "Aula 204"
+                                        },
+                                        {
+                                            "id": 4,
+                                            "nombre": "Gimnasio"
+                                        }
+                                    ]
                                     """)))
     })
     @GetMapping("")
@@ -48,6 +66,28 @@ public class UbicacionController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetUbicacionDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "id": 1,
+                                        "nombre": "Sala de profesores",
+                                        "listaEquipos": [
+                                            {
+                                                "id": 1,
+                                                "nombre": "Ordenador Dell XPS",
+                                                "caracteristicas": "Procesador Intel i7, 16GB RAM, SSD 512GB"
+                                            },
+                                            {
+                                                "id": 5,
+                                                "nombre": "Aire Acondicionado LG DualCool",
+                                                "caracteristicas": "Capacidad 12000 BTU, ahorro energÃ©tico"
+                                            },
+                                            {
+                                                "id": 9,
+                                                "nombre": "Radio Philips Retro 2000",
+                                                "caracteristicas": "Reproductor de CD y USB"
+                                            }
+                                        ],
+                                        "listaIncidencias": []
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Ubicación no encontrada",
                     content = @Content)
@@ -68,7 +108,10 @@ public class UbicacionController {
             @ApiResponse(responseCode = "201", description = "Ubicación creada correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Ubicacion.class),
-                            examples = @ExampleObject(value = """ 
+                            examples = @ExampleObject(value = """
+                                    {
+                                        "nombre": "Aula 301"
+                                    } 
                                     """)))
     })
     @PostMapping("")
@@ -83,6 +126,9 @@ public class UbicacionController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetUbicacionDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre":"Aula 102"
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Ubicación no encontrada",
                     content = @Content)

@@ -23,7 +23,10 @@ public class Incidencia {
     private LocalDateTime fecha;
     private String titulo;
     private String descripcion;
+
+    @Enumerated(EnumType.STRING)
     private Estado estado;
+
     private boolean urgencia;
 
 
