@@ -8,6 +8,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +32,9 @@ public class UsuarioController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUsuarioBasicoDto.class)))
+                            schema = @Schema(implementation = GetUsuarioBasicoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping
     public List<GetUsuarioBasicoDto> getAll() {
@@ -42,7 +45,9 @@ public class UsuarioController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUsuarioDto.class))),
+                            schema = @Schema(implementation = GetUsuarioDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                     content = @Content)
     })
@@ -58,7 +63,9 @@ public class UsuarioController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuario creado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Usuario.class)))
+                            schema = @Schema(implementation = Usuario.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody EditUsuarioCmd editUsuarioCmd) {
@@ -70,7 +77,9 @@ public class UsuarioController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario editado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUsuarioDto.class))),
+                            schema = @Schema(implementation = GetUsuarioDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                     content = @Content)
     })

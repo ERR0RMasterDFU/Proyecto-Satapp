@@ -9,6 +9,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
 import com.salesianostriana.dam.proyecto_satapp.services.AlumnoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,7 +33,9 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de alumnos obtenida correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetAlumnoBasicoDto.class)))
+                            schema = @Schema(implementation = GetAlumnoBasicoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping
     public List<GetAlumnoBasicoDto> getAll() {
@@ -43,7 +46,9 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alumno encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetAlumnoDto.class))),
+                            schema = @Schema(implementation = GetAlumnoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Alumno no encontrado",
                     content = @Content)
     })
@@ -62,7 +67,9 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Alumno creado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Alumno.class)))
+                            schema = @Schema(implementation = Alumno.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<Alumno> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
@@ -74,7 +81,9 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Alumno editado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetAlumnoDto.class))),
+                            schema = @Schema(implementation = GetAlumnoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Alumno no encontrado",
                     content = @Content)
     })

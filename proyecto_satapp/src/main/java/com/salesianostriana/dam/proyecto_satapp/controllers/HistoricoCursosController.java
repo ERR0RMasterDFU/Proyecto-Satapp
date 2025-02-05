@@ -6,6 +6,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 import com.salesianostriana.dam.proyecto_satapp.services.HistoricoCursosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -27,7 +28,9 @@ public class HistoricoCursosController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Historial de cursos creado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetHistoricoCursosDto.class)))
+                            schema = @Schema(implementation = GetHistoricoCursosDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<GetHistoricoCursosDto> create(@RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {

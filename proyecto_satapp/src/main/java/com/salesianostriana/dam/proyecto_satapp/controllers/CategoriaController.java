@@ -9,6 +9,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 import com.salesianostriana.dam.proyecto_satapp.services.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,7 +33,9 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de categorías obtenida correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetCategoriaSinListasDto.class)))
+                            schema = @Schema(implementation = GetCategoriaSinListasDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping("")
     public List<GetCategoriaSinListasDto> getAll() {
@@ -43,7 +46,9 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categoría encontrada",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetCategoriaDto.class))),
+                            schema = @Schema(implementation = GetCategoriaDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada",
                     content = @Content)
     })
@@ -62,7 +67,9 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Categoría creada correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Categoria.class)))
+                            schema = @Schema(implementation = Categoria.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping("")
     public ResponseEntity<Categoria> create(@RequestBody EditCatgeoriaCmd nuevoCategoriaCmd) {
@@ -74,7 +81,9 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categoría editada correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetCategoriaDto.class))),
+                            schema = @Schema(implementation = GetCategoriaDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada",
                     content = @Content)
     })

@@ -9,6 +9,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.services.UbicacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,7 +33,9 @@ public class UbicacionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de ubicaciones obtenida correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUbicacionSinListasDto.class)))
+                            schema = @Schema(implementation = GetUbicacionSinListasDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping("")
     public List<GetUbicacionSinListasDto> getAll() {
@@ -43,7 +46,9 @@ public class UbicacionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ubicación encontrada",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUbicacionDto.class))),
+                            schema = @Schema(implementation = GetUbicacionDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Ubicación no encontrada",
                     content = @Content)
     })
@@ -62,7 +67,9 @@ public class UbicacionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Ubicación creada correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Ubicacion.class)))
+                            schema = @Schema(implementation = Ubicacion.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping("")
     public ResponseEntity<Ubicacion> create(@RequestBody EditUbicacionCmd nuevaUbicacion) {
@@ -74,7 +81,9 @@ public class UbicacionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ubicación editada correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetUbicacionDto.class))),
+                            schema = @Schema(implementation = GetUbicacionDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Ubicación no encontrada",
                     content = @Content)
     })

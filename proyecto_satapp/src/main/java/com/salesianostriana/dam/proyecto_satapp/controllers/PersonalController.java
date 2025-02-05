@@ -8,6 +8,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Personal;
 import com.salesianostriana.dam.proyecto_satapp.services.PersonalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +32,9 @@ public class PersonalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de personal obtenida correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetPersonalBasicoDto.class)))
+                            schema = @Schema(implementation = GetPersonalBasicoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping
     public List<GetPersonalBasicoDto> getAll() {
@@ -42,7 +45,9 @@ public class PersonalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Personal encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetPersonalDto.class))),
+                            schema = @Schema(implementation = GetPersonalDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Personal no encontrado",
                     content = @Content)
     })
@@ -58,7 +63,9 @@ public class PersonalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Personal creado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetPersonalDto.class)))
+                            schema = @Schema(implementation = GetPersonalDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<Personal> create(@RequestBody EditPersonalCmd editPersonalCmd) {
@@ -70,7 +77,9 @@ public class PersonalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Personal editado correctamente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetPersonalDto.class))),
+                            schema = @Schema(implementation = GetPersonalDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Personal no encontrado",
                     content = @Content)
     })

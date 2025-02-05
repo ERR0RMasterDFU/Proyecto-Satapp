@@ -8,6 +8,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.services.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +32,9 @@ public class EquipoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de equipos obtenida con éxito",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetEquipoSinListasDto.class)))
+                            schema = @Schema(implementation = GetEquipoSinListasDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @GetMapping("")
     public List<GetEquipoSinListasDto> getAll() {
@@ -42,7 +45,9 @@ public class EquipoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Equipo encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetEquipoDto.class))),
+                            schema = @Schema(implementation = GetEquipoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Equipo no encontrado")
     })
     @GetMapping("/{id}")
@@ -58,7 +63,9 @@ public class EquipoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Equipo creado con éxito",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetEquipoSinListasDto.class)))
+                            schema = @Schema(implementation = GetEquipoSinListasDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """)))
     })
     @PostMapping("")
     public ResponseEntity<GetEquipoSinListasDto> create(@RequestBody EditEquipoCmd nuevoEquipoCmd) {
@@ -69,7 +76,9 @@ public class EquipoController {
     @Operation(summary = "Editar un equipo existente")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Equipo editado con éxito",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = GetEquipoDto.class))),
+                    schema = @Schema(implementation = GetEquipoDto.class),
+                    examples = @ExampleObject(value = """ 
+                                    """))),
             @ApiResponse(responseCode = "404", description = "Equipo no encontrado")
     })
     @PutMapping("/{id}")
