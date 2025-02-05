@@ -54,18 +54,18 @@ public class HistoricoCursosService {
 
     public HistoricoCursos save(EditHistoricoCursosCmd editHistoricoCursosCmd) {
 
-        Optional<Alumno> nuevoAlumno =
+        Optional<Alumno> alumno =
                 alumnoRepository.findById(editHistoricoCursosCmd.alumnoId());
 
-        if (nuevoAlumno.isPresent()) {
+        if (alumno.isPresent()) {
             HistoricoCursos historicoCursos = HistoricoCursos.builder()
-                    .alumno(nuevoAlumno.get())
+                    .alumno(alumno.get())
                     .curso(editHistoricoCursosCmd.curso())
                     .cursoEscolar(editHistoricoCursosCmd.cursoEscolar())
                     .build();
 
-            nuevoAlumno.get().addHistoricoCursos(historicoCursos);
-            alumnoRepository.save(nuevoAlumno.get());
+            alumno.get().addHistoricoCursos(historicoCursos);
+            alumnoRepository.save(alumno.get());
             return historicoCursos;
 
         } else {
@@ -73,27 +73,21 @@ public class HistoricoCursosService {
         }
     }
 
-/*
-    public GetTecnicoDto edit(EditTecnicoCmd editTecnicoCmd, Long id) {
+    public HistoricoCursos edit(EditHistoricoCursosCmd editHistoricoCursosCmd, Long id, String cursoEscolar) {
 
-        List<GetIncidenciaBasicaDto> listaIncidencias =
-                incidenciaRepository.findIncidenciasByTecnicoId(id);
+        Alumno alumno = alumnoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No existe ningún Alumno con ID: " + id));
 
-        List<GetIncidenciaBasicaDto> listaIncidenciasTecnico =
-                incidenciaRepository.findIncidenciasTecnicoByTecnicoId(id);
+        HistoricoCursos historicoCursos = alumnoRepository.findHistoricoCursosByAlumnoIdAndCursoEscolar(id, cursoEscolar)
+                .orElseThrow(() -> new EntityNotFoundException("No existe un histórico de curso para el alumno con ID: " +
+                        id + " y curso escolar: " + cursoEscolar));
 
-        Tecnico aEditar = tecnicoRepository.findById(id)
-                .map(old -> {
-                    old.setNombre(editTecnicoCmd.nombre());
-                    old.setUsername(editTecnicoCmd.username());
-                    old.setEmail(editTecnicoCmd.email());
-                    old.setPassword(editTecnicoCmd.password());
-                    old.setRole(editTecnicoCmd.role());
-                    return tecnicoRepository.save(old);
-                }).orElseThrow(() -> new EntityNotFoundException("No existe ningún Técnico con ID: " + id));
+        historicoCursos.setCurso(editHistoricoCursosCmd.curso());
+        alumnoRepository.save(alumno);
 
-        return GetTecnicoDto.of(aEditar, listaIncidencias, listaIncidenciasTecnico);
-    }*/
+        return historicoCursos;
+    }
+
 /*
     public void delete(Long id) {
         tecnicoRepository.deleteById(id);
