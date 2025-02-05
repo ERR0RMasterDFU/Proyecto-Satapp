@@ -3,6 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.controllers;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.services.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +47,11 @@ public class EquipoController {
     })
     @GetMapping("/{id}")
     public GetEquipoDto getById(@PathVariable Long id) {
-        return equipoService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                equipoService.getIncidenciasByEquipoId(id);
+        Equipo equipo = equipoService.findById(id);
+
+        return GetEquipoDto.of(equipo, listaIncidencias);
     }
 
     @Operation(summary = "Crear un nuevo equipo")
@@ -69,8 +74,11 @@ public class EquipoController {
     })
     @PutMapping("/{id}")
     public GetEquipoDto edit(@RequestBody EditEquipoCmd aEditar, @PathVariable Long id) {
-        Equipo equipoEditado = equipoService.edit(aEditar, id);
-        return GetEquipoDto.of(equipoEditado);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                equipoService.getIncidenciasByEquipoId(id);
+        Equipo equipo = equipoService.edit(aEditar, id);
+
+        return GetEquipoDto.of(equipo, listaIncidencias);
     }
 
     @Operation(summary = "Eliminar un equipo por ID")

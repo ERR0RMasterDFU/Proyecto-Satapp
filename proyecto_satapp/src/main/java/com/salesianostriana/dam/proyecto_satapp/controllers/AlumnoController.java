@@ -1,8 +1,13 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.services.AlumnoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,25 +24,36 @@ public class AlumnoController {
     private final AlumnoService alumnoService;
 
     @GetMapping
-    public List<Alumno> getAll() {
+    public List<GetAlumnoBasicoDto> getAll() {
         return alumnoService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Alumno getById(@PathVariable Long id) {
-        return alumnoService.findById(id);
+    public GetAlumnoDto getById(@PathVariable Long id) {
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                alumnoService.getIncidenciasByAlumnoId(id);
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoService.getHistoricoCursosByAlumnoId(id);
+        Alumno alumno = alumnoService.findById(id);
+
+        return GetAlumnoDto.of(alumno, listaIncidencias, listaHistoricoCursos);
     }
 
     @PostMapping
-    public ResponseEntity<GetAlumnoDto> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
+    public ResponseEntity<Alumno> create(@RequestBody EditAlumnoCmd editAlumnoCmd) {
         Alumno nuevoAlumno = alumnoService.save(editAlumnoCmd);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GetAlumnoDto.of(nuevoAlumno));
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAlumno);
     }
 
     @PutMapping("/{id}")
     public GetAlumnoDto edit(@PathVariable Long id, @RequestBody EditAlumnoCmd editAlumnoCmd) {
-        return alumnoService.edit(editAlumnoCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                alumnoService.getIncidenciasByAlumnoId(id);
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoService.getHistoricoCursosByAlumnoId(id);
+        Alumno alumno = alumnoService.edit(editAlumnoCmd, id);
+
+        return GetAlumnoDto.of(alumno, listaIncidencias, listaHistoricoCursos);
     }
 
     @DeleteMapping("/{id}")

@@ -1,9 +1,18 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.EditAlumnoCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Alumno;
+import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 import com.salesianostriana.dam.proyecto_satapp.repositories.AlumnoRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,14 +25,30 @@ import java.util.Optional;
 public class AlumnoService {
 
     private final AlumnoRepository alumnoRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
-    public List<Alumno> findAll() {
-        List<Alumno> alumnos = alumnoRepository.findAll();
+
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetIncidenciaBasicaDto> getIncidenciasByAlumnoId(Long id) {
+        return incidenciaRepository.findIncidenciasByAlumnoId(id);
+    }
+
+    public List<GetHistoricoCursosBasicoDto> getHistoricoCursosByAlumnoId(Long id) {
+        return alumnoRepository.findHistoricoCursosByAlumnoId(id);
+    }
+
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
+
+    public List<GetAlumnoBasicoDto> findAll() {
+        List<GetAlumnoBasicoDto> alumnos = alumnoRepository.findAllBasicoDto();
 
         if (alumnos.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron alumnos");
+            throw new EntityNotFoundException("No existen Alumnos con esos criterios de búsqueda");
+        } else {
+            return alumnos;
         }
-        return alumnos;
     }
 
     public Alumno findById(Long id) {
@@ -32,7 +57,7 @@ public class AlumnoService {
         if (alumno.isPresent()) {
             return alumno.get();
         } else {
-            throw new EntityNotFoundException("No se encontraron alumnos");
+            throw new EntityNotFoundException("No existe ningún Alumno con ID: " + id);
         }
     }
 
@@ -48,8 +73,8 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-    public GetAlumnoDto edit(EditAlumnoCmd editAlumnoCmd, Long id) {
-        Alumno aEditar = alumnoRepository.findById(id)
+    public Alumno edit(EditAlumnoCmd editAlumnoCmd, Long id) {
+        return alumnoRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editAlumnoCmd.nombre());
                     old.setUsername(editAlumnoCmd.username());
@@ -57,13 +82,11 @@ public class AlumnoService {
                     old.setPassword(editAlumnoCmd.password());
                     old.setRole(editAlumnoCmd.role());
                     return alumnoRepository.save(old);
-                }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: "+ id));
-
-        return GetAlumnoDto.of(aEditar);
+                }).orElseThrow(() -> new EntityNotFoundException("No hay alumno con ID: " + id));
     }
-
 
     public void delete(Long id) {
         alumnoRepository.deleteById(id);
     }
+
 }

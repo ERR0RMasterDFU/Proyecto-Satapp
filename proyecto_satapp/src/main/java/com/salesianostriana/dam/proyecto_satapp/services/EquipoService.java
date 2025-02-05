@@ -3,9 +3,11 @@ package com.salesianostriana.dam.proyecto_satapp.services;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.EditEquipoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoSinListasDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Equipo;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,44 +22,53 @@ import java.util.Optional;
 public class EquipoService {
 
     private final EquipoRepository equipoRepository;
+    private final IncidenciaRepository incidenciaRepository;
     private final UbicacionRepository ubicacionRepository;
 
 
-    public List<GetEquipoSinListasDto> findAll() {
-        List<GetEquipoSinListasDto> result = equipoRepository.findAllEquiposSinListasDto();
-        if (result.isEmpty())
-            throw new EntityNotFoundException("No existen equipos con esos criterios de búsqueda");
-        return result;
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetIncidenciaBasicaDto> getIncidenciasByEquipoId(Long id) {
+        return incidenciaRepository.findIncidenciasByEquipoId(id);
     }
 
-    public GetEquipoDto findById(Long id) {
-        Optional<Equipo> equipoOptional = equipoRepository.findById(id);
-        // FALTAN LAS INCIDENCIAS
-        if (equipoOptional.isEmpty()) {
-            throw new EntityNotFoundException("No existe ningún Equipo con ID: " + id);
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
+
+    public List<GetEquipoSinListasDto> findAll() {
+        List<GetEquipoSinListasDto> result = equipoRepository.findAllEquiposSinListasDto();
+        if (result.isEmpty()) {
+            throw new EntityNotFoundException("No existen equipos con esos criterios de búsqueda");
         } else {
-            return GetEquipoDto.of(equipoOptional.get());
+            return result;
+        }
+    }
+
+    public Equipo findById(Long id) {
+        Optional<Equipo> equipoOptional = equipoRepository.findById(id);
+
+        if (equipoOptional.isPresent()) {
+            return equipoOptional.get();
+        } else {
+            throw new EntityNotFoundException("No existe ningún Equipo con ID: " + id);
         }
     }
 
     public Equipo save(EditEquipoCmd editEquipoCmd) {
 
         Optional<Ubicacion> ubicacionOpt = ubicacionRepository.findById(editEquipoCmd.ubicacionId());
-        Ubicacion ubicacion = null;
 
         if (ubicacionOpt.isPresent()) {
-            ubicacion = ubicacionOpt.get();
+            Equipo equipo = Equipo.builder()
+                    .nombre(editEquipoCmd.nombre())
+                    .caracteristicas(editEquipoCmd.caracteristicas())
+                    .ubicacion(ubicacionOpt.get())
+                    .build();
+
+            return equipoRepository.save(equipo);
         } else {
             throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + editEquipoCmd.ubicacionId());
         }
-
-        Equipo equipo = Equipo.builder()
-                .nombre(editEquipoCmd.nombre())
-                .caracteristicas(editEquipoCmd.caracteristicas())
-                .ubicacion(ubicacion)
-                .build();
-
-        return equipoRepository.save(equipo);
     }
 
     public Equipo edit(EditEquipoCmd editEquipoCmd, Long id) {

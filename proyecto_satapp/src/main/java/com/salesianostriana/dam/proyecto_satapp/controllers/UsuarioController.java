@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
@@ -47,7 +48,10 @@ public class UsuarioController {
     })
     @GetMapping("/{id}")
     public GetUsuarioDto getById(@PathVariable Long id) {
-        return usuarioService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                usuarioService.getIncidenciasByUsuarioId(id);
+        Usuario usuario = usuarioService.findById(id);
+        return GetUsuarioDto.of(usuario, listaIncidencias);
     }
 
     @Operation(summary = "Crear un nuevo usuario")
@@ -59,8 +63,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody EditUsuarioCmd editUsuarioCmd) {
         Usuario nuevoUsuario = usuarioService.save(editUsuarioCmd);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(nuevoUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @Operation(summary = "Editar un usuario existente")
@@ -73,7 +76,10 @@ public class UsuarioController {
     })
     @PutMapping("/{id}")
     public GetUsuarioDto edit(@PathVariable Long id, @RequestBody EditUsuarioCmd editUsuarioCmd) {
-        return usuarioService.edit(editUsuarioCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                usuarioService.getIncidenciasByUsuarioId(id);
+        Usuario usuario = usuarioService.edit(editUsuarioCmd, id);
+        return GetUsuarioDto.of(usuario, listaIncidencias);
     }
 
     @Operation(summary = "Eliminar un usuario")

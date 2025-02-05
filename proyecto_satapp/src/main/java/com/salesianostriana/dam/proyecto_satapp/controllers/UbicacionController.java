@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
@@ -47,7 +49,13 @@ public class UbicacionController {
     })
     @GetMapping("/{id}")
     public GetUbicacionDto getById(@PathVariable Long id) {
-        return ubicacionService.findById(id);
+        List<GetEquipoBasicoDto> listaEquipos =
+                ubicacionService.getEquiposByUbicacionId(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                ubicacionService.getIncidenciasByUbicacionId(id);
+        Ubicacion ubicacion = ubicacionService.findById(id);
+
+        return GetUbicacionDto.of(ubicacion, listaEquipos, listaIncidencias);
     }
 
     @Operation(summary = "Crear una nueva ubicación")
@@ -72,7 +80,13 @@ public class UbicacionController {
     })
     @PutMapping("/{id}")
     public GetUbicacionDto edit(@RequestBody EditUbicacionCmd aEditar, @PathVariable Long id) {
-        return ubicacionService.edit(aEditar, id);
+        List<GetEquipoBasicoDto> listaEquipos =
+                ubicacionService.getEquiposByUbicacionId(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                ubicacionService.getIncidenciasByUbicacionId(id);
+        Ubicacion ubicacion = ubicacionService.edit(aEditar, id);
+
+        return GetUbicacionDto.of(ubicacion, listaEquipos, listaIncidencias);
     }
 
     @Operation(summary = "Eliminar una ubicación")

@@ -1,6 +1,6 @@
-package com.salesianostriana.dam.proyecto_satapp.dto.usuarios;
+package com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno;
 
-public record EditTecnicoCmd(
+public record EditAlumnoCmd(
         String nombre,
         String username,
         String password,

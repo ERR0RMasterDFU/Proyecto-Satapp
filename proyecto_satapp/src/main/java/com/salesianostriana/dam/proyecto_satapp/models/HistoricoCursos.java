@@ -23,10 +23,10 @@ public class HistoricoCursos {
     private Alumno alumno;
 
     @Id
-    private String cursoEscolar;
+    private String curso;
 
     @Id
-    private int curso;
+    private String cursoEscolar;
 
 
     // EQUALS & HASH CODE ----------------------------------------------------------------------------------------------------------------------------------------------------
