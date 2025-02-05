@@ -34,6 +34,32 @@ public class PersonalController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetPersonalBasicoDto.class),
                             examples = @ExampleObject(value = """ 
+                                    [
+                                        {
+                                            "id": 7,
+                                            "nombre": "Elizabeth Joestar",
+                                            "username": "LisaLisa",
+                                            "email": "lisa.lisa@gmail.com",
+                                            "role": "ADMIN",
+                                            "tipo": "PROFESOR"
+                                        },
+                                        {
+                                            "id": 8,
+                                            "nombre": "Yoshikage Kira",
+                                            "username": "KillerQueen",
+                                            "email": "kira.yoshikage@gmail.com",
+                                            "role": "USER",
+                                            "tipo": "PAS"
+                                        },
+                                        {
+                                            "id": 9,
+                                            "nombre": "Gyro Zeppeli",
+                                            "username": "BallBreaker",
+                                            "email": "gyro.zeppeli@gmail.com",
+                                            "role": "ADMIN",
+                                            "tipo": "PROFESOR"
+                                        }
+                                    ]
                                     """)))
     })
     @GetMapping
@@ -47,6 +73,16 @@ public class PersonalController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetPersonalDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "id": 8,
+                                        "nombre": "Yoshikage Kira",
+                                        "username": "KillerQueen",
+                                        "password": "Qu13tL1f3",
+                                        "email": "kira.yoshikage@gmail.com",
+                                        "role": "USER",
+                                        "tipo": "PAS",
+                                        "listaIncidencias": []
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Personal no encontrado",
                     content = @Content)
@@ -65,6 +101,14 @@ public class PersonalController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetPersonalDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre": "Pannacotta Fugo",
+                                        "username": "Purple Haze",
+                                        "password": "54N4C0TT4",
+                                        "email": "vento.aureo@gmail.com",
+                                        "role": "USER",
+                                        "tipo": "PROFESOR"
+                                    }
                                     """)))
     })
     @PostMapping
@@ -79,6 +123,14 @@ public class PersonalController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetPersonalDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre": "Enrico Pucci",
+                                        "username": "Made in Heaven",
+                                        "password": "CmO05d10",
+                                        "email": "another.universe@gmail.com",
+                                        "role": "ADMIN",
+                                        "tipo": "PAS"
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Personal no encontrado",
                     content = @Content)

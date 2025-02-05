@@ -34,7 +34,44 @@ public class CategoriaController {
             @ApiResponse(responseCode = "200", description = "Lista de categorías obtenida correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetCategoriaSinListasDto.class),
-                            examples = @ExampleObject(value = """ 
+                            examples = @ExampleObject(value = """
+                                    [
+                                        {
+                                            "id": 1,
+                                            "nombre": "ComputaciÃ³n y comunicaciÃ³n.",
+                                            "categoriaPadre": "Ninguna"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "nombre": "ElectrodomÃ©stico",
+                                            "categoriaPadre": "Ninguna"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "nombre": "Ordenador",
+                                            "categoriaPadre": "ComputaciÃ³n y comunicaciÃ³n."
+                                        },
+                                        {
+                                            "id": 4,
+                                            "nombre": "Tablet",
+                                            "categoriaPadre": "ComputaciÃ³n y comunicaciÃ³n."
+                                        },
+                                        {
+                                            "id": 5,
+                                            "nombre": "MÃ³vil",
+                                            "categoriaPadre": "ComputaciÃ³n y comunicaciÃ³n."
+                                        },
+                                        {
+                                            "id": 6,
+                                            "nombre": "Radio",
+                                            "categoriaPadre": "ElectrodomÃ©stico"
+                                        },
+                                        {
+                                            "id": 7,
+                                            "nombre": "Aire acondicionado",
+                                            "categoriaPadre": "ElectrodomÃ©stico"
+                                        }
+                                    ] 
                                     """)))
     })
     @GetMapping("")
@@ -48,6 +85,43 @@ public class CategoriaController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetCategoriaDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "id": 1,
+                                        "nombre": "ComputaciÃ³n y comunicaciÃ³n.",
+                                        "categoriaPadre": "Ninguna",
+                                        "listaSubCategorias": [
+                                            {
+                                                "id": 3,
+                                                "nombre": "Ordenador"
+                                            },
+                                            {
+                                                "id": 4,
+                                                "nombre": "Tablet"
+                                            },
+                                            {
+                                                "id": 5,
+                                                "nombre": "MÃ³vil"
+                                            }
+                                        ],
+                                        "listaIncidencias": [
+                                            {
+                                                "id": 1,
+                                                "fecha": "2025-02-05T10:00:00",
+                                                "titulo": "Fallo en la red Wi-Fi",
+                                                "descripcion": "No hay conexiÃ³n en la sala 102 debido a un fallo en el router.",
+                                                "estado": "PENDIENTE",
+                                                "urgencia": true
+                                            },
+                                            {
+                                                "id": 6,
+                                                "fecha": "2025-02-05T15:30:00",
+                                                "titulo": "Problemas con la impresora",
+                                                "descripcion": "La impresora no imprime en el aula 102.",
+                                                "estado": "TRABAJANDO",
+                                                "urgencia": false
+                                            }
+                                        ]
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada",
                     content = @Content)
@@ -69,6 +143,9 @@ public class CategoriaController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Categoria.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre": "Ordenadores"
+                                    }
                                     """)))
     })
     @PostMapping("")
@@ -83,6 +160,9 @@ public class CategoriaController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetCategoriaDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre":"Robótica"
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Categoría no encontrada",
                     content = @Content)

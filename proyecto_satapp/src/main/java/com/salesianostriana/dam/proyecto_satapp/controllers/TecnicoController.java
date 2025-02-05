@@ -35,6 +35,29 @@ public class TecnicoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetTecnicoDto.class),
                             examples = @ExampleObject(value = """
+                                    [
+                                        {
+                                            "id": 10,
+                                            "nombre": "Emporio Alnino",
+                                            "username": "GhostRoom",
+                                            "email": "emporio.alnino@gmail.com",
+                                            "role": "ADMIN"
+                                        },
+                                        {
+                                            "id": 11,
+                                            "nombre": "Hot Pants",
+                                            "username": "CreamStarter",
+                                            "email": "hot.pants@gmail.com",
+                                            "role": "USER"
+                                        },
+                                        {
+                                            "id": 12,
+                                            "nombre": "Funny Valentine",
+                                            "username": "DirtyDeedsDoneDirtCheap",
+                                            "email": "valentine.funny@gmail.com",
+                                            "role": "USER"
+                                        }
+                                    ]
                                     """)))
     })
     @GetMapping
@@ -48,6 +71,16 @@ public class TecnicoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetTecnicoDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "id": 12,
+                                        "nombre": "Funny Valentine",
+                                        "username": "DirtyDeedsDoneDirtCheap",
+                                        "password": "D4CS4CR1F1C3",
+                                        "email": "valentine.funny@gmail.com",
+                                        "role": "USER",
+                                        "listaIncidencias": [],
+                                        "listaIncidenciasTecnico": []
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Técnico no encontrado",
                     content = @Content)
@@ -69,6 +102,13 @@ public class TecnicoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Tecnico.class),
                             examples = @ExampleObject(value = """
+                                    {
+                                        "nombre":"Josuke Higashikata",
+                                        "username":"Crazy Diamond",
+                                        "password":"Joj05k3h1",
+                                        "email":"diamond.isUnbreakable@gmail.com",
+                                        "role": "USER"
+                                    }
                                     """)))
     })
     @PostMapping
@@ -83,6 +123,13 @@ public class TecnicoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetTecnicoDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "nombre":"Jean Pierre Polnareff",
+                                        "username":"Silver Chariot",
+                                        "password":"MrpR351Den7",
+                                        "email":"cocojumbo.key@gmail.com",
+                                        "role": "ADMIN"
+                                    }
                                     """))),
             @ApiResponse(responseCode = "404", description = "Técnico no encontrado",
                     content = @Content)

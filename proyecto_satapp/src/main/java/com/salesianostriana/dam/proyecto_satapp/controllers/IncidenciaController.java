@@ -30,6 +30,15 @@ public class IncidenciaController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetIncidenciaSinUsuarioDto.class),
                             examples = @ExampleObject(value = """ 
+                                    {
+                                        "titulo": "Ordenador estropeado",
+                                        "descripcion": "El ordenador ha cogido fuego y ha sido reducido a cenizas",
+                                        "estado": "ABIERTA",
+                                        "urgencia": true,
+                                        "categoriaId": 3,
+                                        "equipoId": 1,
+                                        "ubicacionId": 2
+                                    }
                                     """)))
     })
     @PostMapping

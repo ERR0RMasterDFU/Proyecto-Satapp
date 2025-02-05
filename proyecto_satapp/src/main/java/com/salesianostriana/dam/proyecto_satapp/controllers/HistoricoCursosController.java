@@ -31,7 +31,18 @@ public class HistoricoCursosController {
             @ApiResponse(responseCode = "200", description = "Lista de cursos obtenida correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetHistoricoCursosBasicoDto.class),
-                            examples = @ExampleObject(value = "[]")))
+                            examples = @ExampleObject(value = """
+                                    [
+                                        {
+                                            "curso": "1ÂºDAM",
+                                            "cursoEscolar": "2023-2024"
+                                        },
+                                        {
+                                            "curso": "1ÂºElectricidad",
+                                            "cursoEscolar": "2024-2025"
+                                        }
+                                    ]
+                                    """)))
     })
     @GetMapping("/{id}")
     public List<GetHistoricoCursosBasicoDto> getAllHistoricoCursosByAlumnoId(@PathVariable Long id) {
@@ -43,7 +54,13 @@ public class HistoricoCursosController {
             @ApiResponse(responseCode = "201", description = "Historial de cursos creado correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetHistoricoCursosDto.class),
-                            examples = @ExampleObject(value = "{}")))
+                            examples = @ExampleObject(value = """
+                                    {
+                                        "alumnoId": "6",
+                                        "curso": "1º DAM",
+                                        "cursoEscolar": "2022-2023"
+                                    }
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<GetHistoricoCursosDto> create(@RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {
@@ -56,7 +73,11 @@ public class HistoricoCursosController {
             @ApiResponse(responseCode = "200", description = "Historial de cursos actualizado correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetHistoricoCursosDto.class),
-                            examples = @ExampleObject(value = "{}")))
+                            examples = @ExampleObject(value = """
+                                    {
+                                        "curso": "2º DAM"
+                                    }
+                                    """)))
     })
     @PutMapping("/{id}/curso_escolar/{cursoEscolar}")
     public GetHistoricoCursosDto edit(@PathVariable Long id, @PathVariable String cursoEscolar, @RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {
