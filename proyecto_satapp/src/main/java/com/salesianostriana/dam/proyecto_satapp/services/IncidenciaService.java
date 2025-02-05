@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -22,56 +23,61 @@ public class IncidenciaService {
 
     public Incidencia save(EditIncidenciaCmd editIncidenciaCmd) {
 
-        Incidencia incidencia = new Incidencia();
-        incidencia.setFecha(editIncidenciaCmd.fecha());
-        incidencia.setTitulo(editIncidenciaCmd.titulo());
-        incidencia.setDescripcion(editIncidenciaCmd.descripcion());
-        incidencia.setEstado(editIncidenciaCmd.estado());
-        incidencia.setUrgencia(editIncidenciaCmd.urgencia());
+        Equipo equipo = null;
+        Ubicacion ubicacion = null;
 
-        if(editIncidenciaCmd.categoriaId() != null) {
-            Optional<Categoria> optionalCategoria = categoriaRepository.findById(editIncidenciaCmd.categoriaId());
+        Optional<Categoria> optionalCategoria = categoriaRepository.findById(editIncidenciaCmd.categoriaId());
 
-            if(optionalCategoria.isEmpty()) {
-                throw new EntityNotFoundException
-                        ("No existe ninguna Categoria con ID: " + editIncidenciaCmd.categoriaId());
-            } else {
-                incidencia.setCategoria(optionalCategoria.get());
-            }
+        if(optionalCategoria.isEmpty()) {
+            throw new EntityNotFoundException
+                    ("No existe ninguna Categoria con ID: " + editIncidenciaCmd.categoriaId());
         }
 
+    /*
         if(editIncidenciaCmd.usuarioId() != null) {
             Optional<Usuario> optionalUsuario = usuarioRepository.findById(editIncidenciaCmd.usuarioId());
 
-            if(optionalUsuario.isEmpty()) {
-                throw new EntityNotFoundException
-                        ("No existe ningún Usuario con ID: " + editIncidenciaCmd.usuarioId());
+            if(optionalUsuario.isPresent()) {
+                Usuario
             } else {
                 incidencia.setUsuario(optionalUsuario.get());
+                throw new EntityNotFoundException
+                        ("No existe ningún Usuario con ID: " + editIncidenciaCmd.usuarioId());
             }
-        }
+        }*/
 
         if(editIncidenciaCmd.equipoId() != null) {
             Optional<Equipo> optionalEquipo = equipoRepository.findById(editIncidenciaCmd.equipoId());
 
-            if(optionalEquipo.isEmpty()) {
+            if(optionalEquipo.isPresent()) {
+                equipo = optionalEquipo.get();
+            } else {
                 throw new EntityNotFoundException
                         ("No existe ningún Equipo con ID: " + editIncidenciaCmd.equipoId());
-            } else {
-                incidencia.setEquipo(optionalEquipo.get());
             }
         }
 
         if(editIncidenciaCmd.ubicacionId() != null) {
             Optional<Ubicacion> optionalUbicacion = ubicacionRepository.findById(editIncidenciaCmd.ubicacionId());
 
-            if(optionalUbicacion.isEmpty()) {
+            if(optionalUbicacion.isPresent()) {
+                ubicacion = optionalUbicacion.get();
+            } else {
                 throw new EntityNotFoundException
                         ("No existe ninguna Ubicación con ID: " + editIncidenciaCmd.ubicacionId());
-            } else {
-                incidencia.setUbicacion(optionalUbicacion.get());
             }
         }
+
+        Incidencia incidencia = Incidencia.builder()
+                .fecha(LocalDateTime.now())
+                .titulo(editIncidenciaCmd.titulo())
+                .descripcion(editIncidenciaCmd.descripcion())
+                .estado(editIncidenciaCmd.estado())
+                .urgencia(editIncidenciaCmd.urgencia())
+                .categoria(optionalCategoria.get())
+                .equipo(equipo)
+                .ubicacion(ubicacion)
+                .build();
 
         return incidenciaRepository.save(incidencia);
     }

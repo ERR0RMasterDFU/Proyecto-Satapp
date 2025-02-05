@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.EditUsuarioCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
@@ -26,7 +27,10 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public GetUsuarioDto getById(@PathVariable Long id) {
-        return usuarioService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                usuarioService.getIncidenciasByUsuarioId(id);
+        Usuario usuario = usuarioService.findById(id);
+        return GetUsuarioDto.of(usuario, listaIncidencias);
     }
 
     @PostMapping
@@ -37,7 +41,10 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public GetUsuarioDto edit(@PathVariable Long id, @RequestBody EditUsuarioCmd editUsuarioCmd) {
-        return usuarioService.edit(editUsuarioCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                usuarioService.getIncidenciasByUsuarioId(id);
+        Usuario usuario = usuarioService.edit(editUsuarioCmd, id);
+        return GetUsuarioDto.of(usuario, listaIncidencias);
     }
 
     @DeleteMapping("/{id}")

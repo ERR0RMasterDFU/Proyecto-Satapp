@@ -1,5 +1,7 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.EditAlumnoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.alumno.GetAlumnoDto;
@@ -28,7 +30,13 @@ public class AlumnoController {
 
     @GetMapping("/{id}")
     public GetAlumnoDto getById(@PathVariable Long id) {
-        return alumnoService.findById(id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                alumnoService.getIncidenciasByAlumnoId(id);
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoService.getHistoricoCursosByAlumnoId(id);
+        Alumno alumno = alumnoService.findById(id);
+
+        return GetAlumnoDto.of(alumno, listaIncidencias, listaHistoricoCursos);
     }
 
     @PostMapping
@@ -39,7 +47,13 @@ public class AlumnoController {
 
     @PutMapping("/{id}")
     public GetAlumnoDto edit(@PathVariable Long id, @RequestBody EditAlumnoCmd editAlumnoCmd) {
-        return alumnoService.edit(editAlumnoCmd, id);
+        List<GetIncidenciaBasicaDto> listaIncidencias =
+                alumnoService.getIncidenciasByAlumnoId(id);
+        List<GetHistoricoCursosBasicoDto> listaHistoricoCursos =
+                alumnoService.getHistoricoCursosByAlumnoId(id);
+        Alumno alumno = alumnoService.edit(editAlumnoCmd, id);
+
+        return GetAlumnoDto.of(alumno, listaIncidencias, listaHistoricoCursos);
     }
 
     @DeleteMapping("/{id}")

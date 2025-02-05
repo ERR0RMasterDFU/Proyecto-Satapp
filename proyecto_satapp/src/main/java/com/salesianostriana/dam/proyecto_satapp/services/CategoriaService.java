@@ -4,8 +4,10 @@ import com.salesianostriana.dam.proyecto_satapp.dto.categoria.EditCatgeoriaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinCategoriaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Categoria;
 import com.salesianostriana.dam.proyecto_satapp.repositories.CategoriaRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,28 +20,36 @@ import java.util.Optional;
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
+
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetCategoriaBasicaDto> getSubCategoriasDtoById(Long id) {
+        return categoriaRepository.findSubCategoriasDtoById(id);
+    }
+
+    public List<GetIncidenciaSinCategoriaDto> getIncidenciasByCategoriaId(Long id) {
+        return incidenciaRepository.findIncidenciasByCategoriaId(id);
+    }
+
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
 
     public List<GetCategoriaSinListasDto> findAll() {
         List<GetCategoriaSinListasDto> result = categoriaRepository.findAllCategoriasDto();
-        if (result.isEmpty())
+        if (result.isEmpty()) {
             throw new EntityNotFoundException("No existen categorías con esos criterios de búsqueda");
-        return result;
+        } else {
+            return result;
+        }
     }
 
-    public GetCategoriaDto findById(Long id) {
+    public Categoria findById(Long id) {
         Optional<Categoria> categoriaOptional = categoriaRepository.findById(id);
 
         if (categoriaOptional.isPresent()) {
-            Categoria categoria = categoriaOptional.get();
-
-            List<GetCategoriaBasicaDto> listaSubCategoriaDto =
-                    categoriaRepository.findSubCategoriasDtoById(id);
-
-            // FALTAN LAS INCIDENCIAS
-
-            return GetCategoriaDto.of(categoria, listaSubCategoriaDto);
-
+            return categoriaOptional.get();
         } else {
             throw new EntityNotFoundException("No existe ninguna Categoría con ID: " + id);
         }
@@ -52,25 +62,17 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public GetCategoriaDto edit(EditCatgeoriaCmd editCatgeoriaCmd, Long id) {
-
-        List<GetCategoriaBasicaDto> listaSubCategoriaDto =
-                categoriaRepository.findSubCategoriasDtoById(id);
-
-        // FALTAN INCIDENCIAS
-
-        Categoria categoriaAEditar = categoriaRepository.findById(id)
+    public Categoria edit(EditCatgeoriaCmd editCatgeoriaCmd, Long id) {
+        return categoriaRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editCatgeoriaCmd.nombre());
                     return categoriaRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna categoría con ID: "+ id));
-
-        return GetCategoriaDto.of(categoriaAEditar, listaSubCategoriaDto);
     }
 /*
     public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
+        categoriaRepository.deleteById(id);
     }
 */
 

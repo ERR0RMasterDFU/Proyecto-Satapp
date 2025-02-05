@@ -3,9 +3,8 @@ package com.salesianostriana.dam.proyecto_satapp.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -21,9 +20,7 @@ public class Incidencia {
     @GeneratedValue
     private Long id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate fecha;
-
+    private LocalDateTime fecha;
     private String titulo;
     private String descripcion;
     private Estado estado;

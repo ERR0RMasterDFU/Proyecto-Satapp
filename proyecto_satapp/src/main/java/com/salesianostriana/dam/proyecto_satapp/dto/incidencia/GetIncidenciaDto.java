@@ -1,30 +1,28 @@
 package com.salesianostriana.dam.proyecto_satapp.dto.incidencia;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.models.Estado;
 import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
 import com.salesianostriana.dam.proyecto_satapp.models.Usuario;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record GetIncidenciaDto(
         Long id,
-        LocalDate fecha,
+        LocalDateTime fecha,
         String titulo,
         String descripcion,
         Estado estado,
         boolean urgencia,
-        //GetSubCategoriaDto categoria,
-        String categoria,
-        Usuario usuario,
+        GetCategoriaBasicaDto categoria,
+        GetUsuarioBasicoDto usuario,
         GetEquipoBasicoDto equipo,
-        //GetUbicacionSinListasDto ubicacion
-        String ubicacion
+        GetUbicacionSinListasDto ubicacion
 ) {
     public static GetIncidenciaDto of(Incidencia i) {
-
-        String ubicacion = (i.getUbicacion() != null) ? i.getUbicacion().getNombre() : "Ninguna";
-
         return new GetIncidenciaDto(
                 i.getId(),
                 i.getFecha(),
@@ -32,12 +30,10 @@ public record GetIncidenciaDto(
                 i.getDescripcion(),
                 i.getEstado(),
                 i.isUrgencia(),
-                //GetSubCategoriaDto.of(i.getCategoria()),
-                i.getCategoria().getNombre(),
-                i.getUsuario(),
+                GetCategoriaBasicaDto.of(i.getCategoria()),
+                GetUsuarioBasicoDto.of(i.getUsuario()),
                 GetEquipoBasicoDto.of(i.getEquipo()),
-                //GetUbicacionSinListasDto.of(i.getUbicacion()),
-                ubicacion
+                GetUbicacionSinListasDto.of(i.getUbicacion())
         );
     }
 }

@@ -1,12 +1,14 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.EditUbicacionCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
 import com.salesianostriana.dam.proyecto_satapp.error.UbicacionEnUsoException;
 import com.salesianostriana.dam.proyecto_satapp.models.Ubicacion;
 import com.salesianostriana.dam.proyecto_satapp.repositories.EquipoRepository;
+import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.UbicacionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +23,36 @@ public class UbicacionService {
 
     private final UbicacionRepository ubicacionRepository;
     private final EquipoRepository equipoRepository;
+    private final IncidenciaRepository incidenciaRepository;
 
+
+    // MÉOTDOS NECESARIOS PARA CONVERSIÓN A DTO EN EL CONTROLADOR ------------------------------------------------------------------------------------------------------------
+
+    public List<GetEquipoBasicoDto> getEquiposByUbicacionId(Long id) {
+        return equipoRepository.findEquiposByUbicacionId(id);
+    }
+
+    public List<GetIncidenciaBasicaDto> getIncidenciasByUbicacionId(Long id) {
+        return incidenciaRepository.findIncidenciasByUbicacionId(id);
+    }
+
+
+    // MÉOTDOS PARA EL CONTROLADOR (CRUD) ------------------------------------------------------------------------------------------------------------------------------------
 
     public List<GetUbicacionSinListasDto> findAll() {
         List<GetUbicacionSinListasDto> result = ubicacionRepository.findAllSinListas();
-        if (result.isEmpty())
+        if(result.isEmpty()) {
             throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
-        return result;
+        } else {
+            return result;
+        }
     }
 
-    public GetUbicacionDto findById(Long id) {
+    public Ubicacion findById(Long id) {
         Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
 
         if (ubicacionOptional.isPresent()) {
-            List<GetEquipoBasicoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
-            // FALTAN INCIDENCIAS
-            return GetUbicacionDto.of(ubicacionOptional.get(), listaEquipos);
+            return ubicacionOptional.get();
         } else {
             throw new EntityNotFoundException("No existe ninguna Ubicación con ID: " + id);
         }
@@ -49,33 +65,30 @@ public class UbicacionService {
         return ubicacionRepository.save(nuevaUbicacion);
     }
 
-    public GetUbicacionDto edit(EditUbicacionCmd editUbicacionCmd, Long id) {
-        List<GetEquipoBasicoDto> listaEquipos = equipoRepository.findEquiposByUbicacionId(id);
-        // FALTAN LAS INCIDENCIAS
-        Ubicacion ubicacionAEditar = ubicacionRepository.findById(id)
+    public Ubicacion edit(EditUbicacionCmd editUbicacionCmd, Long id) {
+        return ubicacionRepository.findById(id)
                 .map(old -> {
                     old.setNombre(editUbicacionCmd.nombre());
                     return ubicacionRepository.save(old);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
-
-        return GetUbicacionDto.of(ubicacionAEditar, listaEquipos);
     }
 
     public void delete(Long id) {
-        GetUbicacionDto ubicacion = findById(id);
+        Ubicacion ubicacion = findById(id);
 
-        if(ubicacion.listaEquipos().isEmpty() //&& ubicacion.listaIncidencias().isEmpty
-        ) {
+        if(ubicacion.getListaEquipos().isEmpty() && ubicacion.getListaIncidencias().isEmpty()) {
             ubicacionRepository.deleteById(id);
         } else {
-            if(!ubicacion.listaEquipos().isEmpty() //&& !ubicacion.listaIncidencias().isEmpty
-            ) {
-                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay equipos en ella e incidencias asociadas.");
-            } else if(!ubicacion.listaEquipos().isEmpty()) {
-                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay equipos en ella.");
+            if(!ubicacion.getListaEquipos().isEmpty() && !ubicacion.getListaIncidencias().isEmpty()) {
+                throw new UbicacionEnUsoException
+                        ("No puedes eliminar esta ubicación porque hay equipos en ella e incidencias asociadas.");
+            } else if(!ubicacion.getListaEquipos().isEmpty()) {
+                throw new UbicacionEnUsoException
+                        ("No puedes eliminar esta ubicación porque hay equipos en ella.");
             } else {
-                throw new UbicacionEnUsoException("No puedes eliminar esta ubicación porque hay incicidencias asociadas.");
+                throw new UbicacionEnUsoException
+                        ("No puedes eliminar esta ubicación porque hay incicidencias asociadas.");
             }
         }
     }
