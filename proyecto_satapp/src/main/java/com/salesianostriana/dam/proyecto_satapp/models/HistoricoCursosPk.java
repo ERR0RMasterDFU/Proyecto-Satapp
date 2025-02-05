@@ -8,24 +8,10 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class HistoricoCursosPk implements Serializable {
 
     private Alumno alumno;
     private String cursoEscolar;
-    private String curso;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HistoricoCursosPk that = (HistoricoCursosPk) o;
-        return curso == that.curso &&
-                Objects.equals(alumno, that.alumno) &&
-                Objects.equals(cursoEscolar, that.cursoEscolar);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(alumno, cursoEscolar, curso);
-    }
 }
