@@ -22,7 +22,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 55c57ba672f0173a7fcfdf75ac16103979fc0f1f
 
 @RestController
 @RequiredArgsConstructor
@@ -32,13 +35,24 @@ public class HistoricoCursosController {
 
     private final HistoricoCursosService historicoCursosService;
 
+    @Operation(summary = "Obtener el historial de cursos de un alumno")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de cursos obtenida correctamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetHistoricoCursosBasicoDto.class),
+                            examples = @ExampleObject(value = "[]")))
+    })
+    @GetMapping("/{id}")
+    public List<GetHistoricoCursosBasicoDto> getAllHistoricoCursosByAlumnoId(@PathVariable Long id) {
+        return historicoCursosService.getHistoricoCursosByAlumnoId(id);
+    }
+
     @Operation(summary = "Crear un nuevo historial de cursos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Historial de cursos creado correctamente",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetHistoricoCursosDto.class),
-                            examples = @ExampleObject(value = """ 
-                                    """)))
+                            examples = @ExampleObject(value = "{}")))
     })
     @GetMapping("/{id}")
     public List<GetHistoricoCursosBasicoDto> getAllHistoricoCursosByAlumnoId(@PathVariable Long id) {
@@ -52,17 +66,40 @@ public class HistoricoCursosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetHistoricoCursosDto.of(nuevoHistoricoCursos));
     }
 
+<<<<<<< HEAD
+    @Operation(summary = "Editar un historial de cursos específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Historial de cursos actualizado correctamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetHistoricoCursosDto.class),
+                            examples = @ExampleObject(value = "{}")))
+    })
+=======
+>>>>>>> 55c57ba672f0173a7fcfdf75ac16103979fc0f1f
     @PutMapping("/{id}/curso_escolar/{cursoEscolar}")
     public GetHistoricoCursosDto edit(@PathVariable Long id, @PathVariable String cursoEscolar, @RequestBody EditHistoricoCursosCmd editHistoricoCursosCmd) {
         HistoricoCursos historicoCursos = historicoCursosService.edit(editHistoricoCursosCmd, id, cursoEscolar);
         return GetHistoricoCursosDto.of(historicoCursos);
     }
 
+<<<<<<< HEAD
+    @Operation(summary = "Eliminar un historial de cursos específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Historial de cursos eliminado correctamente",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{}")))
+    })
+=======
+>>>>>>> 55c57ba672f0173a7fcfdf75ac16103979fc0f1f
     @DeleteMapping("/{id}/curso_escolar/{cursoEscolar}")
     public ResponseEntity<?> delete(@PathVariable Long id, @PathVariable String cursoEscolar) {
         historicoCursosService.delete(id, cursoEscolar);
         return ResponseEntity.noContent().build();
     }
+<<<<<<< HEAD
+}
+=======
 
 }
 
+>>>>>>> 55c57ba672f0173a7fcfdf75ac16103979fc0f1f
