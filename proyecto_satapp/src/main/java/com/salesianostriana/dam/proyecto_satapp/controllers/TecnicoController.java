@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
+
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.EditTecnicoCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.tecnico.GetTecnicoBasicoDto;
@@ -8,6 +9,7 @@ import com.salesianostriana.dam.proyecto_satapp.models.Tecnico;
 import com.salesianostriana.dam.proyecto_satapp.services.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +33,9 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de técnicos obtenida correctamente.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetTecnicoBasicoDto.class)))
+                            schema = @Schema(implementation = GetTecnicoDto.class),
+                            examples = @ExampleObject(value = """
+                                    """)))
     })
     @GetMapping
     public List<GetTecnicoBasicoDto> getAll() {
@@ -42,8 +46,10 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Técnico encontrado.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetTecnicoDto.class))),
-            @ApiResponse(responseCode = "404", description = "Técnico no encontrado.",
+                            schema = @Schema(implementation = GetTecnicoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
+            @ApiResponse(responseCode = "404", description = "Técnico no encontrado",
                     content = @Content)
     })
     @GetMapping("/{id}")
@@ -61,7 +67,9 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Técnico creado correctamente.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Tecnico.class)))
+                            schema = @Schema(implementation = Tecnico.class),
+                            examples = @ExampleObject(value = """
+                                    """)))
     })
     @PostMapping
     public ResponseEntity<Tecnico> create(@RequestBody EditTecnicoCmd editTecnicoCmd) {
@@ -73,8 +81,10 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Técnico editado correctamente.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GetTecnicoDto.class))),
-            @ApiResponse(responseCode = "404", description = "Técnico no encontrado.",
+                            schema = @Schema(implementation = GetTecnicoDto.class),
+                            examples = @ExampleObject(value = """ 
+                                    """))),
+            @ApiResponse(responseCode = "404", description = "Técnico no encontrado",
                     content = @Content)
     })
     @PutMapping("/{id}")
@@ -92,7 +102,7 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Técnico eliminado correctamente.",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Técnico no encontrado.",
+            @ApiResponse(responseCode = "404", description = "Técnico no encontrado",
                     content = @Content)
     })
     @DeleteMapping("/{id}")
