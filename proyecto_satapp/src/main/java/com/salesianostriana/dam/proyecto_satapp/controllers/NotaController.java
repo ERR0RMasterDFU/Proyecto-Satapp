@@ -1,14 +1,13 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.EditHistoricoCursosCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.CreateNotaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.EditNotaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 import com.salesianostriana.dam.proyecto_satapp.models.Nota;
-import com.salesianostriana.dam.proyecto_satapp.services.IncidenciaService;
 import com.salesianostriana.dam.proyecto_satapp.services.NotaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -61,9 +60,27 @@ public class NotaController {
                                     """)))
     })
     @PostMapping("")
-    public ResponseEntity<GetNotaDto> create(@RequestBody EditNotaCmd editNotaCmd) {
-        Nota nuevaNota = notaService.save(editNotaCmd);
+    public ResponseEntity<GetNotaDto> create(@RequestBody CreateNotaCmd createNotaCmd) {
+        Nota nuevaNota = notaService.save(createNotaCmd);
         return ResponseEntity.status(HttpStatus.CREATED).body(GetNotaDto.of(nuevaNota));
+    }
+
+    @Operation(summary = "Editar una nota específica")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Nota actualizada correctamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetNotaDto.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                        "contenido": "Se ha desintegrado parte del aparato misteriosamente."
+                                    }
+                                    """)))
+    })
+    @PutMapping("/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
+    public GetNotaDto edit(@PathVariable Long idIncidencia, @PathVariable String fecha,
+                                      @PathVariable Long idAutor, @RequestBody EditNotaCmd editNotaCmd) {
+        Nota nota = notaService.edit(editNotaCmd, idIncidencia, fecha, idAutor);
+        return GetNotaDto.of(nota);
     }
 
     @Operation(summary = "Elimina una nota específica")
