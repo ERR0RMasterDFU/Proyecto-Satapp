@@ -32,8 +32,8 @@ public record GetIncidenciaDto(
                 i.isUrgencia(),
                 GetCategoriaBasicaDto.of(i.getCategoria()),
                 GetUsuarioBasicoDto.of(i.getUsuario()),
-                GetEquipoBasicoDto.of(i.getEquipo()),
-                GetUbicacionSinListasDto.of(i.getUbicacion())
+                i.getEquipo() != null ? GetEquipoBasicoDto.of(i.getEquipo()) : null,
+                i.getUbicacion() != null ? GetUbicacionSinListasDto.of(i.getUbicacion()) : null
         );
     }
 }

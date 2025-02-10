@@ -41,7 +41,7 @@ public class NotaController {
                                     
                                     """)))
     })
-    @GetMapping("/{id}")
+    @GetMapping("/incidencia/{id}")
     public List<GetNotaBasicaDto> getAllNotasByIncidenciaId(@PathVariable Long id) {
         return notaService.getNotasByIncidenciaId(id);
     }
@@ -76,7 +76,7 @@ public class NotaController {
                                     }
                                     """)))
     })
-    @PutMapping("/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
+    @PutMapping("/incidencia/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
     public GetNotaDto edit(@PathVariable Long idIncidencia, @PathVariable String fecha,
                                       @PathVariable Long idAutor, @RequestBody EditNotaCmd editNotaCmd) {
         Nota nota = notaService.edit(editNotaCmd, idIncidencia, fecha, idAutor);
@@ -89,7 +89,7 @@ public class NotaController {
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = "{}")))
     })
-    @DeleteMapping("/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
+    @DeleteMapping("/incidencia/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
     public ResponseEntity<?> delete(@PathVariable Long idIncidencia, @PathVariable String fecha,
                                     @PathVariable Long idAutor) {
         notaService.delete(idIncidencia, fecha, idAutor);

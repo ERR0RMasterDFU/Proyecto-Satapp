@@ -1,6 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.EditIncidenciaCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.models.*;
 import com.salesianostriana.dam.proyecto_satapp.repositories.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,30 +24,42 @@ public class IncidenciaService {
     private final UbicacionRepository ubicacionRepository;
 
 
+    public List<GetIncidenciaBasicaDto> findAll() {
+        List<GetIncidenciaBasicaDto> result = incidenciaRepository.findAllIncidenciasBasicasDto();
+        if (result.isEmpty())
+            throw new EntityNotFoundException("No existen incidencias con esos criterios de búsqueda");
+        return result;
+    }
+
+    public Incidencia findById(Long id) {
+        Optional<Incidencia> incidenciaOpt = incidenciaRepository.findById(id);
+
+        if (incidenciaOpt.isPresent()) {
+            return incidenciaOpt.get();
+        } else {
+            throw new EntityNotFoundException("No existe ninguna incidencia con ID: " + id);
+        }
+    }
+
+    public List<GetIncidenciaSinUsuarioDto> findIncidenciasByUsuarioId(Long id) {
+        List<GetIncidenciaSinUsuarioDto> result = incidenciaRepository.findIncidenciasSinUsuarioByUsuarioId(id);
+        if (result.isEmpty())
+            throw new EntityNotFoundException("No existe ninguna incidencia del usuario con ID: " + id);
+        return result;
+    }
+
     public Incidencia save(EditIncidenciaCmd editIncidenciaCmd) {
 
         Equipo equipo = null;
         Ubicacion ubicacion = null;
 
-        Optional<Categoria> optionalCategoria = categoriaRepository.findById(editIncidenciaCmd.categoriaId());
+        Categoria categoria = categoriaRepository.findById(editIncidenciaCmd.categoriaId())
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna categoría con ID: "
+                        + editIncidenciaCmd.categoriaId()));
 
-        if(optionalCategoria.isEmpty()) {
-            throw new EntityNotFoundException
-                    ("No existe ninguna Categoria con ID: " + editIncidenciaCmd.categoriaId());
-        }
-
-    /*
-        if(editIncidenciaCmd.usuarioId() != null) {
-            Optional<Usuario> optionalUsuario = usuarioRepository.findById(editIncidenciaCmd.usuarioId());
-
-            if(optionalUsuario.isPresent()) {
-                Usuario
-            } else {
-                incidencia.setUsuario(optionalUsuario.get());
-                throw new EntityNotFoundException
-                        ("No existe ningún Usuario con ID: " + editIncidenciaCmd.usuarioId());
-            }
-        }*/
+        Usuario usuario = usuarioRepository.findById(editIncidenciaCmd.usuarioId())
+                .orElseThrow(() -> new EntityNotFoundException("No existe ningún usuario con ID: "
+                        + editIncidenciaCmd.usuarioId()));
 
         if(editIncidenciaCmd.equipoId() != null) {
             Optional<Equipo> optionalEquipo = equipoRepository.findById(editIncidenciaCmd.equipoId());
@@ -74,42 +89,15 @@ public class IncidenciaService {
                 .descripcion(editIncidenciaCmd.descripcion())
                 .estado(editIncidenciaCmd.estado())
                 .urgencia(editIncidenciaCmd.urgencia())
-                .categoria(optionalCategoria.get())
+                .categoria(categoria)
+                .usuario(usuario)
                 .equipo(equipo)
                 .ubicacion(ubicacion)
                 .build();
 
         return incidenciaRepository.save(incidencia);
     }
-
-    /*
-    public List<Ubicacion> findAll() {
-        List<Ubicacion> result = ubicacionRepository.findAll();
-        if (result.isEmpty())
-            throw new EntityNotFoundException("No existen ubicaciones con esos criterios de búsqueda");
-        return result;
-    }
-
-    public Ubicacion findById(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
-        }
-    }
-
-    public Ubicacion findByIdConDto(Long id) {
-        Optional<Ubicacion> ubicacionOptional = ubicacionRepository.findById(id);
-
-        if (ubicacionOptional.isPresent()) {
-            return ubicacionOptional.get();
-        } else {
-            throw new EntityNotFoundException("No existe ninguna Ubicacion con ID: " + id);
-        }
-    }
-
+/*
     public Ubicacion edit(Ubicacion ubicacion, Long id) {
         return ubicacionRepository.findById(id)
                 .map(old -> {

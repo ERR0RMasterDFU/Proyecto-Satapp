@@ -3,6 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.repositories;
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinCategoriaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinUsuarioDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
@@ -17,7 +18,6 @@ import java.util.Optional;
 
 public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
 
-    // CONSULTAS PARA USUARIO
     @Query("""
         select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
             i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria
@@ -106,4 +106,22 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
     """)
     Optional<Nota> findNotasByIncidenciaIdAndFechaAndAutor(Long idIncidencia, LocalDateTime fecha, String autor);
 
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria
+        )
+        from Incidencia i
+        order by i.id asc
+    """)
+    List<GetIncidenciaBasicaDto> findAllIncidenciasBasicasDto();
+
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinUsuarioDto(
+            i.id, i.fecha, i.titulo, i.descripcion, i.estado, i.urgencia, i.categoria, 
+                i.equipo, i.ubicacion
+        )
+        from Incidencia i join i.usuario u
+        where u.id = ?1
+    """)
+    List<GetIncidenciaSinUsuarioDto> findIncidenciasSinUsuarioByUsuarioId(Long id);
 }
