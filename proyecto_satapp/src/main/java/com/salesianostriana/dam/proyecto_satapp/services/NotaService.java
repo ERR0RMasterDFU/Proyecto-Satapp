@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.CreateNotaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.EditNotaCmd;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.*;
 import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.TecnicoRepository;
@@ -34,20 +34,20 @@ public class NotaService {
         }
     }
 
-    public Nota save(EditNotaCmd editNotaCmd) {
+    public Nota save(CreateNotaCmd createNotaCmd) {
 
         Optional<Incidencia> incidencia =
-                incidenciaRepository.findById(editNotaCmd.incidenciaId());
+                incidenciaRepository.findById(createNotaCmd.incidenciaId());
 
         Optional<Tecnico> tecnico =
-                tecnicoRepository.findById(editNotaCmd.tecnicoId());
+                tecnicoRepository.findById(createNotaCmd.tecnicoId());
 
         if (incidencia.isPresent() && tecnico.isPresent()) {
             Nota nota = Nota.builder()
                     .incidencia(incidencia.get())
                     .fecha(LocalDateTime.now().withNano(0))
                     .autor(tecnico.get().getNombre())
-                    .contenido(editNotaCmd.contenido())
+                    .contenido(createNotaCmd.contenido())
                     .build();
 
             incidencia.get().addNota(nota);
@@ -56,28 +56,33 @@ public class NotaService {
 
         } else {
             if(incidencia.isEmpty()) {
-                throw new EntityNotFoundException("No existe ninguna Incidencia con ID: " + editNotaCmd.incidenciaId());
+                throw new EntityNotFoundException("No existe ninguna Incidencia con ID: " + createNotaCmd.incidenciaId());
             } else {
-                throw new EntityNotFoundException("No existe ningún Técnico con ID: " + editNotaCmd.tecnicoId());
+                throw new EntityNotFoundException("No existe ningún Técnico con ID: " + createNotaCmd.tecnicoId());
             }
         }
     }
 
-    /*
-    public HistoricoCursos edit(EditHistoricoCursosCmd editHistoricoCursosCmd, Long id, String cursoEscolar) {
+    public Nota edit(EditNotaCmd editNotaCmd, Long idIncidencia, String fecha, Long idTecnico) {
 
-        Alumno alumno = alumnoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No existe ningún Alumno con ID: " + id));
+        LocalDateTime fechaNota = LocalDateTime.parse(fecha).withNano(0);
 
-        HistoricoCursos historicoCursos = alumnoRepository.findHistoricoCursosByAlumnoIdAndCursoEscolar(id, cursoEscolar)
-                .orElseThrow(() -> new EntityNotFoundException("No existe un histórico de curso para el alumno con ID: " +
-                        id + " y curso escolar: " + cursoEscolar));
+        Incidencia incidencia = incidenciaRepository.findById(idIncidencia)
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Incidencia con ID: " + idIncidencia));
 
-        historicoCursos.setCurso(editHistoricoCursosCmd.curso());
-        alumnoRepository.save(alumno);
+        Tecnico autor = tecnicoRepository.findById(idTecnico)
+                .orElseThrow(() -> new EntityNotFoundException("No existe ningún Técnico (autor) con ID: " + idTecnico));
 
-        return historicoCursos;
-    }*/
+        Nota nota = incidenciaRepository.findNotasByIncidenciaIdAndFechaAndAutor(incidencia.getId(), fechaNota, autor.getNombre())
+                .orElseThrow(() -> new EntityNotFoundException("No existe una nota asociada a una incidencia con ID: " +
+                        idIncidencia + ", fecha: " + LocalDateTime.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
+                        + " y técnico (autor) con ID: " + idTecnico));
+
+        nota.setContenido(editNotaCmd.contenido());
+        incidenciaRepository.save(incidencia);
+
+        return nota;
+    }
 
     public void delete(Long idIncidencia, String fecha, Long idTecnico) {
 
