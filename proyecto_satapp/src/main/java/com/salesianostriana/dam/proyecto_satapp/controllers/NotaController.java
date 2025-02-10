@@ -66,4 +66,17 @@ public class NotaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetNotaDto.of(nuevaNota));
     }
 
+    @Operation(summary = "Elimina una nota específica")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Nota eliminada correctamente",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{}")))
+    })
+    @DeleteMapping("/{idIncidencia}/fecha/{fecha}/autor/{idAutor}")
+    public ResponseEntity<?> delete(@PathVariable Long idIncidencia, @PathVariable String fecha,
+                                    @PathVariable Long idAutor) {
+        notaService.delete(idIncidencia, fecha, idAutor);
+        return ResponseEntity.noContent().build();
+    }
+
 }

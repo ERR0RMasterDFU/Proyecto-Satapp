@@ -83,3 +83,22 @@ INSERT INTO incidencia (id, fecha, titulo, descripcion, estado, urgencia, catego
 INSERT INTO incidencia (id, fecha, titulo, descripcion, estado, urgencia, categoria_id, usuario_id, equipo_id, ubicacion_id) VALUES (8, '2025-02-05T17:00:00', 'No carga el dispositivo', 'El dispositivo de tablet Samsung Galaxy S7 no carga en el aula 204.', 'PENDIENTE', true, 4, 4, 7, 3);
 
 ALTER SEQUENCE incidencia_seq RESTART WITH 58;
+
+
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (1, '2025-02-10T11:00:00', 'Emporio Alnino', 'He revisado el router y parece que hay un problema con la configuración del DHCP.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (2, '2025-02-10T11:30:00', 'Hot Pants', 'El compresor del aire acondicionado está funcionando, pero hay fuga de gas refrigerante.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (3, '2025-02-10T12:00:00', 'Funny Valentine', 'El monitor Dell tiene la fuente de alimentación dañada, procederemos con el reemplazo.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (4, '2025-02-10T12:45:00', 'Emporio Alnino', 'El problema parece estar en la batería, intentaremos una carga manual antes de reemplazarla.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (5, '2025-02-10T13:15:00', 'Hot Pants', 'Se ha limpiado el filtro del aire acondicionado, pero el motor sigue sin enfriar correctamente.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (6, '2025-02-10T14:00:00', 'Funny Valentine', 'La impresora no reconoce los cartuchos de tinta, probaremos con otros compatibles.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (7, '2025-02-10T14:30:00', 'Emporio Alnino', 'El amplificador de sonido no responde, revisaré la conexión eléctrica y los fusibles.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (8, '2025-02-10T15:00:00', 'Hot Pants', 'Probé con otro cargador y el problema persiste, parece un fallo en el puerto de carga.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (1, '2025-02-10T15:30:00', 'Funny Valentine', 'Reinicié el router y ahora algunos dispositivos sí tienen conexión, pero sigue fallando.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (2, '2025-02-10T16:00:00', 'Emporio Alnino', 'El aire acondicionado ya enfría mejor tras cambiar el gas refrigerante.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (3, '2025-02-10T16:30:00', 'Hot Pants', 'Instalé un nuevo monitor y todo funciona correctamente.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (4, '2025-02-10T17:00:00', 'Funny Valentine', 'El móvil ha encendido tras un reinicio forzado, pero la batería se descarga muy rápido.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (5, '2025-02-10T17:30:00', 'Emporio Alnino', 'El problema del aire acondicionado se debe a un termostato defectuoso.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (6, '2025-02-10T18:00:00', 'Hot Pants', 'La impresora imprime, pero la calidad es baja, posible problema en los inyectores.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (7, '2025-02-10T18:30:00', 'Funny Valentine', 'Sistema de sonido funcionando tras reemplazar un cable de conexión.');
+INSERT INTO nota (incidencia_id, fecha, autor, contenido) VALUES (8, '2025-02-10T19:00:00', 'Emporio Alnino', 'El puerto de carga de la tablet presenta soldaduras frías, recomendaré su reparación.');
+

@@ -69,7 +69,7 @@ public class IncidenciaService {
         }
 
         Incidencia incidencia = Incidencia.builder()
-                .fecha(LocalDateTime.now())
+                .fecha(LocalDateTime.now().withNano(0))
                 .titulo(editIncidenciaCmd.titulo())
                 .descripcion(editIncidenciaCmd.descripcion())
                 .estado(editIncidenciaCmd.estado())
