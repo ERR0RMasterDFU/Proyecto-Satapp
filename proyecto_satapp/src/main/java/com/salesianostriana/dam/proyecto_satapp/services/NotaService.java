@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class NotaService {
         if (incidencia.isPresent() && tecnico.isPresent()) {
             Nota nota = Nota.builder()
                     .incidencia(incidencia.get())
-                    .fecha(LocalDateTime.now())
+                    .fecha(LocalDateTime.now().withNano(0))
                     .autor(tecnico.get().getNombre())
                     .contenido(editNotaCmd.contenido())
                     .build();
@@ -76,20 +77,25 @@ public class NotaService {
         alumnoRepository.save(alumno);
 
         return historicoCursos;
+    }*/
+
+    public void delete(Long idIncidencia, String fecha, Long idTecnico) {
+
+        LocalDateTime fechaNota = LocalDateTime.parse(fecha).withNano(0);
+
+        Incidencia incidencia = incidenciaRepository.findById(idIncidencia)
+                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Incidencia con ID: " + idIncidencia));
+
+        Tecnico autor = tecnicoRepository.findById(idTecnico)
+                .orElseThrow(() -> new EntityNotFoundException("No existe ningún Técnico (autor) con ID: " + idTecnico));
+
+        Nota nota = incidenciaRepository.findNotasByIncidenciaIdAndFechaAndAutor(incidencia.getId(), fechaNota, autor.getNombre())
+                .orElseThrow(() -> new EntityNotFoundException("No existe una nota asociada a una incidencia con ID: " +
+                        idIncidencia + ", fecha: " + LocalDateTime.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))
+                        + " y técnico (autor) con ID: " + idTecnico));
+
+        incidencia.removeNota(nota);
+        incidenciaRepository.save(incidencia);
     }
 
-    public void delete(Long id, String cursoEscolar) {
-
-        Alumno alumno = alumnoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No existe ningún Alumno con ID: " + id));
-
-        HistoricoCursos historicoCursos = alumnoRepository.findHistoricoCursosByAlumnoIdAndCursoEscolar(id, cursoEscolar)
-                .orElseThrow(() -> new EntityNotFoundException("No existe un histórico de curso para el alumno con ID: " +
-                        id + " y curso escolar: " + cursoEscolar));
-
-        alumno.removeHistoricoCursos(historicoCursos);
-        alumnoRepository.save(alumno);
-    }
-*/
 }
-

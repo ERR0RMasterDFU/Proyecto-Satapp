@@ -7,9 +7,11 @@ import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
+import com.salesianostriana.dam.proyecto_satapp.models.Nota;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,12 +99,11 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
     """)
     List<GetNotaBasicaDto> findNotasByIncidenciaId(Long id);
 
-    /*@Query("""
+    @Query("""
         select n
         from Nota n
-        where n..alumno.id = ?1 and hc.cursoEscolar = ?2
+        where n.incidencia.id = ?1 and n.fecha = ?2 and n.autor = ?3
     """)
-    Optional<HistoricoCursos> findHistoricoCursosByAlumnoIdAndCursoEscolar(Long id, String cursoEscolar);*/
-
+    Optional<Nota> findNotasByIncidenciaIdAndFechaAndAutor(Long idIncidencia, LocalDateTime fecha, String autor);
 
 }
