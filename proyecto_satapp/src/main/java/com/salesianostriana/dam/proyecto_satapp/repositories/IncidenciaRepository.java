@@ -1,12 +1,17 @@
 package com.salesianostriana.dam.proyecto_satapp.repositories;
 
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.incidencia.GetIncidenciaSinCategoriaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
+import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
 
@@ -82,6 +87,22 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
         where e.id = ?1
     """)
     List<GetIncidenciaBasicaDto> findIncidenciasByEquipoId(Long id);
+
+    @Query("""
+        select new com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto(
+            n.fecha, n.autor, n.contenido
+        ) 
+        from Nota n
+        where n.incidencia.id = ?1
+    """)
+    List<GetNotaBasicaDto> findNotasByIncidenciaId(Long id);
+
+    /*@Query("""
+        select n
+        from Nota n
+        where n..alumno.id = ?1 and hc.cursoEscolar = ?2
+    """)
+    Optional<HistoricoCursos> findHistoricoCursosByAlumnoIdAndCursoEscolar(Long id, String cursoEscolar);*/
 
 
 }

@@ -1,11 +1,14 @@
 package com.salesianostriana.dam.proyecto_satapp.controllers;
 
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.EditHistoricoCursosCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.EditNotaCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.HistoricoCursos;
 import com.salesianostriana.dam.proyecto_satapp.models.Nota;
+import com.salesianostriana.dam.proyecto_satapp.services.IncidenciaService;
 import com.salesianostriana.dam.proyecto_satapp.services.NotaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,10 +20,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +31,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotaController {
 
     private final NotaService notaService;
+
+
+    @Operation(summary = "Obtener las notas asociadas a una incidencia")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de notas obtenida correctamente",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetNotaDto.class),
+                            examples = @ExampleObject(value = """
+                                    
+                                    """)))
+    })
+    @GetMapping("/{id}")
+    public List<GetNotaBasicaDto> getAllNotasByIncidenciaId(@PathVariable Long id) {
+        return notaService.getNotasByIncidenciaId(id);
+    }
 
     @Operation(summary = "Crear un nueva nota")
     @ApiResponses(value = {
