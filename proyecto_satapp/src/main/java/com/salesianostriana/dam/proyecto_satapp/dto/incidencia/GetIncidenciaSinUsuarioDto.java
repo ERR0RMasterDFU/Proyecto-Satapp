@@ -3,9 +3,7 @@ package com.salesianostriana.dam.proyecto_satapp.dto.incidencia;
 import com.salesianostriana.dam.proyecto_satapp.dto.categoria.GetCategoriaBasicaDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.equipo.GetEquipoBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.ubicacion.GetUbicacionSinListasDto;
-import com.salesianostriana.dam.proyecto_satapp.dto.usuarios.usuario.GetUsuarioBasicoDto;
-import com.salesianostriana.dam.proyecto_satapp.models.Estado;
-import com.salesianostriana.dam.proyecto_satapp.models.Incidencia;
+import com.salesianostriana.dam.proyecto_satapp.models.*;
 
 import java.time.LocalDateTime;
 
@@ -29,8 +27,17 @@ public record GetIncidenciaSinUsuarioDto(
                 i.getEstado(),
                 i.isUrgencia(),
                 GetCategoriaBasicaDto.of(i.getCategoria()),
-                GetEquipoBasicoDto.of(i.getEquipo()),
-                GetUbicacionSinListasDto.of(i.getUbicacion())
+                i.getEquipo() != null ? GetEquipoBasicoDto.of(i.getEquipo()) : null,
+                i.getUbicacion() != null ? GetUbicacionSinListasDto.of(i.getUbicacion()) : null
         );
     }
+
+    // CONSTRUCTOR PARA CONSULTAS
+    public GetIncidenciaSinUsuarioDto(Long id, LocalDateTime fecha, String titulo, String descripcion,
+                                      Estado estado, boolean urgencia, Categoria categoria,
+                                      Equipo equipo, Ubicacion ubicacion) {
+        this(id, fecha, titulo, descripcion, estado, urgencia, GetCategoriaBasicaDto.of(categoria),
+                GetEquipoBasicoDto.of(equipo), GetUbicacionSinListasDto.of(ubicacion));
+    }
+
 }

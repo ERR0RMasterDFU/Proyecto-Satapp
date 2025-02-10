@@ -10,7 +10,7 @@ public record EditIncidenciaCmd(
         Estado estado,
         boolean urgencia,
         Long categoriaId,
-        //Long usuarioId,
+        Long usuarioId,
         Long equipoId,
         Long ubicacionId
 ) {
