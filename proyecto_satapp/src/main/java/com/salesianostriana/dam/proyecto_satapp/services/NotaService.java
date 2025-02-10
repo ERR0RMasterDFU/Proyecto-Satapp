@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.proyecto_satapp.services;
 
-import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.EditHistoricoCursosCmd;
-import com.salesianostriana.dam.proyecto_satapp.dto.historicoCursos.GetHistoricoCursosBasicoDto;
 import com.salesianostriana.dam.proyecto_satapp.dto.nota.EditNotaCmd;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaBasicaDto;
+import com.salesianostriana.dam.proyecto_satapp.dto.nota.GetNotaDto;
 import com.salesianostriana.dam.proyecto_satapp.models.*;
 import com.salesianostriana.dam.proyecto_satapp.repositories.IncidenciaRepository;
 import com.salesianostriana.dam.proyecto_satapp.repositories.TecnicoRepository;
@@ -21,18 +21,18 @@ public class NotaService {
     private final IncidenciaRepository incidenciaRepository;
     private final TecnicoRepository tecnicoRepository;
 
-    /*
-        public List<GetHistoricoCursosBasicoDto> getHistoricoCursosByAlumnoId(Long id) {
 
-            List<GetHistoricoCursosBasicoDto> listaHC = alumnoRepository.findHistoricoCursosByAlumnoId(id);
+    public List<GetNotaBasicaDto> getNotasByIncidenciaId(Long id) {
 
-            if (listaHC.isEmpty()) {
-                throw new EntityNotFoundException("No existen Históricos con esos criterios de búsqueda");
-            }else{
-                return listaHC;
-            }
+        List<GetNotaBasicaDto> listaNotas = incidenciaRepository.findNotasByIncidenciaId(id);
+
+        if (listaNotas.isEmpty()) {
+            throw new EntityNotFoundException("No existen Notas con esos criterios de búsqueda");
+        }else{
+            return listaNotas;
         }
-    */
+    }
+
     public Nota save(EditNotaCmd editNotaCmd) {
 
         Optional<Incidencia> incidencia =
