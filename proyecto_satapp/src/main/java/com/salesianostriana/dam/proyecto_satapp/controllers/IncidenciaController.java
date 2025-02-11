@@ -220,4 +220,17 @@ public class IncidenciaController {
         Incidencia incidencia = incidenciaService.edit(editIncidenciaCmd, id);
         return GetIncidenciaDto.of(incidencia);
     }
+
+    @Operation(summary = "Eliminar una incidencia")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Incidencia eliminada correctamente",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Incidencia no encontrada",
+                    content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        incidenciaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
