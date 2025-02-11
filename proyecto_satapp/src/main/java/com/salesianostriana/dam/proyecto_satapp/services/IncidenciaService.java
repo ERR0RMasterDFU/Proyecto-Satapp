@@ -62,10 +62,10 @@ public class IncidenciaService {
                 .orElseThrow(() -> new EntityNotFoundException("No existe ningún usuario con ID: "
                         + editIncidenciaCmd.usuarioId()));
 
-        if(editIncidenciaCmd.equipoId() != null) {
+        if (editIncidenciaCmd.equipoId() != null) {
             Optional<Equipo> optionalEquipo = equipoRepository.findById(editIncidenciaCmd.equipoId());
 
-            if(optionalEquipo.isPresent()) {
+            if (optionalEquipo.isPresent()) {
                 equipo = optionalEquipo.get();
             } else {
                 throw new EntityNotFoundException
@@ -73,10 +73,10 @@ public class IncidenciaService {
             }
         }
 
-        if(editIncidenciaCmd.ubicacionId() != null) {
+        if (editIncidenciaCmd.ubicacionId() != null) {
             Optional<Ubicacion> optionalUbicacion = ubicacionRepository.findById(editIncidenciaCmd.ubicacionId());
 
-            if(optionalUbicacion.isPresent()) {
+            if (optionalUbicacion.isPresent()) {
                 ubicacion = optionalUbicacion.get();
             } else {
                 throw new EntityNotFoundException
@@ -131,17 +131,8 @@ public class IncidenciaService {
                 }).orElseThrow(() -> new EntityNotFoundException("No existe ninguna incidencia con ID: " + id));
     }
 
-/*
-    public Ubicacion edit(Ubicacion ubicacion, Long id) {
-        return ubicacionRepository.findById(id)
-                .map(old -> {
-                    old.setNombre(ubicacion.getNombre());
-                    return ubicacionRepository.save(old);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("No existe ninguna Ubicacion con ID: "+ id));
+    public void delete(Long id) {
+        incidenciaRepository.deleteById(id);
     }
 
-    public void delete(Long id) {
-        ubicacionRepository.deleteById(id);
-*/
 }
