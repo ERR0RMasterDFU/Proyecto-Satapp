@@ -38,7 +38,18 @@ public class NotaController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = GetNotaDto.class),
                             examples = @ExampleObject(value = """
-                                    
+                                    [
+                                        {
+                                            "fecha": "2025-02-10T11:00:00",
+                                            "autor": "Emporio Alnino",
+                                            "contenido": "He revisado el router y parece que hay un problema con la configuraciÃ³n del DHCP."
+                                        },
+                                        {
+                                            "fecha": "2025-02-10T15:30:00",
+                                            "autor": "Funny Valentine",
+                                            "contenido": "ReiniciÃ© el router y ahora algunos dispositivos sÃ­ tienen conexiÃ³n, pero sigue fallando."
+                                        }
+                                    ]
                                     """)))
     })
     @GetMapping("/incidencia/{id}")
