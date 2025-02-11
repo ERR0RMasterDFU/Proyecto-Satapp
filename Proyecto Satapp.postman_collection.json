@@ -339,13 +339,70 @@
 			"name": "Incidencia",
 			"item": [
 				{
+					"name": "Mostrar todas las incidencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/incidencia",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar incidencia por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/incidencia/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar incidencias de un usuario por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/incidencia/usuario/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia",
+								"usuario",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Crear incidencia",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titulo\": \"Ordenador estropeado\",\r\n    \"descripcion\": \"El ordenador ha cogido fuego y ha sido reducido a cenizas\",\r\n    \"estado\": \"ABIERTA\",\r\n    \"urgencia\": true,\r\n    \"categoriaId\": 3,\r\n    \"equipoId\": 1,\r\n    \"ubicacionId\": 2\r\n}",
+							"raw": "{\r\n    \"titulo\": \"Ordenador estropeado\",\r\n    \"descripcion\": \"El ordenador ha cogido fuego y ha sido reducido a cenizas\",\r\n    \"estado\": \"ABIERTA\",\r\n    \"urgencia\": true,\r\n    \"categoriaId\": 3,\r\n    \"usuarioId\": 5,\r\n    \"equipoId\": 1,\r\n    \"ubicacionId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -360,6 +417,53 @@
 							"port": "8080",
 							"path": [
 								"incidencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar incidencia por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Tablet sin pantalla\",\r\n    \"descripcion\": \"La tablet se ha quedado ciega.\",\r\n    \"estado\": \"PENDIENTE\",\r\n    \"urgencia\": false,\r\n    \"categoriaId\": 4,\r\n    \"equipoId\": 7,\r\n    \"ubicacionId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/incidencia/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar incidencia por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/incidencia/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"incidencia",
+								"1"
 							]
 						}
 					},
@@ -819,14 +923,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/alumno/1",
+									"raw": "localhost:8080/alumno/4",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
 										"alumno",
-										"1"
+										"4"
 									]
 								}
 							},
@@ -931,6 +1035,115 @@
 								"1",
 								"curso_escolar",
 								"2022-2023"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nota",
+			"item": [
+				{
+					"name": "Mostrar todos las notas de una incidencia por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/nota/incidencia/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"nota",
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear nota",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"incidenciaId\": 1,\r\n    \"tecnicoId\": 11,\r\n    \"contenido\": \"Su ciclo de vida ha llegado a su fin. Simplemente, no pudimos hacer nada...\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/nota",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"nota"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar una nota por ID de la incidencia, fecha de la nota y el ID del técnico (autor)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contenido\": \"Se ha desintegrado parte del aparato misteriosamente.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/nota/incidencia/1/fecha/2025-02-10T11:00:00/autor/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"nota",
+								"incidencia",
+								"1",
+								"fecha",
+								"2025-02-10T11:00:00",
+								"autor",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una nota por ID de la incidencia, fecha de la nota y el ID del técnico (autor)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/nota/incidencia/1/fecha/2025-02-10T11:00:00/autor/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"nota",
+								"incidencia",
+								"1",
+								"fecha",
+								"2025-02-10T11:00:00",
+								"autor",
+								"10"
 							]
 						}
 					},
